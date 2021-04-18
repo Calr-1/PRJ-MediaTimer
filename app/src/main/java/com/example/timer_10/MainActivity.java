@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fragmentsTimer = new ArrayList<>();
+
         setContentView(R.layout.activity_main);
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> addFragment());
