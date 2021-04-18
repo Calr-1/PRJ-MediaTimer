@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">timer_1.0</string>
+    <string name="startTimerButton_string">Start Timer</string>
+    <string name="timerValue">00:00:00</string>
+    <string name="hours_string"></string>
+    <string name="minutes_string"></string>
+    <string name="seconds_string"></string>
+    <string name="hints">00</string>
+    <string name="separator_string">:</string>
+    <string name="pauseTimer_string">Pause</string>
+    <string name="unpauseTimer_string">Unpause</string>
+    <string name="uploadImageButton_string">Upl Image</string>
+    <string name="uploadTimerButton_string">Upl Timer</string>
+    <string name="stopAlarm_string">Stop Alarm</string>
+
+</resources>
