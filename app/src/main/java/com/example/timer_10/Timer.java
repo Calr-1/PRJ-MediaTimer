@@ -2,6 +2,7 @@ package com.example.timer_10;
 
 import android.os.CountDownTimer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Timer {
@@ -10,15 +11,27 @@ public class Timer {
     private final int timerCountdownInterval;
     private final String timerName;
     private CountDownTimer countDownTimerTimerObject;
-    private final AlarmPlayer soundObject;
+    private final AlarmPlayer soundObject, random;
     private final timerFragment fragment;
+
+    private boolean intervals;
+    private int numberOfIntervals;
+    private String mode;
+    private ArrayList<Long> intervalArray;
 
     public Timer(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, timerFragment fragment) {
         currentTimerValue = timerInitialValue;
         this.timerInitialValue = timerInitialValue;
         this.timerCountdownInterval = timerCountdownInterval;
         this.timerName = timerName;
+        random = new AlarmPlayer(context, R.raw.notification);
+
         this.fragment = fragment;
+        intervals = false;
+        numberOfIntervals = 1;
+        mode = "HH/MM/SS";
+        intervalArray = createIntervals(numberOfIntervals);
+
 
         soundObject = new AlarmPlayer(context, soundID);
         createTimer(timerInitialValue, timerCountdownInterval);
@@ -32,6 +45,11 @@ public class Timer {
             public void onTick(long millisUntilFinished) {
                 currentTimerValue = millisUntilFinished;
                 fragment.updateTimer(currentTimerValue);
+                for (Long l : intervalArray) {
+                    if (Math.abs(l - currentTimerValue) < 110 && intervals) {
+                        random.playNotification();
+                    }
+                }
             }
 
             @Override
@@ -57,6 +75,11 @@ public class Timer {
                 public void onTick(long millisUntilFinished) {
                     currentTimerValue = millisUntilFinished;
                     fragment.updateTimer(currentTimerValue);
+                    for (Long l : intervalArray) {
+                        if (Math.abs(l - currentTimerValue) < 110 && intervals) {
+                            random.playNotification();
+                        }
+                    }
                 }
 
                 @Override
@@ -72,14 +95,22 @@ public class Timer {
     }
 
     public HashMap<String, Object> millisToCommonTime(Long millis) {
-        int seconds = (int) (millis / 1000) % 60;
-        int minutes = (int) ((millis / (1000 * 60)) % 60);
-        int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
         HashMap<String, Object> timerInHoursMinutesSeconds = new HashMap<>();
-        timerInHoursMinutesSeconds.put("Hours", hours);
-        timerInHoursMinutesSeconds.put("Minutes", minutes);
-        timerInHoursMinutesSeconds.put("Seconds", seconds);
-
+        if (mode.equals("HH/MM/SS")) {
+            int seconds = (int) (millis / 1000) % 60;
+            int minutes = (int) ((millis / (1000 * 60)) % 60);
+            int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
+            timerInHoursMinutesSeconds.put("Hours", hours);
+            timerInHoursMinutesSeconds.put("Minutes", minutes);
+            timerInHoursMinutesSeconds.put("Seconds", seconds);
+        } else if (mode.equals("DD/HH/MM")) {
+            int minutes = (int) ((millis / (1000 * 60)) % 60);
+            int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
+            int days = (int) (millis / (1000 * 60 * 60 * 24));
+            timerInHoursMinutesSeconds.put("Days", days);
+            timerInHoursMinutesSeconds.put("Hours", hours);
+            timerInHoursMinutesSeconds.put("Minutes", minutes);
+        }
         return timerInHoursMinutesSeconds;
     }
 
@@ -87,4 +118,62 @@ public class Timer {
         soundObject.stopSoundObject();
     }
 
+    public boolean canStopSound() {
+        return soundObject.isPlaying();
+    }
+
+    private ArrayList<Long> createIntervals(int numberOfIntervals) {
+        ArrayList<Long> array = new ArrayList<Long>();
+        if (intervals) {
+            if (numberOfIntervals == 0) {
+                array.add((long) 0);
+            } else if (numberOfIntervals == 1) {
+                long l = timerInitialValue / (numberOfIntervals + 1);
+                array.add(l);
+            } else {
+                int n = numberOfIntervals + 1;
+                long l = 0;
+                if (n % 2 == 0) {
+                    l = timerInitialValue / n;
+                } else {
+                    l = (timerInitialValue / n) + 1;
+                }
+                long total = timerInitialValue;
+                while (total > 0) {
+                    total -= l;
+                    if (total > 0) {
+                        array.add(total);
+                    }
+                }
+            }
+        } else {
+            array.add((long) 0);
+        }
+        return array;
+    }
+
+    public boolean isIntervals() {
+        return intervals;
+    }
+
+    public int getNumberOfIntervals() {
+        return numberOfIntervals;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setIntervals(boolean intervals) {
+        this.intervals = intervals;
+    }
+
+    public void setNumberOfIntervals(int numberOfIntervals) {
+        this.numberOfIntervals = numberOfIntervals;
+        intervalArray = createIntervals(numberOfIntervals);
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
 }

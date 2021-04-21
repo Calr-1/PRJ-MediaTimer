@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">timer_1.0</string>
+    <string name="app_name">Media Timer</string>
     <string name="startTimerButton_string">Start Timer</string>
     <string name="timerValue">00:00:00</string>
     <string name="hours_string"></string>
@@ -7,10 +7,15 @@
     <string name="seconds_string"></string>
     <string name="hints">00</string>
     <string name="separator_string">:</string>
-    <string name="pauseTimer_string">Pause</string>
-    <string name="unpauseTimer_string">Unpause</string>
-    <string name="uploadImageButton_string">Upl Image</string>
-    <string name="uploadTimerButton_string">Upl Timer</string>
+    <string name="pauseTimer_string">Pause Timer</string>
+    <string name="unpauseTimer_string">Unpause Timer</string>
+    <string name="uploadImageButton_string">Upload Image</string>
+    <string name="uploadTimerButton_string">Upload Timer</string>
     <string name="stopAlarm_string">Stop Alarm</string>
-
+    <string name="enable_notifications">Enable during-timer notifications</string>
+    <string name="number_of_intervals">Number of intervals:</string>
+    <string name="number_of_intervals_default">1</string>
+    <string name="timer_format">Timer Format:</string>
+    <string name="save">Save</string>
+    <string name="add_timer">Add Timer</string>
 </resources>

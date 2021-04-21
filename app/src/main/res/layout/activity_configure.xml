@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfigureActivity">
+
+    <TextView
+        android:id="@+id/enableIntevalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/enable_notifications"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/notificationsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/enableIntevalText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/NumberOfIntervalsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/number_of_intervals"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/enableIntevalText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntevalText" />
+
+    <EditText
+        android:id="@+id/inputIntervals"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:inputType="number"
+        android:text="@string/number_of_intervals_default"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/NumberOfIntervalsText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntevalText"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/TimerFormat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/timer_format"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/NumberOfIntervalsText"
+        app:layout_constraintTop_toBottomOf="@+id/NumberOfIntervalsText" />
+
+    <Spinner
+        android:id="@+id/modes_spinner"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@+id/TimerFormat"
+        app:layout_constraintTop_toBottomOf="@+id/inputIntervals" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="300dp"
+        android:text="@string/save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
