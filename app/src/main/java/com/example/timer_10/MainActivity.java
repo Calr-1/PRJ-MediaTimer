@@ -1,42 +1,49 @@
 package com.example.timer_10;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import java.util.ArrayList;
+import com.google.android.material.tabs.TabLayout;
+
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private Button addButton;
-
-    private ArrayList<timerFragment> fragmentsTimer;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_common_page);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        TabLayout tabs = findViewById(R.id.tabs);
 
-        fragmentsTimer = new ArrayList<>();
-        setContentView(R.layout.activity_main);
-        addButton = findViewById(R.id.addButton);
-        addButton.setOnClickListener(v -> addFragment());
+        tabs.addTab(tabs.newTab().setText("Timers"));
+        tabs.addTab(tabs.newTab().setText("Group Timers"));
+        tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+        tabs.setupWithViewPager(viewPager);
+        final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabs.getTabCount());
+        viewPager.setAdapter(adapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
+
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
-
-    private void addFragment() {
-
-        if (fragmentsTimer.size() < 4) {
-
-            timerFragment frag = new timerFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.timerLayout, frag)
-                    .commit();
-            fragmentsTimer.add(frag);
-            System.out.println("Confirm x123");
-        }
-    }
-
 }

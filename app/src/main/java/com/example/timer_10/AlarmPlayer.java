@@ -28,8 +28,6 @@ public class AlarmPlayer {
     }
 
     public boolean isPlaying() {
-        if (!released) {
-            return true;
-        } else return false;
+        return !released;
     }
 }

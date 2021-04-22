@@ -5,8 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="#C6BDBD"
+    android:layout_margin="10dp"
+    android:background="@drawable/round_corners"
     tools:context=".timerFragment">
 
     <EditText
@@ -90,31 +90,50 @@
         android:id="@+id/play_and_pause_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_baseline_play_arrow_24"
-        android:tint="@color/red"
+        android:tint="@color/palette_yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/hoursEditView"
         app:layout_constraintHorizontal_bias="0.0"
+
         app:layout_constraintStart_toStartOf="@+id/hoursEditView"
-        app:layout_constraintTop_toBottomOf="@+id/hoursEditView" />
+        app:layout_constraintTop_toBottomOf="@+id/hoursEditView"
+        android:contentDescription="@string/placeholder_desc" />
+
 
     <ImageButton
         android:id="@+id/stop_playing_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_baseline_stop_24"
-        android:tint="@color/red"
+        android:tint="@color/palette_yellow"
         app:layout_constraintEnd_toEndOf="@+id/minutesEditView"
         app:layout_constraintStart_toStartOf="@+id/minutesEditView"
-        app:layout_constraintTop_toTopOf="@+id/play_and_pause_button" />
+        app:layout_constraintTop_toTopOf="@+id/play_and_pause_button"
+        android:contentDescription="@string/placeholder_desc" />
+
 
     <ImageButton
         android:id="@+id/timer_options_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/button_style"
         android:src="@drawable/ic_baseline_menu_24"
-        android:tint="@color/red"
+        android:tint="@color/palette_yellow"
         app:layout_constraintEnd_toEndOf="@+id/secondsEditView"
         app:layout_constraintStart_toStartOf="@+id/secondsEditView"
-        app:layout_constraintTop_toTopOf="@+id/stop_playing_button" />
+        app:layout_constraintTop_toTopOf="@+id/stop_playing_button"
+        android:contentDescription="@string/placeholder_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
