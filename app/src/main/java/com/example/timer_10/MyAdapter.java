@@ -39,4 +39,16 @@ public class MyAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return totalTabs;
     }
+
+    @Override
+    public CharSequence getPageTitle(final int position) {
+        switch (position) {
+            case 0:
+                return "TIMERS";
+            case 1:
+                return "GROUP TIMERS";
+            default:
+                return null;
+        }
+    }
 }
