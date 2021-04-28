@@ -5,6 +5,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:background="@drawable/round_corners_no_border"
     tools:context=".ConfigureActivity">
 
     <TextView
@@ -15,6 +17,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/enable_notifications"
+        android:textColor="@color/palette_blue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/number_of_intervals"
+        android:textColor="@color/palette_blue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/enableIntevalText"
         app:layout_constraintTop_toBottomOf="@+id/enableIntevalText" />
@@ -46,12 +50,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="8dp"
+        android:importantForAutofill="no"
         android:inputType="number"
         android:text="@string/number_of_intervals_default"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/NumberOfIntervalsText"
         app:layout_constraintTop_toBottomOf="@+id/enableIntevalText"
-        android:importantForAutofill="no" />
+        tools:ignore="LabelFor" />
 
     <TextView
         android:id="@+id/TimerFormat"
@@ -59,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/timer_format"
+        android:textColor="@color/palette_blue"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/NumberOfIntervalsText"
         app:layout_constraintTop_toBottomOf="@+id/NumberOfIntervalsText" />
@@ -79,6 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
         android:text="@string/save"
+        android:textColor="@color/palette_yellow"
+        app:backgroundTint="@color/palette_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

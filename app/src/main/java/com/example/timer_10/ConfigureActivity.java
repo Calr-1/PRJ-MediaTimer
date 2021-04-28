@@ -3,7 +3,6 @@ package com.example.timer_10;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +27,7 @@ public class ConfigureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure);
-        sp = (Spinner) findViewById(R.id.modes_spinner);
+        sp = findViewById(R.id.modes_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.modes_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -45,12 +44,7 @@ public class ConfigureActivity extends AppCompatActivity {
         et.setText("" + numberOfIntervals);
         ActionBar actionBar = getSupportActionBar();
         Button bt1 = findViewById(R.id.saveButton);
-        bt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
+        bt1.setOnClickListener(v -> save());
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         saved = false;
@@ -71,7 +65,7 @@ public class ConfigureActivity extends AppCompatActivity {
 
     private void save() {
         intervals = cb.isChecked();
-        numberOfIntervals = Integer.valueOf(et.getText().toString());
+        numberOfIntervals = Integer.parseInt(et.getText().toString());
         mode = sp.getSelectedItem().toString();
 
 

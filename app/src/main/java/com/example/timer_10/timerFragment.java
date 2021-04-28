@@ -19,9 +19,6 @@ import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class timerFragment extends Fragment {
 
     private ImageButton playPauseButton, stopTimerButton, optionsButton;
@@ -59,7 +56,6 @@ public class timerFragment extends Fragment {
         playPauseButton = getView().findViewById(R.id.play_and_pause_button);
         stopTimerButton = getView().findViewById(R.id.stop_playing_button);
         optionsButton = getView().findViewById(R.id.timer_options_button);
-
 
         timerRunning = false;
         timerCreated = false;
