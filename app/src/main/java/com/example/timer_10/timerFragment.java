@@ -89,6 +89,7 @@ public class timerFragment extends Fragment {
         });
 
         optionsButton.setOnClickListener(v -> {
+            Log.d("teste", "!");
             Intent intent = new Intent(getActivity(), ConfigureActivity.class);
             intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
             startActivity(intent);
