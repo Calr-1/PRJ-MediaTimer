@@ -25,10 +25,6 @@ public class ConfigureActivity extends AppCompatActivity {
     private Intent intent;
     private boolean saved;
 
-    private Timer timer;
-    private TimersWrapper wrapper;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +38,12 @@ public class ConfigureActivity extends AppCompatActivity {
         sp.setAdapter(adapter);
         et = findViewById(R.id.inputIntervals);
         cb = findViewById(R.id.notificationsCheckBox);
-        int indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
-        wrapper = TimersWrapper.getInstance();
-        timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
-        sp.setSelection(getIndex(sp, timer.getMode()));
-        cb.setChecked(timer.isIntervals());
-        et.setText("" + timer.getNumberOfIntervals());
+        intervals = getIntent().getBooleanExtra("intervals", false);
+        numberOfIntervals = getIntent().getIntExtra("numberOfIntervals", 1);
+        mode = getIntent().getStringExtra("mode");
+        sp.setSelection(getIndex(sp, mode));
+        cb.setChecked(intervals);
+        et.setText("" + numberOfIntervals);
         ActionBar actionBar = getSupportActionBar();
         //Button bt1 = findViewById(R.id.saveButton);
         //bt1.setOnClickListener(v -> save());
@@ -74,18 +70,16 @@ public class ConfigureActivity extends AppCompatActivity {
         numberOfIntervals = Integer.parseInt(et.getText().toString());
         mode = sp.getSelectedItem().toString();
 
-        timer.setIntervals(intervals);
-        timer.setMode(mode);
-        timer.setNumberOfIntervals(numberOfIntervals);
-
 
         saved = true;
     }
 
     public void onBackPressed() {
-        timer.setIntervals(intervals);
-        timer.setMode(mode);
-        timer.setNumberOfIntervals(numberOfIntervals);
+        intent.putExtra("intervals", intervals);
+        intent.putExtra("numberOfIntervals", numberOfIntervals);
+        intent.putExtra("mode", mode);
+        if (saved) setResult(RESULT_OK, intent);
+        else setResult(RESULT_CANCELED, intent);// or setResult(RESULT_CANCELED);
         finish();
 
     }
@@ -94,9 +88,10 @@ public class ConfigureActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                timer.setIntervals(intervals);
-                timer.setMode(mode);
-                timer.setNumberOfIntervals(numberOfIntervals);
+                intent.putExtra("intervals", intervals);
+                intent.putExtra("numberOfIntervals", numberOfIntervals);
+                intent.putExtra("mode", mode);
+                setResult(RESULT_OK, intent);
                 finish();
                 return true;
         }

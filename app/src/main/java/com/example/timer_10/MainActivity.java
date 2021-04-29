@@ -1,9 +1,7 @@
 package com.example.timer_10;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,10 +14,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_page);
-        ActionBar actionBar;
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.palette_blue)));
-
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabs = findViewById(R.id.tabs);
 
