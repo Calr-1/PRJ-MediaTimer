@@ -1,40 +1,51 @@
 package com.example.timer_10;
 
 import android.os.CountDownTimer;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Timer {
 
     private long currentTimerValue, timerInitialValue;
-    private final int timerCountdownInterval;
-    private final String timerName;
+    private int timerCountdownInterval;
+    private String timerName;
     private CountDownTimer countDownTimerTimerObject;
     private final AlarmPlayer soundObject, random;
-    private final timerFragment fragment;
 
     private boolean intervals;
     private int numberOfIntervals;
     private String mode;
     private ArrayList<Long> intervalArray;
 
-    public Timer(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, timerFragment fragment) {
+    private boolean timerRunning;
+
+    private TextView small;
+    private TextView medium;
+    private TextView big;
+
+    private timerFragment fragment;
+
+    public Timer(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, TextView small, TextView medium, TextView big, timerFragment fragment) {
         currentTimerValue = timerInitialValue;
         this.timerInitialValue = timerInitialValue;
         this.timerCountdownInterval = timerCountdownInterval;
         this.timerName = timerName;
         random = new AlarmPlayer(context, R.raw.notification);
 
-        this.fragment = fragment;
         intervals = false;
         numberOfIntervals = 1;
         mode = "HH/MM/SS";
         intervalArray = createIntervals(numberOfIntervals);
 
+        timerRunning = false;
 
+        this.small = small;
+        this.medium = medium;
+        this.big = big;
+
+        this.fragment = fragment;
         soundObject = new AlarmPlayer(context, soundID);
-        createTimer(timerInitialValue, timerCountdownInterval);
 
     }
 
@@ -44,7 +55,7 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 currentTimerValue = millisUntilFinished;
-                fragment.updateTimer(currentTimerValue);
+                TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
                 for (Long l : intervalArray) {
                     if (Math.abs(l - currentTimerValue) < 110 && intervals) {
                         random.playNotification();
@@ -74,7 +85,7 @@ public class Timer {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     currentTimerValue = millisUntilFinished;
-                    fragment.updateTimer(currentTimerValue);
+                    TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
                     for (Long l : intervalArray) {
                         if (Math.abs(l - currentTimerValue) < 110 && intervals) {
                             random.playNotification();
@@ -92,26 +103,6 @@ public class Timer {
             countDownTimerTimerObject.start();
         }
 
-    }
-
-    public HashMap<String, Object> millisToCommonTime(Long millis) {
-        HashMap<String, Object> timerInHoursMinutesSeconds = new HashMap<>();
-        if (mode.equals("HH/MM/SS")) {
-            int seconds = (int) (millis / 1000) % 60;
-            int minutes = (int) ((millis / (1000 * 60)) % 60);
-            int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
-            timerInHoursMinutesSeconds.put("Hours", hours);
-            timerInHoursMinutesSeconds.put("Minutes", minutes);
-            timerInHoursMinutesSeconds.put("Seconds", seconds);
-        } else if (mode.equals("DD/HH/MM")) {
-            int minutes = (int) ((millis / (1000 * 60)) % 60);
-            int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
-            int days = (int) (millis / (1000 * 60 * 60 * 24));
-            timerInHoursMinutesSeconds.put("Days", days);
-            timerInHoursMinutesSeconds.put("Hours", hours);
-            timerInHoursMinutesSeconds.put("Minutes", minutes);
-        }
-        return timerInHoursMinutesSeconds;
     }
 
     public void stopSound() {
@@ -152,6 +143,22 @@ public class Timer {
         return array;
     }
 
+    public long getTimerInitialValue() {
+        return timerInitialValue;
+    }
+
+    public void setTimerInitialValue(long timerInitialValue) {
+        this.timerInitialValue = timerInitialValue;
+    }
+
+    public int getTimerCountdownInterval() {
+        return timerCountdownInterval;
+    }
+
+    public void setTimerCountdownInterval(int timerCountdownInterval) {
+        this.timerCountdownInterval = timerCountdownInterval;
+    }
+
     public boolean isIntervals() {
         return intervals;
     }
@@ -175,5 +182,35 @@ public class Timer {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public boolean isTimerRunning() {
+        return timerRunning;
+    }
+
+    public void setTimerRunning(boolean timerRunning) {
+        this.timerRunning = timerRunning;
+    }
+
+    public String getTimerName() {
+        return timerName;
+    }
+
+    public void setTimerName(String timerName) {
+        this.timerName = timerName;
+    }
+
+    public long getCurrentTimerValue() {
+        return currentTimerValue;
+    }
+
+    public void setCurrentTimerValue(long currentTimerValue) {
+        this.currentTimerValue = currentTimerValue;
+    }
+
+    public void setViews(TextView small, TextView medium, TextView big) {
+        this.small = small;
+        this.medium = medium;
+        this.big = big;
     }
 }

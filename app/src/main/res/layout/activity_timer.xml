@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimerActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/mainTimerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linputNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/timerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.7"
+                    android:hint="@string/timer_s_name"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textSize="30sp"
+                    tools:ignore="LabelFor" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:contentDescription="@string/edit_text_indicator"
+                    android:src="@drawable/ic_baseline_edit_24" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/timeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/hoursEditView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:layout_weight="0.3"
+                    android:gravity="bottom|center_horizontal"
+                    android:hint="@string/hints"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:text="@string/hours_string"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/hoursIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.03"
+                    android:gravity="bottom|center"
+                    android:text="@string/separator1"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/minutesEditView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0.3"
+                    android:gravity="bottom|center_horizontal"
+                    android:hint="@string/hints"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:text="@string/minutes_string"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/minutesIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.03"
+                    android:gravity="bottom|center"
+                    android:text="@string/separator2"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/secondsEditView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="0.3"
+                    android:gravity="bottom|center_horizontal"
+                    android:hint="@string/hints"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:text="@string/seconds_string"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/secondsIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.03"
+                    android:gravity="bottom|center"
+                    android:text="@string/separator3"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mediaLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/showMedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_weight="1">
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:textSize="24sp"
+                    android:tint="@color/palette_yellow" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/configLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/enableIntervalsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/enableIntervalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/enable_notifications"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <CheckBox
+                        android:id="@+id/notificationsCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/numberOfIntervalsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NumberOfIntervalsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/number_of_intervals"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/inputIntervals"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="8dp"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/number_of_intervals_default"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timerFormatLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TimerFormat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/timer_format"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/modes_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:entries="@array/modes_array" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

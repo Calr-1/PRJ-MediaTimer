@@ -10,7 +10,7 @@
     tools:context=".ConfigureActivity">
 
     <TextView
-        android:id="@+id/enableIntevalText"
+        android:id="@+id/enableIntervalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -29,7 +29,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@+id/enableIntevalText"
+        app:layout_constraintStart_toEndOf="@+id/enableIntervalText"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -40,8 +40,8 @@
         android:text="@string/number_of_intervals"
         android:textColor="@color/palette_blue"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/enableIntevalText"
-        app:layout_constraintTop_toBottomOf="@+id/enableIntevalText" />
+        app:layout_constraintStart_toStartOf="@+id/enableIntervalText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntervalText" />
 
     <EditText
         android:id="@+id/inputIntervals"
@@ -55,7 +55,7 @@
         android:text="@string/number_of_intervals_default"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/NumberOfIntervalsText"
-        app:layout_constraintTop_toBottomOf="@+id/enableIntevalText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntervalText"
         tools:ignore="LabelFor" />
 
     <TextView

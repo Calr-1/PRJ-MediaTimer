@@ -27,4 +27,10 @@
     <string name="name_your_new_group">Name your new group</string>
     <string name="placeholder_desc">NO DESC</string>
     <string name="group_name">Group Name(N of timers)</string>
+    <string name="edit_text_indicator">edit text indicator</string>
+    <string name="timer_s_name">Timer Name</string>
+    <string name="separator1">H</string>
+    <string name="separator2">M</string>
+    <string name="separator3">S</string>
+    <string name="add_media">Add Media</string>
 </resources>
