@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+
 import static android.app.Activity.RESULT_OK;
 
 public class timerFragment extends Fragment {
@@ -26,6 +27,7 @@ public class timerFragment extends Fragment {
     private TextView hoursValue, minutesValue, secondsValue;
     private Timer timer;
     private ConstraintLayout layout;
+
     private boolean timerRunning, timerCreated;
     private long timerInitialValue;
     private int timerCountdownInterval;
@@ -35,7 +37,10 @@ public class timerFragment extends Fragment {
     private EditText et;
     private CheckBox cb;
 
-    private static final int configure = 1;
+    private static final int mediaTimer = 1;
+    private static final int configure = 2;
+
+    private long time, lastValue;
 
 
     @Override
@@ -71,6 +76,7 @@ public class timerFragment extends Fragment {
         et = getView().findViewById(R.id.inputIntervals);
         cb = getView().findViewById(R.id.notificationsCheckBox);
 
+
         playPauseButton.setOnClickListener(v -> {
             if (!timerCreated) {
                 startStopTimer();
@@ -79,7 +85,9 @@ public class timerFragment extends Fragment {
                 Log.d("TIMER initial value: ", String.valueOf(timerInitialValue));
                 timer.setTimerCountdownInterval(timerCountdownInterval);
                 timer.createTimer(timerInitialValue, timerCountdownInterval);
+
                 timer.startTimer();
+                timer.setTimerName(name);
                 Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
                 playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
 
@@ -93,6 +101,7 @@ public class timerFragment extends Fragment {
             intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
             startActivity(intent);
 
+
         });
 
         layout = getView().findViewById(R.id.frameLayout);
@@ -101,6 +110,7 @@ public class timerFragment extends Fragment {
             intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
             startActivityForResult(intent, configure);
         });
+
 
     }
 
@@ -126,6 +136,7 @@ public class timerFragment extends Fragment {
     }
 
 
+
     private void stopAlarm() {
         timer.stopSound();
     }
@@ -140,4 +151,54 @@ public class timerFragment extends Fragment {
             }
         }
     }
+
+                assert data != null;
+                assert data != null;
+                intervals = data.getBooleanExtra("intervals", false);
+                numberOfIntervals = data.getIntExtra("numberOfIntervals", 1);
+                mode = data.getStringExtra("mode");
+                name = data.getStringExtra("name");
+                time = data.getLongExtra("time", 0);
+                if (timer != null) {
+                    timer.setMode(mode);
+                    updateTimer(time);
+                }
+            }
+        }
+        if (requestCode == mediaTimer) {
+            if (resultCode == RESULT_OK) {
+                assert data != null;
+                intervals = data.getBooleanExtra("intervals", false);
+                numberOfIntervals = data.getIntExtra("numberOfIntervals", 1);
+                mode = data.getStringExtra("mode");
+                name = data.getStringExtra("name");
+                time = data.getLongExtra("time", 0);
+                updateTimer(time);
+                if (timer != null) {
+                    timer.setMode(mode);
+                    //updateTimer(time);
+                }
+                else{
+
+                }
+            }
+        }
+    }
+
+    public void startStopTimer() {
+        hoursValue.setEnabled(timerCreated);
+        minutesValue.setEnabled(timerCreated);
+        secondsValue.setEnabled(timerCreated);
+        timerRunning = !timerCreated;
+        timerCreated = !timerCreated;
+    }
+
+    private void stopAlarm() {
+        timer.stopSound();
+    }
+
+    public void setLastValue(long lastValue){
+        this.lastValue = lastValue;
+    }
+
 }

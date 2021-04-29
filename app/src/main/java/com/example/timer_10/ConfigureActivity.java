@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Serializable;
+
 public class ConfigureActivity extends AppCompatActivity {
     private boolean intervals;
     private int numberOfIntervals;
@@ -47,8 +49,8 @@ public class ConfigureActivity extends AppCompatActivity {
         cb.setChecked(timer.isIntervals());
         et.setText("" + timer.getNumberOfIntervals());
         ActionBar actionBar = getSupportActionBar();
-        Button bt1 = findViewById(R.id.saveButton);
-        bt1.setOnClickListener(v -> save());
+        //Button bt1 = findViewById(R.id.saveButton);
+        //bt1.setOnClickListener(v -> save());
         // showing the back button in action bar
         actionBar.setDisplayHomeAsUpEnabled(true);
         saved = false;
