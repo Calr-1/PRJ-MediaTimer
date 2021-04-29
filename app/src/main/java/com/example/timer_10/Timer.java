@@ -1,18 +1,20 @@
 package com.example.timer_10;
 
 import android.os.CountDownTimer;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Timer {
 
-    private long currentTimerValue, timerInitialValue;
+    private long currentTimerValue, timerInitialValue, lastValue;
     private final int timerCountdownInterval;
-    private final String timerName;
+    private String timerName;
     private CountDownTimer countDownTimerTimerObject;
-    private final AlarmPlayer soundObject, random;
-    private final timerFragment fragment;
+    private AlarmPlayer soundObject, random;
+    private timerFragment fragment;
 
     private boolean intervals;
     private int numberOfIntervals;
@@ -36,6 +38,16 @@ public class Timer {
         soundObject = new AlarmPlayer(context, soundID);
         createTimer(timerInitialValue, timerCountdownInterval);
 
+        lastValue = 0;
+
+    }
+
+    public String getTimerName() {
+        return timerName;
+    }
+
+    public void setTimerName(String timerName) {
+        this.timerName = timerName;
     }
 
     public void createTimer(long timerInitialValue, int timerCountdownInterval) {
@@ -44,6 +56,7 @@ public class Timer {
             @Override
             public void onTick(long millisUntilFinished) {
                 currentTimerValue = millisUntilFinished;
+                lastValue = millisUntilFinished;
                 fragment.updateTimer(currentTimerValue);
                 for (Long l : intervalArray) {
                     if (Math.abs(l - currentTimerValue) < 110 && intervals) {
@@ -67,13 +80,15 @@ public class Timer {
     }
 
     public void pauseUnpauseTimer(boolean isPlaying) {
-        if (isPlaying)
+        if (isPlaying) {
+            fragment.setLastValue(lastValue);
             countDownTimerTimerObject.cancel();
-        else {
+        } else {
             countDownTimerTimerObject = new CountDownTimer(currentTimerValue, timerCountdownInterval) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     currentTimerValue = millisUntilFinished;
+                    lastValue = millisUntilFinished;
                     fragment.updateTimer(currentTimerValue);
                     for (Long l : intervalArray) {
                         if (Math.abs(l - currentTimerValue) < 110 && intervals) {
@@ -94,7 +109,7 @@ public class Timer {
 
     }
 
-    public HashMap<String, Object> millisToCommonTime(Long millis) {
+    public static HashMap<String, Object> millisToCommonTime(Long millis, String mode) {
         HashMap<String, Object> timerInHoursMinutesSeconds = new HashMap<>();
         if (mode.equals("HH/MM/SS")) {
             int seconds = (int) (millis / 1000) % 60;
@@ -119,7 +134,8 @@ public class Timer {
     }
 
     public boolean canStopSound() {
-        return soundObject.isPlaying();
+        if (soundObject != null) return soundObject.isPlaying();
+        return false;
     }
 
     private ArrayList<Long> createIntervals(int numberOfIntervals) {

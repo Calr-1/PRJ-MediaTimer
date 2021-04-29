@@ -9,12 +9,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
@@ -22,20 +26,25 @@ import static android.app.Activity.RESULT_OK;
 public class timerFragment extends Fragment {
 
     private ImageButton playPauseButton, stopTimerButton, optionsButton;
-    private EditText hoursValue, minutesValue, secondsValue;
+    private TextView hoursValue, minutesValue, secondsValue;
+    private ConstraintLayout layout;
     private Timer timer;
+    private TimerActivity timerActivity;
     private boolean timerRunning, timerCreated;
     private long timerInitialValue;
     private int timerCountdownInterval;
 
     private boolean intervals;
     private int numberOfIntervals;
-    private String mode;
+    private String mode, name;
     private Spinner sp;
     private EditText et;
     private CheckBox cb;
 
-    private static final int configure = 1;
+    private static final int mediaTimer = 1;
+    private static final int configure = 2;
+
+    private long time, lastValue;
 
 
     @Override
@@ -68,16 +77,20 @@ public class timerFragment extends Fragment {
         intervals = false;
         numberOfIntervals = 1;
         mode = "HH/MM/SS";
+        name = "";
+
+        lastValue = 0;
 
         playPauseButton.setOnClickListener(v -> {
             if (!timerCreated) {
                 startStopTimer();
-                timerInitialValue = getTimerValue();
+                timerInitialValue = time;
                 timer = new Timer(timerInitialValue, timerCountdownInterval, "Default name", getActivity(), R.raw.sound, this);
                 timer.setIntervals(intervals);
                 timer.setMode(mode);
                 timer.setNumberOfIntervals(numberOfIntervals);
                 timer.startTimer();
+                timer.setTimerName(name);
                 Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -93,12 +106,31 @@ public class timerFragment extends Fragment {
         });
         optionsButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ConfigureActivity.class);
+            time = getTimerValue();
             intent.putExtra("intervals", intervals);
             intent.putExtra("numberOfIntervals", numberOfIntervals);
             intent.putExtra("mode", mode);
+            intent.putExtra("time",time);
+            intent.putExtra("name",name);
+            intent.putExtra("last", lastValue);
             startActivityForResult(intent, configure);
 
         });
+
+        layout = getView().findViewById(R.id.frameLayout);
+        layout.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), TimerActivity.class);
+            time = getTimerValue();
+            intent.putExtra("intervals", intervals);
+            intent.putExtra("numberOfIntervals", numberOfIntervals);
+            intent.putExtra("mode", mode);
+            intent.putExtra("time",time);
+            intent.putExtra("paused", timerRunning);
+            intent.putExtra("last", lastValue);
+            intent.putExtra("name",name);
+            startActivityForResult(intent, mediaTimer);
+        });
+
 
     }
 
@@ -136,16 +168,22 @@ public class timerFragment extends Fragment {
     }
 
     public void updateTimer(long timerLeft) {
-        HashMap<String, Object> timeLeft = timer.millisToCommonTime(timerLeft);
+        HashMap<String, Object> timeLeft = Timer.millisToCommonTime(timerLeft, mode);
 
         if (mode.equals("HH/MM/SS")) {
             secondsValue.setText(String.valueOf(timeLeft.get("Seconds")));
             minutesValue.setText(String.valueOf(timeLeft.get("Minutes")));
             hoursValue.setText(String.valueOf(timeLeft.get("Hours")));
+            TimerActivity.hoursView.setText(String.valueOf(timeLeft.get("Hours")));
+            TimerActivity.minutesView.setText(String.valueOf(timeLeft.get("Minutes")));
+            TimerActivity.secondsView.setText(String.valueOf(timeLeft.get("Seconds")));
         } else {
             secondsValue.setText(String.valueOf(timeLeft.get("Minutes")));
             minutesValue.setText(String.valueOf(timeLeft.get("Hours")));
             hoursValue.setText(String.valueOf(timeLeft.get("Days")));
+            TimerActivity.hoursView.setText(String.valueOf(timeLeft.get("Days")));
+            TimerActivity.minutesView.setText(String.valueOf(timeLeft.get("Hours")));
+            TimerActivity.secondsView.setText(String.valueOf(timeLeft.get("Minutes")));
         }
 
     }
@@ -157,11 +195,33 @@ public class timerFragment extends Fragment {
         if (requestCode == configure) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
+                assert data != null;
                 intervals = data.getBooleanExtra("intervals", false);
                 numberOfIntervals = data.getIntExtra("numberOfIntervals", 1);
                 mode = data.getStringExtra("mode");
+                name = data.getStringExtra("name");
+                time = data.getLongExtra("time", 0);
                 if (timer != null) {
                     timer.setMode(mode);
+                    updateTimer(time);
+                }
+            }
+        }
+        if (requestCode == mediaTimer) {
+            if (resultCode == RESULT_OK) {
+                assert data != null;
+                intervals = data.getBooleanExtra("intervals", false);
+                numberOfIntervals = data.getIntExtra("numberOfIntervals", 1);
+                mode = data.getStringExtra("mode");
+                name = data.getStringExtra("name");
+                time = data.getLongExtra("time", 0);
+                updateTimer(time);
+                if (timer != null) {
+                    timer.setMode(mode);
+                    //updateTimer(time);
+                }
+                else{
+
                 }
             }
         }
@@ -177,6 +237,10 @@ public class timerFragment extends Fragment {
 
     private void stopAlarm() {
         timer.stopSound();
+    }
+
+    public void setLastValue(long lastValue){
+        this.lastValue = lastValue;
     }
 
 }
