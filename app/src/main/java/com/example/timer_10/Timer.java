@@ -47,16 +47,6 @@ public class Timer {
         this.fragment = fragment;
         soundObject = new AlarmPlayer(context, soundID);
 
-        lastValue = 0;
-
-    }
-
-    public String getTimerName() {
-        return timerName;
-    }
-
-    public void setTimerName(String timerName) {
-        this.timerName = timerName;
     }
 
     public void createTimer(long timerInitialValue, int timerCountdownInterval) {
@@ -64,7 +54,8 @@ public class Timer {
         countDownTimerTimerObject = new CountDownTimer(timerInitialValue, timerCountdownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
-                currentTimerValue = millisUntilFinished;                TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
+                currentTimerValue = millisUntilFinished;
+                TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
                 for (Long l : intervalArray) {
                     if (Math.abs(l - currentTimerValue) < 110 && intervals) {
                         random.playNotification();
@@ -87,15 +78,13 @@ public class Timer {
     }
 
     public void pauseUnpauseTimer(boolean isPlaying) {
-        if (isPlaying) {
-            fragment.setLastValue(lastValue);
+        if (isPlaying)
             countDownTimerTimerObject.cancel();
-        } else {
+        else {
             countDownTimerTimerObject = new CountDownTimer(currentTimerValue, timerCountdownInterval) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     currentTimerValue = millisUntilFinished;
-
                     TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
                     for (Long l : intervalArray) {
                         if (Math.abs(l - currentTimerValue) < 110 && intervals) {
@@ -121,8 +110,7 @@ public class Timer {
     }
 
     public boolean canStopSound() {
-        if (soundObject != null) return soundObject.isPlaying();
-        return false;
+        return soundObject.isPlaying();
     }
 
     private ArrayList<Long> createIntervals(int numberOfIntervals) {

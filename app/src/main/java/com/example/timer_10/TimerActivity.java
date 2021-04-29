@@ -1,7 +1,5 @@
 package com.example.timer_10;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +16,6 @@ public class TimerActivity extends AppCompatActivity {
 
     private boolean intervals, timerRunning;
     private int numberOfIntervals;
-
     private long time;
     private String mode, name;
     private CheckBox cb;
@@ -31,6 +28,8 @@ public class TimerActivity extends AppCompatActivity {
     public EditText nameView;
     private TextView sp1, sp2, sp3;
 
+    private Timer timer;
+    private TimersWrapper wrapper;
 
 
     @Override
@@ -47,7 +46,8 @@ public class TimerActivity extends AppCompatActivity {
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
-
+                time = wrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
+                mode = selectedItem;
                 if (selectedItem.equals("HH/MM/SS")) {
                     sp1.setText("H");
                     sp2.setText("M");
@@ -57,6 +57,10 @@ public class TimerActivity extends AppCompatActivity {
                     sp2.setText("H");
                     sp3.setText("M");
                 }
+                timer.setMode(mode);
+                TimersWrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
+
+
             } // to close the onItemSelected
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -86,7 +90,6 @@ public class TimerActivity extends AppCompatActivity {
         timerRunning = timer.isTimerRunning();
         if (!timerRunning) {
             wrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
-
         }
         sp.setSelection(getIndex(sp, mode));
         cb.setChecked(intervals);
@@ -109,11 +112,29 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    /*public void updateViews(long time, String mode) {
+        HashMap<String, Object> timeLeft = TimersWrapper.millisToCommonTime(time, mode);
+
+        if (mode.equals("HH/MM/SS")) {
+            hoursView.setText(String.valueOf(timeLeft.get("Hours")));
+            minutesView.setText(String.valueOf(timeLeft.get("Minutes")));
+            secondsView.setText(String.valueOf(timeLeft.get("Seconds")));
+            sp1.setText("H");
+            sp2.setText("M");
+            sp3.setText("S");
+        } else {
+            hoursView.setText(String.valueOf(timeLeft.get("Days")));
+            minutesView.setText(String.valueOf(timeLeft.get("Hours")));
+            secondsView.setText(String.valueOf(timeLeft.get("Minutes")));
+            sp1.setText("D");
+            sp2.setText("H");
+            sp3.setText("M");
+        }
+    }*/
 
     public void onBackPressed() {
         save();
         setResult(RESULT_OK);
-
         finish();
 
     }
@@ -132,7 +153,6 @@ public class TimerActivity extends AppCompatActivity {
         timer.setMode(mode);
         timer.setTimerName(name);
         timer.setCurrentTimerValue(time);
-
 
     }
 

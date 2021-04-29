@@ -58,6 +58,7 @@ public class timerFragment extends Fragment {
         wrapper.addIndividualTimerToList(timer);
 
 
+
         playPauseButton = getView().findViewById(R.id.play_and_pause_button);
         stopTimerButton = getView().findViewById(R.id.stop_playing_button);
         optionsButton = getView().findViewById(R.id.timer_options_button);
@@ -89,7 +90,6 @@ public class timerFragment extends Fragment {
         });
 
         optionsButton.setOnClickListener(v -> {
-            Log.d("teste", "!");
             Intent intent = new Intent(getActivity(), ConfigureActivity.class);
             intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
             startActivity(intent);
