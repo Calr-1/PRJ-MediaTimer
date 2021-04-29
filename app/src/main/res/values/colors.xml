@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#802222</color>
     <color name="blossom_color">#C6BDBD</color>
-    <color name="palette_blue">#02475E</color>
+    <color name="palette_blue">#132c33</color>
     <color name="palette_grey">#687980</color>
-    <color name="palette_dark_pink">#F3BDA1</color>
-    <color name="palette_yellow">#FEFECC</color>
+    <color name="palette_dark_pink">#d8e3e7</color>
+    <color name="palette_yellow">#51c4d3</color>
 </resources>

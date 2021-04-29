@@ -9,7 +9,18 @@
     android:background="@drawable/round_corners_no_border"
     tools:context=".ConfigureActivity">
 
-    <!--<ScrollView
+    <TextView
+        android:id="@+id/enableIntervalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/enable_notifications"
+        android:textColor="@color/palette_blue"
+        android:textSize="20sp"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,6 +28,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+    <CheckBox
+        android:id="@+id/notificationsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toEndOf="@+id/enableIntervalText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/NumberOfIntervalsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/number_of_intervals"
+        android:textColor="@color/palette_blue"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/enableIntervalText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntervalText" />
+
+    <EditText
+        android:id="@+id/inputIntervals"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:text="@string/number_of_intervals_default"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/NumberOfIntervalsText"
+        app:layout_constraintTop_toBottomOf="@+id/enableIntervalText"
+        tools:ignore="LabelFor" />
         <LinearLayout
             android:id="@+id/scrollViewLayout"
             android:layout_width="match_parent"
@@ -114,6 +160,6 @@
                 app:backgroundTint="@color/palette_grey" />
 
         </LinearLayout>
-    </ScrollView>-->
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

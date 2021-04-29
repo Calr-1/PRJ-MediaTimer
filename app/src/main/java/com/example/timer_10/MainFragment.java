@@ -10,13 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.ArrayList;
-
 
 public class MainFragment extends Fragment {
-    private Button addButton;
 
-    private ArrayList<timerFragment> fragmentsTimer;
+    private Button addButton;
+    private TimersWrapper wrapper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,20 +25,18 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        fragmentsTimer = new ArrayList<>();
+        wrapper = TimersWrapper.getInstance();
         addButton = getView().findViewById(R.id.addButton);
         addButton.setOnClickListener(v -> addFragment());
-
     }
 
     private void addFragment() {
-
 
         timerFragment frag = new timerFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();
-        fragmentsTimer.add(frag);
-        System.out.println("Confirm x123");
+        wrapper.addTimerFragment(frag);
+
     }
 }
