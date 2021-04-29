@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <LinearLayout
                 android:id="@+id/linputNameLayout"
                 android:layout_width="match_parent"
@@ -190,6 +191,7 @@
 
                     <TextView
                         android:id="@+id/enableIntervalText"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
