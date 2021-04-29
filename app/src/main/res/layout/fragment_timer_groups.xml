@@ -22,6 +22,7 @@
         android:id="@+id/list_of_groups_vertical_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_margin="5dp"
         android:background="@drawable/round_corners_no_border"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +40,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/addGroupName"
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -50,35 +51,37 @@
                 android:textSize="24sp" />
 
             <ImageButton
-                android:id="@+id/addGroupButton"
+                android:id="@+id/imageButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="0.8"
                 android:background="@drawable/button_style"
-                android:contentDescription="@string/placeholder_desc"
                 android:minWidth="50dp"
                 android:minHeight="50dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_baseline_add_24"
-                android:tint="@color/palette_yellow" />
+                android:tint="@color/palette_yellow"
+                android:contentDescription="@string/placeholder_desc" />
 
         </LinearLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/groupsLinearLayout"
+            <TextView
+                android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:orientation="vertical">
-
-            </LinearLayout>
-        </ScrollView>
+                android:layout_margin="5dp"
+                android:background="@drawable/top_round_corners_no_border"
+                android:text="@string/group_name"
+                android:textColor="@color/palette_blue"
+                android:textSize="30sp" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

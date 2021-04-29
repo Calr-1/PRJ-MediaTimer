@@ -28,6 +28,7 @@ public class MyAdapter extends FragmentPagerAdapter {
             case 1:
                 TimerGroupsFragment timerGroupFrag = new TimerGroupsFragment();
                 return timerGroupFrag;
+
             default:
                 return null;
         }

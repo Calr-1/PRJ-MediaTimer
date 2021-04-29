@@ -18,8 +18,7 @@
             android:id="@+id/mainTimerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/linputNameLayout"
@@ -168,9 +167,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1"
-                    android:textSize="24sp"
-                    android:tint="@color/palette_yellow" />
-
+                    android:text="@string/add_media"
+                    android:textSize="24sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -190,8 +188,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/enableIntervalText"
-
+                        android:id="@+id/enableIntevalText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
