@@ -35,8 +35,25 @@ public class timerFragment extends Fragment {
     private EditText et;
     private CheckBox cb;
 
+    private int typeId;
+    private TimerGroup timerGroup;
+
     private static final int configure = 1;
 
+    public timerFragment(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public timerFragment(int typeId, TimerGroup timerGroup) {
+        this.typeId = typeId;
+        this.timerGroup = timerGroup;
+    }
+
+    public timerFragment(int typeId, TimerGroup timerGroup, Timer timer) {
+        this.typeId = typeId;
+        this.timerGroup = timerGroup;
+        this.timer = timer;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,9 +71,13 @@ public class timerFragment extends Fragment {
         hoursValue = getView().findViewById(R.id.hoursEditView);
         minutesValue = getView().findViewById(R.id.minutesEditView);
         secondsValue = getView().findViewById(R.id.secondsEditView);
-        timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
-        wrapper.addIndividualTimerToList(timer);
-
+        if (typeId == 1) {
+            timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            wrapper.addIndividualTimerToList(timer);
+        } else if (typeId == 2) {
+            timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timerGroup.addTimer(timer);
+        }
 
 
         playPauseButton = getView().findViewById(R.id.play_and_pause_button);
@@ -71,49 +92,72 @@ public class timerFragment extends Fragment {
         sp = getView().findViewById(R.id.modes_spinner);
         et = getView().findViewById(R.id.inputIntervals);
         cb = getView().findViewById(R.id.notificationsCheckBox);
+        if (typeId == 3) {
+            timerRunning = timer.isTimerRunning();
+            timerInitialValue = timer.getTimerInitialValue();
+            timerCountdownInterval = timer.getTimerCountdownInterval();
+            timerCreated = timer.isTimerCreated();
+        }
 
         playPauseButton.setOnClickListener(v -> {
             if (!timerCreated) {
-                startStopTimer();
                 timerInitialValue = wrapper.getTimerValue(timer.getMode(), secondsValue, minutesValue, hoursValue);
-                timer.setTimerInitialValue(timerInitialValue);
-                Log.d("TIMER initial value: ", String.valueOf(timerInitialValue));
-                timer.setTimerCountdownInterval(timerCountdownInterval);
-                timer.createTimer(timerInitialValue, timerCountdownInterval);
-                timer.startTimer();
-                Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
-                playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
+                if (timerInitialValue != 0) {
+                    startStopTimer();
+                    timer.setTimerInitialValue(timerInitialValue);
+                    Log.d("TIMER initial value: ", String.valueOf(timerInitialValue));
+                    timer.setTimerCountdownInterval(timerCountdownInterval);
+                    timer.createTimer(timerInitialValue, timerCountdownInterval);
+                    timer.startTimer();
+                    Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Timer can't start!", Toast.LENGTH_SHORT).show();
+
+                }
 
             } else {
                 pauseUnpauseTimer();
             }
         });
 
-        optionsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ConfigureActivity.class);
-            intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
-            startActivity(intent);
+        stopTimerButton.setOnClickListener(v -> {
+            if (timer.canStopSound()) {
+                stopAlarm();
+                Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
+                playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
+            }
         });
-
         layout = getView().findViewById(R.id.frameLayout);
         layout.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TimerActivity.class);
-            intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
+
+            if (typeId == 2 || typeId == 3) {
+                intent.putExtra("typeID", 2);
+                intent.putExtra("indexGroup", wrapper.getIndexOfGroupOfTimers(timerGroup));
+                intent.putExtra("indexTimer", timerGroup.getIndexOfTimer(timer));
+
+            } else if (typeId == 1) {
+                intent.putExtra("typeID", 1);
+                intent.putExtra("indexTimer", wrapper.getIndexOfIndividualTimer(timer));
+            }
             startActivityForResult(intent, configure);
         });
-
+        timer.setViews(secondsValue, minutesValue, hoursValue);
+        TimersWrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
     }
 
     private void pauseUnpauseTimer() {
+        Log.d("TESTE", "PAUSE");
         if (timerRunning) {
-            playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-        } else {
             playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
+        } else {
+            playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
         }
 
         timer.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;
+        timer.setTimerRunning(timerRunning);
 
 
     }
@@ -124,11 +168,26 @@ public class timerFragment extends Fragment {
         secondsValue.setEnabled(timerCreated);
         timerRunning = !timerCreated;
         timerCreated = !timerCreated;
+        timer.setTimerCreated(timerCreated);
+        timer.setTimerRunning(timerRunning);
+
     }
 
 
     private void stopAlarm() {
         timer.stopSound();
+    }
+
+    public TimerGroup getTimerGroup() {
+        return timerGroup;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void start() {
+        playPauseButton.performClick();
     }
 
     @Override
@@ -137,7 +196,7 @@ public class timerFragment extends Fragment {
         if (requestCode == configure) {
             if (resultCode == RESULT_OK) {
                 timer.setViews(secondsValue, minutesValue, hoursValue);
-                wrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
+                TimersWrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
             }
         }
     }

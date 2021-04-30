@@ -1,5 +1,6 @@
 package com.example.timer_10;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class TimerGroupsFragment extends Fragment implements Serializable {
@@ -57,8 +60,8 @@ public class TimerGroupsFragment extends Fragment implements Serializable {
         String groupName = nameTv.getText().toString();
         if (!groupName.isEmpty()) {
             TimerGroup group = new TimerGroup(groupName);
-            addGroupToUi(group);
             wrapper.addGroupOfTimers(group);
+            addGroupToUi(group);
             return true;
         }
         return false;
@@ -81,9 +84,34 @@ public class TimerGroupsFragment extends Fragment implements Serializable {
         tv.setBackground(
                 getResources().getDrawable(R.drawable.top_round_corners_no_border));
         tv.setTextColor(ContextCompat.getColor(getView().getContext(), R.color.palette_blue));
+        tv.setOnClickListener(v -> {
+            int index = wrapper.getIndexOfGroupOfTimers(group);
+            Intent intent = new Intent(getActivity(), group.class);
+            intent.putExtra("groupIndex", index);
+            startActivityForResult(intent, 1);
+
+        });
         groupLayout.addView(tv);
 
 
+    }
+
+    private void updateName(int index) {
+        LinearLayout groupLayout = getView().findViewById(R.id.groupsLinearLayout);
+        TextView tv = (TextView) groupLayout.getChildAt(index);
+        tv.setText(wrapper.getSpecificGroupOfTimersByIndex(index).getName() + " - (" + wrapper.getSpecificGroupOfTimersByIndex(index).getNumberOfTimers() + ")");
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                updateName(data.getIntExtra("groupIndex", -1));
+
+            }
+        }
     }
 
 

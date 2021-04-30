@@ -30,6 +30,7 @@ public class TimerActivity extends AppCompatActivity {
 
     private Timer timer;
     private TimersWrapper wrapper;
+    private int typeID;
 
 
     @Override
@@ -76,10 +77,19 @@ public class TimerActivity extends AppCompatActivity {
         sp1 = findViewById(R.id.hoursIndicator);
         sp2 = findViewById(R.id.minutesIndicator);
         sp3 = findViewById(R.id.secondsIndicator);
-
-        int indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
         wrapper = TimersWrapper.getInstance();
-        timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
+        typeID = getIntent().getIntExtra("typeID", -1);
+
+        if (typeID == 2 || typeID == 3) {
+            int indexGroup = getIntent().getIntExtra("indexGroup", -1);
+            int indexTimer = getIntent().getIntExtra("indexTimer", -1);
+            TimerGroup group = wrapper.getSpecificGroupOfTimersByIndex(indexGroup);
+            timer = group.getTimerByIndex(indexTimer);
+        } else if (typeID == 1) {
+            int index = getIntent().getIntExtra("indexTimer", -1);
+            timer = wrapper.getSpecificIndividualTimerByIndex(index);
+
+        }
 
         timer.setViews(secondsView, minutesView, hoursView);
         intervals = timer.isIntervals();
@@ -112,33 +122,12 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    /*public void updateViews(long time, String mode) {
-        HashMap<String, Object> timeLeft = TimersWrapper.millisToCommonTime(time, mode);
-
-        if (mode.equals("HH/MM/SS")) {
-            hoursView.setText(String.valueOf(timeLeft.get("Hours")));
-            minutesView.setText(String.valueOf(timeLeft.get("Minutes")));
-            secondsView.setText(String.valueOf(timeLeft.get("Seconds")));
-            sp1.setText("H");
-            sp2.setText("M");
-            sp3.setText("S");
-        } else {
-            hoursView.setText(String.valueOf(timeLeft.get("Days")));
-            minutesView.setText(String.valueOf(timeLeft.get("Hours")));
-            secondsView.setText(String.valueOf(timeLeft.get("Minutes")));
-            sp1.setText("D");
-            sp2.setText("H");
-            sp3.setText("M");
-        }
-    }*/
-
     public void onBackPressed() {
         save();
         setResult(RESULT_OK);
         finish();
 
     }
-
 
 
     private void save() {
