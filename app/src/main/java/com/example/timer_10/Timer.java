@@ -20,6 +20,9 @@ public class Timer {
 
     private boolean timerRunning;
 
+    private boolean timerCreated;
+
+
     private TextView small;
     private TextView medium;
     private TextView big;
@@ -39,6 +42,7 @@ public class Timer {
         intervalArray = createIntervals(numberOfIntervals);
 
         timerRunning = false;
+        timerCreated = false;
 
         this.small = small;
         this.medium = medium;
@@ -67,6 +71,12 @@ public class Timer {
             public void onFinish() {
                 fragment.startStopTimer();
                 soundObject.startSoundObject();
+
+                if (fragment.getTypeId() == 2 || fragment.getTypeId() == 3) {
+
+                    fragment.getTimerGroup().runNextTimer();
+                }
+                currentTimerValue = 0;
 
             }
         };
@@ -97,7 +107,10 @@ public class Timer {
                 public void onFinish() {
                     fragment.startStopTimer();
                     soundObject.startSoundObject();
-
+                    if (fragment.getTypeId() == 2 || fragment.getTypeId() == 3) {
+                        fragment.getTimerGroup().runNextTimer();
+                    }
+                    currentTimerValue = 0;
                 }
             };
             countDownTimerTimerObject.start();
@@ -212,5 +225,17 @@ public class Timer {
         this.small = small;
         this.medium = medium;
         this.big = big;
+    }
+
+    public timerFragment getFragment() {
+        return fragment;
+    }
+
+    public boolean isTimerCreated() {
+        return timerCreated;
+    }
+
+    public void setTimerCreated(boolean timerCreated) {
+        this.timerCreated = timerCreated;
     }
 }

@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timer_10">
-        <activity android:name=".TimerActivity"></activity>
+        <activity android:name=".group"></activity>
+        <activity android:name=".TimerActivity" />
         <activity android:name=".ConfigureActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

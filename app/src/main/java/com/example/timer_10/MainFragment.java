@@ -32,7 +32,7 @@ public class MainFragment extends Fragment {
 
     private void addFragment() {
 
-        timerFragment frag = new timerFragment();
+        timerFragment frag = new timerFragment(1);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();

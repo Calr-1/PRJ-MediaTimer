@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Singleton class that contains all the timers created
+ * Singleton class that contains all the timers created,
  * Serializable to facilitate saving user data
  */
 public class TimersWrapper implements Serializable {
@@ -202,16 +202,16 @@ public class TimersWrapper implements Serializable {
     /**
      * Gets a specific individual timer from the array given an index
      *
-     * @param index Index of the timer wanted
+     * @param index Index of the wanted timer
      */
     public Timer getSpecificIndividualTimerByIndex(int index) {
         return individualTimerList.get(index);
     }
 
     /**
-     * Gets the index of the wanted individual timer from the array
+     * Gets the index of the given individual timer from the array
      *
-     * @param timer Index of timer wanted
+     * @param timer Index of wanted timer
      */
     public int getIndexOfIndividualTimer(Timer timer) {
         return individualTimerList.indexOf(timer);
@@ -220,16 +220,16 @@ public class TimersWrapper implements Serializable {
     /**
      * Gets a specific group of timers from the array given an index
      *
-     * @param index Index of the timer wanted
+     * @param index Index of the wanted timer
      */
     public TimerGroup getSpecificGroupOfTimersByIndex(int index) {
         return groupsOfTimers.get(index);
     }
 
     /**
-     * Gets the index of the wanted group of timers from the array
+     * Gets the index of the given group of timers from the array
      *
-     * @param group Index of group wanted
+     * @param group Index of wanted group
      */
     public int getIndexOfGroupOfTimers(TimerGroup group) {
         return groupsOfTimers.indexOf(group);
@@ -238,16 +238,16 @@ public class TimersWrapper implements Serializable {
     /**
      * Gets a timer fragment from the array given an index
      *
-     * @param index Index of the timer wanted
+     * @param index Index of the wanted timer
      */
     public Fragment getTimerFragmentByIndex(int index) {
         return timerFragments.get(index);
     }
 
     /**
-     * Gets the index of the wanted timer fragment from the array
+     * Gets the index of the given timer fragment from the array
      *
-     * @param fragment Index of timer wanted
+     * @param fragment Index of wanted timer
      */
     public int getIndexOfTimerFragment(Fragment fragment) {
         return timerFragments.indexOf(fragment);
