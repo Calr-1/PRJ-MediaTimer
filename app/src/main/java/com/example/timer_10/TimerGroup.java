@@ -4,16 +4,24 @@ import java.util.ArrayList;
 
 public class TimerGroup {
 
+
     private ArrayList<Timer> timerArray;
     private ArrayList<timerFragment> timerFragment;
+    private ArrayList<TimerGroup> timerGroupArray;
+    private ArrayList<timer_group> timerGroupFragment;
+
 
     private String name;
     private boolean runSequential;
     private int currentlyRunning;
+    private TimersWrapper wrapper;
 
     public TimerGroup(String name) {
+        wrapper = TimersWrapper.getInstance();
         timerArray = new ArrayList<Timer>();
         timerFragment = new ArrayList<timerFragment>();
+        timerGroupArray = new ArrayList<TimerGroup>();
+        timerGroupFragment = new ArrayList<timer_group>();
 
         this.name = name;
         runSequential = true;
@@ -23,6 +31,12 @@ public class TimerGroup {
     public void addTimer(Timer timer) {
 
         timerArray.add(timer);
+    }
+
+    public void addTimerGroup(TimerGroup timer) {
+
+        timerGroupArray.add(timer);
+        wrapper.addGroupOfTimers(timer);
     }
 
     public boolean removeTimer(Timer timer) {
@@ -46,8 +60,17 @@ public class TimerGroup {
         return timerArray.size();
     }
 
+    public int getNumberOfGroups() {
+        return timerGroupArray.size();
+    }
+
+
     public Timer getTimerByIndex(int index) {
         return timerArray.get(index);
+    }
+
+    public TimerGroup getGroupByIndex(int index) {
+        return timerGroupArray.get(index);
     }
 
 
@@ -62,6 +85,11 @@ public class TimerGroup {
     public void addTimerFragment(timerFragment fragment) {
         this.timerFragment.add(fragment);
     }
+
+    public void addTimerGroupFragment(timer_group fragment) {
+        this.timerGroupFragment.add(fragment);
+    }
+
 
     public int getIndexOfTimer(Timer timer) {
         return timerArray.indexOf(timer);
