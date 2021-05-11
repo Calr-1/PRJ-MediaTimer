@@ -71,6 +71,7 @@ public class timerFragment extends Fragment {
         hoursValue = getView().findViewById(R.id.hoursEditView);
         minutesValue = getView().findViewById(R.id.minutesEditView);
         secondsValue = getView().findViewById(R.id.secondsEditView);
+
         if (typeId == 1) {
             timer = new Timer(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
             wrapper.addIndividualTimerToList(timer);
