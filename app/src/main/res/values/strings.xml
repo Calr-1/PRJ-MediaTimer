@@ -37,4 +37,5 @@
     <string name="create_group_options">Create group</string>
     <string name="give_a_name">Give a name</string>
     <string name="group_name_hint">Group Name</string>
+    <string name="change_theme">Change Theme</string>
 </resources>

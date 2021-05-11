@@ -99,7 +99,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        style="@style/ButtonStyle"
         android:id="@+id/play_and_pause_group_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -114,7 +113,6 @@
 
 
     <ImageButton
-        style="@style/ButtonStyle"
         android:id="@+id/stop_playing_group_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -130,7 +128,6 @@
 
 
     <ImageButton
-        style="@style/ButtonStyle"
         android:id="@+id/timer_options_group_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

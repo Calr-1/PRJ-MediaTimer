@@ -1,7 +1,11 @@
 package com.example.timer_10;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +17,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences, app_preferences;
+    SharedPreferences.Editor editor;
+
+
+    boolean appColor;
+
     private ImageButton addButton;
     private TimersWrapper wrapper;
+    private boolean currentTheme;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        appColor = app_preferences.getBoolean("color", false);
+        if (!appColor) {
+            setTheme(R.style.Theme_Timer_10);
+        } else if (appColor) {
+            setTheme(R.style.Theme_ORANGE_THEME);
+        }
         setContentView(R.layout.activity_main);
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
         wrapper = TimersWrapper.getInstance();
         addButton = findViewById(R.id.addButton);
         registerForContextMenu(addButton);
@@ -47,6 +67,30 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.change_theme_option:
+                editor.putBoolean("color", !appColor);
+                editor.commit();
+
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

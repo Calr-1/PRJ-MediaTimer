@@ -9,13 +9,23 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#802222</color>
 
-    <color name="primaryColor">#132c33</color>
-    <color name="primaryColorVariant">#30545e</color>
-    <color name="primaryColorLighter">#687980</color>
-    <color name="primaryColorLightest">#d8e3e7</color>
+    <!-- COLORS FOR BLUE/GREY THEME-->
+    <color name="primaryColorBlueGrey">#132c33</color>
+    <color name="primaryColorVariantBlueGrey">#30545e</color>
+    <color name="primaryColorLighterBlueGrey">#687980</color>
+    <color name="primaryColorLightestBlueGrey">#d8e3e7</color>
 
-    <color name="onPrimaryColor">#ffffff</color>
-    <color name="onPrimaryLightestColor">#132c33</color>
+    <color name="onPrimaryColorBlueGrey">#ffffff</color>
+    <color name="onPrimaryLightestColorBlueGrey">#132c33</color>
+
+    <!-- COLORS FOR ORANGE THEME-->
+    <color name="primaryColorOrange">#f4501e</color>
+    <color name="primaryColorVariantOrange">#ff5622</color>
+    <color name="primaryColorLighterOrange">#ff6f43</color>
+    <color name="primaryColorLightestOrange">#ffccbc</color>
+
+    <color name="onPrimaryColorOrange">#ffffff</color>
+    <color name="onPrimaryLightestColorOrange">#f4501e</color>
 
 
 </resources>
