@@ -11,8 +11,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/mainTimerLayout"
@@ -32,7 +34,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/timerName"
+                    android:id="@+id/groupName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -196,7 +198,6 @@
                         android:layout_margin="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/enable_notifications"
-                        android:textColor="@color/palette_blue"
                         android:textSize="20sp" />
 
                     <CheckBox
@@ -221,7 +222,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="10dp"
                         android:text="@string/number_of_intervals"
-                        android:textColor="@color/palette_blue"
                         android:textSize="20sp" />
 
                     <EditText
@@ -250,7 +250,6 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="10dp"
                         android:text="@string/timer_format"
-                        android:textColor="@color/palette_blue"
                         android:textSize="20sp" />
 
                     <Spinner

@@ -72,17 +72,20 @@ public class timerFragment extends Fragment {
         minutesValue = getView().findViewById(R.id.minutesEditView);
         secondsValue = getView().findViewById(R.id.secondsEditView);
         if (typeId == 1) {
-            timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timer = new Timer(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
             wrapper.addIndividualTimerToList(timer);
         } else if (typeId == 2) {
-            timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timer = new Timer(0, 0, "Timer " + (timerGroup.getNumberOfTimers() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
             timerGroup.addTimer(timer);
         }
 
 
-        playPauseButton = getView().findViewById(R.id.play_and_pause_button);
-        stopTimerButton = getView().findViewById(R.id.stop_playing_button);
-        optionsButton = getView().findViewById(R.id.timer_options_button);
+        playPauseButton = getView().findViewById(R.id.play_and_pause_group_button);
+        stopTimerButton = getView().findViewById(R.id.stop_playing_group_button);
+        optionsButton = getView().findViewById(R.id.timer_options_group_button);
+
+        TextView tv = getView().findViewById(R.id.timerFragName);
+        tv.setText(timer.getTimerName());
 
         timerRunning = false;
         timerCreated = false;
@@ -148,7 +151,6 @@ public class timerFragment extends Fragment {
     }
 
     private void pauseUnpauseTimer() {
-        Log.d("TESTE", "PAUSE");
         if (timerRunning) {
             playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
         } else {
@@ -197,6 +199,8 @@ public class timerFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 timer.setViews(secondsValue, minutesValue, hoursValue);
                 TimersWrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
+                TextView tv = getView().findViewById(R.id.timerFragName);
+                tv.setText(timer.getTimerName());
             }
         }
     }

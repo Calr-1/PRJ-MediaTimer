@@ -33,4 +33,8 @@
     <string name="separator2">M</string>
     <string name="separator3">S</string>
     <string name="add_media">Add Media</string>
+    <string name="create_timer_options">Create timer</string>
+    <string name="create_group_options">Create group</string>
+    <string name="give_a_name">Give a name</string>
+    <string name="group_name_hint">Group Name</string>
 </resources>

@@ -73,7 +73,7 @@ public class TimerActivity extends AppCompatActivity {
         hoursView = findViewById(R.id.hoursEditView);
         minutesView = findViewById(R.id.minutesEditView);
         secondsView = findViewById(R.id.secondsEditView);
-        nameView = findViewById(R.id.timerName);
+        nameView = findViewById(R.id.groupName);
         sp1 = findViewById(R.id.hoursIndicator);
         sp2 = findViewById(R.id.minutesIndicator);
         sp3 = findViewById(R.id.secondsIndicator);

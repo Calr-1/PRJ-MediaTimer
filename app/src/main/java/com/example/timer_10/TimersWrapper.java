@@ -1,6 +1,5 @@
 package com.example.timer_10;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +28,10 @@ public class TimersWrapper implements Serializable {
      * Array containing the groups of timers
      */
     private ArrayList<TimerGroup> groupsOfTimers;
+    /**
+     * Array containing the groups of timers fragments
+     */
+    private ArrayList<Fragment> groupsOfTimersFragment;
 
     /**
      * Array containing all the fragments that represent the individual timers
@@ -43,6 +46,8 @@ public class TimersWrapper implements Serializable {
         individualTimerList = new ArrayList<>();
         groupsOfTimers = new ArrayList<>();
         timerFragments = new ArrayList<>();
+        groupsOfTimersFragment = new ArrayList<>();
+
     }
 
     /**
@@ -68,16 +73,14 @@ public class TimersWrapper implements Serializable {
             int seconds = (int) (millis / 1000) % 60;
             int minutes = (int) ((millis / (1000 * 60)) % 60);
             int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
-            timerInHoursMinutesSeconds.put("Hours", hours);
+            int days = (int) (millis / (1000 * 60 * 60 * 24));
+            timerInHoursMinutesSeconds.put("Hours", (hours + (days * 24)));
             timerInHoursMinutesSeconds.put("Minutes", minutes);
             timerInHoursMinutesSeconds.put("Seconds", seconds);
         } else if (mode.equals("DD/HH/MM")) {
             int minutes = (int) ((millis / (1000 * 60)) % 60);
             int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
             int days = (int) (millis / (1000 * 60 * 60 * 24));
-            Log.d("M ", String.valueOf(minutes));
-            Log.d("H ", String.valueOf(hours));
-            Log.d("D ", String.valueOf(days));
             timerInHoursMinutesSeconds.put("Days", days);
             timerInHoursMinutesSeconds.put("Hours", hours);
             timerInHoursMinutesSeconds.put("Minutes", minutes);
@@ -91,7 +94,7 @@ public class TimersWrapper implements Serializable {
      * @param mode   String that dictates the format of the given time
      * @param small  TextView that holds the time in its smallest value, either seconds or minutes
      * @param medium TextView that holds the time in its medium value, either minutes or hours
-     * @param big    TextView that holds the time in its smallest value, either hours or days
+     * @param big    TextView that holds the time in its biggest value, either hours or days
      * @return the time in milliseconds
      */
     public static long getTimerValue(String mode, TextView small, TextView medium, TextView big) {
@@ -121,7 +124,7 @@ public class TimersWrapper implements Serializable {
      * @param mode   String that dictates the format of the given time
      * @param small  TextView that holds the time in its smallest value, either seconds or minutes
      * @param medium TextView that holds the time in its medium value, either minutes or hours
-     * @param big    TextView that holds the time in its smallest value, either hours or days
+     * @param big    TextView that holds the time in its biggest value, either hours or days
      */
     public static void updateViews(long time, String mode, TextView small, TextView medium, TextView big) {
         HashMap<String, Object> timeLeft = millisToCommonTime(time, mode);
@@ -191,12 +194,21 @@ public class TimersWrapper implements Serializable {
     }
 
     /**
-     * Adds group of timers to its specific array
+     * Adds fragment to its specific array
      *
-     * @param fragment TimerGroup object to be added to the array
+     * @param fragment timer fragment object to be added to the array
      */
     public void addTimerFragment(Fragment fragment) {
         timerFragments.add(fragment);
+    }
+
+    /**
+     * Adds a fragment to its specific array
+     *
+     * @param fragment group of timers fragment object to be added to the array
+     */
+    public void addTimerGroupFragment(Fragment fragment) {
+        groupsOfTimersFragment.add(fragment);
     }
 
     /**

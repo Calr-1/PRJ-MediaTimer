@@ -7,29 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/groupName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linputNameLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/placeholder_desc"
-        android:textColor="@color/palette_blue"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/groupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0.7"
+            android:hint="@string/group_name_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textSize="30sp"
+            tools:ignore="LabelFor" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:contentDescription="@string/edit_text_indicator"
+            android:src="@drawable/ic_baseline_edit_24" />
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollTimers"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:background="@drawable/round_corners_no_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/groupName">
+        app:layout_constraintTop_toBottomOf="@+id/linputNameLayout">
 
         <LinearLayout
             android:id="@+id/timerLayout"
@@ -38,16 +54,17 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <Button
+    <ImageButton
+        style="@style/ButtonStyle"
         android:id="@+id/addTimerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/add_timer"
-        android:textColor="@color/palette_yellow"
-        app:backgroundTint="#687980"
+        android:contentDescription="@string/placeholder_desc"
+        android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
