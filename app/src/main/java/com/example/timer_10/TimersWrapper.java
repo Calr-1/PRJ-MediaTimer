@@ -64,14 +64,25 @@ public class TimersWrapper implements Serializable {
      */
     public static HashMap<String, Object> millisToCommonTime(Long millis, String mode) {
         HashMap<String, Object> timerInHoursMinutesSeconds = new HashMap<>();
+        /*int seconds = (int) (millis / 1000) % 60;
+        int minutes = (int) ((millis / (1000 * 60)) % 60);
+        int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
+        int days = (int) (millis / (1000 * 60 * 60 * 24));
+        timerInHoursMinutesSeconds.put("Days", days);
+        timerInHoursMinutesSeconds.put("Hours", hours);
+        timerInHoursMinutesSeconds.put("Minutes", minutes);
+        timerInHoursMinutesSeconds.put("Seconds", seconds);*/
         if (mode.equals("HH/MM/SS")) {
             int seconds = (int) (millis / 1000) % 60;
             int minutes = (int) ((millis / (1000 * 60)) % 60);
             int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
-            timerInHoursMinutesSeconds.put("Hours", hours);
+            int days = (int) (millis / (1000 * 60 * 60 * 24));
+            //timerInHoursMinutesSeconds.put("Days", days);
+            timerInHoursMinutesSeconds.put("Hours", (hours + (days * 24)));
             timerInHoursMinutesSeconds.put("Minutes", minutes);
             timerInHoursMinutesSeconds.put("Seconds", seconds);
         } else if (mode.equals("DD/HH/MM")) {
+            int seconds = (int) (millis / 1000) % 60;
             int minutes = (int) ((millis / (1000 * 60)) % 60);
             int hours = (int) ((millis / (1000 * 60 * 60)) % 24);
             int days = (int) (millis / (1000 * 60 * 60 * 24));
@@ -81,6 +92,7 @@ public class TimersWrapper implements Serializable {
             timerInHoursMinutesSeconds.put("Days", days);
             timerInHoursMinutesSeconds.put("Hours", hours);
             timerInHoursMinutesSeconds.put("Minutes", minutes);
+            //timerInHoursMinutesSeconds.put("Seconds", seconds);
         }
         return timerInHoursMinutesSeconds;
     }

@@ -10,9 +10,24 @@
     tools:context=".timerFragment">
 
     <TextView
+        android:id="@+id/timerFragName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/placeholder_desc"
+        android:textColor="@color/palette_blue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/hoursEditView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
         android:gravity="center_horizontal"
         android:hint="@string/hints"
         android:importantForAutofill="no"
@@ -20,7 +35,7 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerFragName"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -50,6 +65,7 @@
         android:importantForAutofill="no"
         android:text="@string/seconds_string"
         android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/minutesEditView"
         app:layout_constraintStart_toEndOf="@+id/separator2"
         app:layout_constraintTop_toTopOf="@+id/separator2" />
 

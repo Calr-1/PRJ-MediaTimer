@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -13,10 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.Serializable;
-
 public class ConfigureActivity extends AppCompatActivity {
-    private boolean intervals;
+/*    private boolean intervals;
     private int numberOfIntervals;
     private String mode;
     private CheckBox cb;
@@ -40,14 +37,13 @@ public class ConfigureActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         sp.setAdapter(adapter);
-        et = findViewById(R.id.inputIntervals);
+        et = findViewById(R.id.inputNumberIntervals);
         cb = findViewById(R.id.notificationsCheckBox);
         int indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
         wrapper = TimersWrapper.getInstance();
         timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
         sp.setSelection(getIndex(sp, timer.getMode()));
-        cb.setChecked(timer.isIntervals());
-        et.setText("" + timer.getNumberOfIntervals());
+        et.setText("" + timer.getNotifications().getNumberOfIntervals());
         ActionBar actionBar = getSupportActionBar();
         //Button bt1 = findViewById(R.id.saveButton);
         //bt1.setOnClickListener(v -> save());
@@ -74,18 +70,18 @@ public class ConfigureActivity extends AppCompatActivity {
         numberOfIntervals = Integer.parseInt(et.getText().toString());
         mode = sp.getSelectedItem().toString();
 
-        timer.setIntervals(intervals);
+        //timer.setIntervals(intervals);
         timer.setMode(mode);
-        timer.setNumberOfIntervals(numberOfIntervals);
+        timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
 
 
         saved = true;
     }
 
     public void onBackPressed() {
-        timer.setIntervals(intervals);
+        //timer.setIntervals(intervals);
         timer.setMode(mode);
-        timer.setNumberOfIntervals(numberOfIntervals);
+        timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
         finish();
 
     }
@@ -94,12 +90,12 @@ public class ConfigureActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                timer.setIntervals(intervals);
+                //timer.setIntervals(intervals);
                 timer.setMode(mode);
-                timer.setNumberOfIntervals(numberOfIntervals);
+                timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

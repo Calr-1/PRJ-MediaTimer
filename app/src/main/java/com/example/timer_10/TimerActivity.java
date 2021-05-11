@@ -2,15 +2,18 @@ package com.example.timer_10;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
 
 public class TimerActivity extends AppCompatActivity {
 
@@ -18,7 +21,7 @@ public class TimerActivity extends AppCompatActivity {
     private int numberOfIntervals;
     private long time;
     private String mode, name;
-    private CheckBox cb;
+    //private CheckBox cb;
     private EditText et;
     private Spinner sp;
     private Intent intent;
@@ -27,9 +30,15 @@ public class TimerActivity extends AppCompatActivity {
     public static EditText secondsView;
     public EditText nameView;
     private TextView sp1, sp2, sp3;
+    private TextView editNotifications;
 
     private Timer timer;
     private TimersWrapper wrapper;
+
+    private Button addImages;
+
+    private static final int images = 3;
+    private static final int notifications = 4;
 
 
     @Override
@@ -67,8 +76,8 @@ public class TimerActivity extends AppCompatActivity {
 
             }
         });
-        et = findViewById(R.id.inputIntervals);
-        cb = findViewById(R.id.notificationsCheckBox);
+        et = findViewById(R.id.inputNumberIntervals);
+        //cb = findViewById(R.id.notificationsCheckBox);
         hoursView = findViewById(R.id.hoursEditView);
         minutesView = findViewById(R.id.minutesEditView);
         secondsView = findViewById(R.id.secondsEditView);
@@ -76,14 +85,15 @@ public class TimerActivity extends AppCompatActivity {
         sp1 = findViewById(R.id.hoursIndicator);
         sp2 = findViewById(R.id.minutesIndicator);
         sp3 = findViewById(R.id.secondsIndicator);
+        addImages = findViewById(R.id.addImagesButton);
 
         int indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
         wrapper = TimersWrapper.getInstance();
         timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
 
         timer.setViews(secondsView, minutesView, hoursView);
-        intervals = timer.isIntervals();
-        numberOfIntervals = timer.getNumberOfIntervals();
+        //intervals = timer.isIntervals();
+        numberOfIntervals = timer.getNotifications().getNumberOfIntervals();
         mode = timer.getMode();
         name = timer.getTimerName();
         time = timer.getCurrentTimerValue();
@@ -92,13 +102,27 @@ public class TimerActivity extends AppCompatActivity {
             wrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
         }
         sp.setSelection(getIndex(sp, mode));
-        cb.setChecked(intervals);
+        //cb.setChecked(intervals);
         et.setText("" + numberOfIntervals);
         nameView.setText(name);
         editable(time);
 
-        intent = new Intent(this.getApplicationContext(), timerFragment.class);
+        addImages.setOnClickListener(v -> {
+            intent = new Intent(this.getApplicationContext(), AddImagesActivity.class);
+            startActivityForResult(intent, images);
+        });
+
+        editNotifications = findViewById(R.id.enableIntervalText);
+        editNotifications.setOnClickListener(v -> {
+            intent = new Intent(this.getApplicationContext(), NotificationActivity.class);
+            intent.putExtra("timerIndex", indexOfTimer);
+            startActivityForResult(intent, notifications);
+        });
+
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
+
+
 
     private void editable(long time) {
         if (time != 0) {
@@ -112,25 +136,6 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    /*public void updateViews(long time, String mode) {
-        HashMap<String, Object> timeLeft = TimersWrapper.millisToCommonTime(time, mode);
-
-        if (mode.equals("HH/MM/SS")) {
-            hoursView.setText(String.valueOf(timeLeft.get("Hours")));
-            minutesView.setText(String.valueOf(timeLeft.get("Minutes")));
-            secondsView.setText(String.valueOf(timeLeft.get("Seconds")));
-            sp1.setText("H");
-            sp2.setText("M");
-            sp3.setText("S");
-        } else {
-            hoursView.setText(String.valueOf(timeLeft.get("Days")));
-            minutesView.setText(String.valueOf(timeLeft.get("Hours")));
-            secondsView.setText(String.valueOf(timeLeft.get("Minutes")));
-            sp1.setText("D");
-            sp2.setText("H");
-            sp3.setText("M");
-        }
-    }*/
 
     public void onBackPressed() {
         save();
@@ -142,14 +147,14 @@ public class TimerActivity extends AppCompatActivity {
 
 
     private void save() {
-        intervals = cb.isChecked();
+        //intervals = cb.isChecked();
         numberOfIntervals = Integer.parseInt(et.getText().toString());
         mode = sp.getSelectedItem().toString();
         time = wrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
         name = nameView.getText().toString();
 
-        timer.setIntervals(intervals);
-        timer.setNumberOfIntervals(numberOfIntervals);
+        //timer.setIntervals(intervals);
+        timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
         timer.setMode(mode);
         timer.setTimerName(name);
         timer.setCurrentTimerValue(time);
@@ -164,5 +169,17 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home) {
+            save();
+            setResult(RESULT_OK);
+            finish();
+
+            return true;
+        }
+        return false;
     }
 }

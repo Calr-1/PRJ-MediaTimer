@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotificationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/scrollViewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/notificationsMainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/chooseTypeOfIntervalLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/chooseIntervalText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:layout_weight="0.1"
+                        android:text="@string/choose_interval_type"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/typeOfIntervalSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:entries="@array/notifications_array" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/intervalNumberSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NumberOfIntervalsSeparatorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/define_intervals_by_number"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/intervalNumberLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NumberOfIntervalsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/number_of_intervals"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/inputNumberIntervals"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="6dp"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/number_of_intervals_default"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/intervalTimeSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TimeIntervalsSeparatorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/define_intervals_by_time"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timeNotificationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TimebetweenIntervals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center_vertical"
+                        android:text="@string/time_between_intervals"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/hoursEditInterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_weight="0.2"
+                        android:gravity="bottom|center_horizontal"
+                        android:hint="@string/hints"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/hours_string"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/hoursIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.02"
+                        android:gravity="bottom|center"
+                        android:text="@string/separator1"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/minutesEditInterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="0.2"
+                        android:gravity="bottom|center_horizontal"
+                        android:hint="@string/hints"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/minutes_string"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/minutesIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.02"
+                        android:gravity="bottom|center"
+                        android:text="@string/separator2"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/secondsEditInterval"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="0dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_weight="0.2"
+                        android:gravity="bottom|center_horizontal"
+                        android:hint="@string/hints"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/seconds_string"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/secondsIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight="0.02"
+                        android:gravity="bottom|center"
+                        android:text="@string/separator3"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/intervalRandomSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/RandomIntervalsSeparatorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/random_intervals"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/randomIntervalCheckBoxText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NumberOfIntervalsRandomText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/number_of_intervals"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/inputNumberIntervalsRandom"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="6dp"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/number_of_intervals_default"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/soundsSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/soundsSeparatorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/sounds"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="24sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/soundLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/chooseSoundText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/choose_sound"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

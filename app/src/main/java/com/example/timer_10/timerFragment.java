@@ -1,6 +1,7 @@
 package com.example.timer_10;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -45,6 +47,7 @@ public class timerFragment extends Fragment {
         return inflater.inflate(R.layout.timer_fragment, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -54,14 +57,15 @@ public class timerFragment extends Fragment {
         hoursValue = getView().findViewById(R.id.hoursEditView);
         minutesValue = getView().findViewById(R.id.minutesEditView);
         secondsValue = getView().findViewById(R.id.secondsEditView);
-        timer = new Timer(0, 0, "Default", getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+        timer = new Timer(0, 0, "Timer "+(wrapper.getIndividualTimerList().size()+1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
         wrapper.addIndividualTimerToList(timer);
-
-
 
         playPauseButton = getView().findViewById(R.id.play_and_pause_button);
         stopTimerButton = getView().findViewById(R.id.stop_playing_button);
         optionsButton = getView().findViewById(R.id.timer_options_button);
+
+        TextView tv = getView().findViewById(R.id.timerFragName);
+        tv.setText(timer.getTimerName());
 
         timerRunning = false;
         timerCreated = false;
@@ -69,7 +73,7 @@ public class timerFragment extends Fragment {
         timerCountdownInterval = 100;
 
         sp = getView().findViewById(R.id.modes_spinner);
-        et = getView().findViewById(R.id.inputIntervals);
+        et = getView().findViewById(R.id.inputNumberIntervals);
         cb = getView().findViewById(R.id.notificationsCheckBox);
 
         playPauseButton.setOnClickListener(v -> {
@@ -89,6 +93,15 @@ public class timerFragment extends Fragment {
             }
         });
 
+        stopTimerButton.setOnClickListener(v -> {
+            if (timer.canStopSound()) {
+                stopAlarm();
+                Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
+                playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+
+            }
+        });
+
         optionsButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ConfigureActivity.class);
             intent.putExtra("timerIndex", wrapper.getIndexOfIndividualTimer(timer));
@@ -105,6 +118,7 @@ public class timerFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void pauseUnpauseTimer() {
         if (timerRunning) {
             playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
@@ -138,6 +152,8 @@ public class timerFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 timer.setViews(secondsValue, minutesValue, hoursValue);
                 wrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
+                TextView tv = getView().findViewById(R.id.timerFragName);
+                tv.setText(timer.getTimerName());
             }
         }
     }

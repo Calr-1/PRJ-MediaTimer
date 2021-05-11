@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/enableIntervalText" />
 
     <EditText
-        android:id="@+id/inputIntervals"
+        android:id="@+id/inputNumberIntervals"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -77,7 +77,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@+id/TimerFormat"
-        app:layout_constraintTop_toBottomOf="@+id/inputIntervals" />
+        app:layout_constraintTop_toBottomOf="@+id/inputNumberIntervals" />
 
     <Button
         android:id="@+id/saveButton"
