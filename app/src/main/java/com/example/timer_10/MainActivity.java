@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +19,10 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences, app_preferences;
     SharedPreferences.Editor editor;
 
-
     boolean appColor;
 
     private ImageButton addButton;
     private TimersWrapper wrapper;
-    private boolean currentTheme;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.create_timer_option:
                 addTimerFragment();
@@ -73,30 +68,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_options, menu);
+        inflater.inflate(R.menu.main_options_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.change_theme_option:
-                editor.putBoolean("color", !appColor);
-                editor.commit();
+        if (item.getItemId() == R.id.change_theme_option) {
+            editor.putBoolean("color", !appColor);
+            editor.commit();
 
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void addTimerFragment() {
 
-        timerFragment frag = new timerFragment(1);
+        TimerFragment frag = new TimerFragment(1);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();
@@ -107,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addGroupFragment() {
 
-        timer_group frag = new timer_group(1);
+        TimerGroupFragment frag = new TimerGroupFragment(1);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();

@@ -12,7 +12,7 @@
     <string name="uploadImageButton_string">Upload Image</string>
     <string name="uploadTimerButton_string">Upload Timer</string>
     <string name="stopAlarm_string">Stop Alarm</string>
-    <string name="enable_notifications">Enable during-timer notifications</string>
+    <string name="enable_notifications">During-timer notifications</string>
     <string name="number_of_intervals">Number of intervals:</string>
     <string name="number_of_intervals_default">1</string>
     <string name="timer_format">Timer Format:</string>
@@ -33,9 +33,25 @@
     <string name="separator2">M</string>
     <string name="separator3">S</string>
     <string name="add_media">Add Media</string>
-    <string name="create_timer_options">Create timer</string>
+    <string name="create_timer_options">Create timerClass</string>
     <string name="create_group_options">Create group</string>
     <string name="give_a_name">Give a name</string>
     <string name="group_name_hint">Group Name</string>
     <string name="change_theme">Change Theme</string>
+    <string name="choose_file">Choose file</string>
+    <string name="image_to_add">Image to add</string>
+    <string name="upload">Upload</string>
+    <string name="show_uploads">Show Uploads</string>
+    <string name="enter_file_name">Enter file name</string>
+    <string name="choose_interval_type">Interval type</string>
+    <string name="choose_sound">Choose Sound</string>
+    <string name="metric_example">s</string>
+    <string name="uploaded_image">uploaded image</string>
+    <string name="name">Name</string>
+    <string name="define_intervals_by_number">Define intervals by number</string>
+    <string name="random_intervals">Random intervals</string>
+    <string name="define_intervals_by_time">Define intervals by time</string>
+    <string name="time_between_intervals">Time between Intervals:</string>
+    <string name="sounds">Sounds</string>
+    <string name="enable_random_intervals">Enable random intervals</string>
 </resources>

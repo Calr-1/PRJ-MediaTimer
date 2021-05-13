@@ -15,25 +15,24 @@ import androidx.fragment.app.Fragment;
 import static android.app.Activity.RESULT_OK;
 
 
-public class timer_group extends Fragment {
+public class TimerGroupFragment extends Fragment {
 
     private TimersWrapper wrapper;
-    private ConstraintLayout layout;
-    private TimerGroup group;
-    private TimerGroup associatedGroup;
-    private int type;
+    private TimerGroupClass group;
+    private TimerGroupClass associatedGroup;
+    private final int type;
 
 
-    public timer_group(int type) {
+    public TimerGroupFragment(int type) {
         this.type = type;
     }
 
-    public timer_group(int type, TimerGroup associatedGroup) {
+    public TimerGroupFragment(int type, TimerGroupClass associatedGroup) {
         this.type = type;
         this.associatedGroup = associatedGroup;
     }
 
-    public timer_group(int type, TimerGroup group, TimerGroup associatedGroup) {
+    public TimerGroupFragment(int type, TimerGroupClass group, TimerGroupClass associatedGroup) {
         this.type = type;
         this.group = group;
         this.associatedGroup = associatedGroup;
@@ -58,21 +57,21 @@ public class timer_group extends Fragment {
         wrapper = TimersWrapper.getInstance();
 
         if (type == 1) {
-            group = new TimerGroup("Timer group " + (wrapper.getGroupsOfTimers().size() + 1));
+            group = new TimerGroupClass("Timer Group " + (wrapper.getGroupsOfTimers().size() + 1));
             wrapper.addGroupOfTimers(group);
         }
         if (type == 2) {
-            group = new TimerGroup("Timer group " + (associatedGroup.getNumberOfGroups() + 1));
+            group = new TimerGroupClass("Timer Group " + (associatedGroup.getNumberOfGroups() + 1));
             associatedGroup.addTimerGroup(group);
         }
 
         updateName();
 
-        layout = getView().findViewById(R.id.frameLayout);
+        ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
 
         layout.setOnClickListener(v -> {
             int index = wrapper.getIndexOfGroupOfTimers(group);
-            Intent intent = new Intent(getActivity(), group.class);
+            Intent intent = new Intent(getActivity(), GroupActivity.class);
             intent.putExtra("groupIndex", index);
             startActivityForResult(intent, 1);
 

@@ -9,29 +9,24 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class group extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity {
 
     private ImageButton addButton;
-    private TimerGroup timerGroup;
-    private TimersWrapper wrapper;
+    private TimerGroupClass timerGroupClass;
 
     private EditText et;
 
-    SharedPreferences app_preferences;
-
-    boolean appColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        appColor = app_preferences.getBoolean("color", false);
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean appColor = app_preferences.getBoolean("color", false);
         if (!appColor) {
             setTheme(R.style.Theme_Timer_10);
         } else if (appColor) {
@@ -39,11 +34,11 @@ public class group extends AppCompatActivity {
         }
         setContentView(R.layout.activity_group);
 
-        wrapper = TimersWrapper.getInstance();
-        timerGroup = wrapper.getSpecificGroupOfTimersByIndex(getIntent().getIntExtra("groupIndex", -1));
+        TimersWrapper wrapper = TimersWrapper.getInstance();
+        timerGroupClass = wrapper.getSpecificGroupOfTimersByIndex(getIntent().getIntExtra("groupIndex", -1));
 
         et = findViewById(R.id.groupName);
-        et.setText(timerGroup.getName());
+        et.setText(timerGroupClass.getName());
         addButton = findViewById(R.id.addTimerButton);
         registerForContextMenu(addButton);
         addButton.setOnClickListener(v -> addButton.showContextMenu());
@@ -53,47 +48,47 @@ public class group extends AppCompatActivity {
     }
 
     private void loadExistingTimers() {
-        for (int index = 0; index < timerGroup.getNumberOfTimers(); index++) {
+        for (int index = 0; index < timerGroupClass.getNumberOfTimers(); index++) {
 
-            timerFragment frag = new timerFragment(3, timerGroup, timerGroup.getTimerByIndex(index));
+            TimerFragment frag = new TimerFragment(3, timerGroupClass, timerGroupClass.getTimerByIndex(index));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.timerLayout, frag)
                     .commit();
-            timerGroup.addTimerFragment(frag);
+            timerGroupClass.addTimerFragment(frag);
         }
-        for (int index = 0; index < timerGroup.getNumberOfGroups(); index++) {
+        for (int index = 0; index < timerGroupClass.getNumberOfGroups(); index++) {
 
-            timer_group frag = new timer_group(3, timerGroup.getGroupByIndex(index), timerGroup);
+            TimerGroupFragment frag = new TimerGroupFragment(3, timerGroupClass.getGroupByIndex(index), timerGroupClass);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.timerLayout, frag)
                     .commit();
-            timerGroup.addTimerGroupFragment(frag);
+            timerGroupClass.addTimerGroupFragment(frag);
         }
 
     }
 
 
     private void addTimerFragment() {
-        timerFragment frag = new timerFragment(2, timerGroup);
+        TimerFragment frag = new TimerFragment(2, timerGroupClass);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();
-        timerGroup.addTimerFragment(frag);
+        timerGroupClass.addTimerFragment(frag);
     }
 
     private void addGroupFragment() {
 
-        timer_group frag = new timer_group(2, timerGroup);
+        TimerGroupFragment frag = new TimerGroupFragment(2, timerGroupClass);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.timerLayout, frag)
                 .commit();
-        timerGroup.addTimerGroupFragment(frag);
+        timerGroupClass.addTimerGroupFragment(frag);
 
     }
 
     public void onBackPressed() {
         String name = et.getText().toString();
-        timerGroup.setName(name);
+        timerGroupClass.setName(name);
 
         Intent returnIntent = new Intent();
         returnIntent.putExtra("groupIndex", getIntent().getIntExtra("groupIndex", -1));
@@ -111,7 +106,6 @@ public class group extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.create_timer_option:
                 addTimerFragment();

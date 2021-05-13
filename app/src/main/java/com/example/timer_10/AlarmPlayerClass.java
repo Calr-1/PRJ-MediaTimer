@@ -3,15 +3,15 @@ package com.example.timer_10;
 import android.content.Context;
 import android.media.MediaPlayer;
 
-public class AlarmPlayer {
+public class AlarmPlayerClass {
 
     private MediaPlayer soundObject;
     private boolean released;
-    private Context context;
-    private int soundID;
+    private final Context context;
+    private final int soundID;
 
 
-    public AlarmPlayer(Context context, int soundID) {
+    public AlarmPlayerClass(Context context, int soundID) {
         soundObject = MediaPlayer.create(context, soundID);
         this.context = context;
         this.soundID = soundID;
