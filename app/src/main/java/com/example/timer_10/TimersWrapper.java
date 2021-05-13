@@ -1,5 +1,9 @@
 package com.example.timer_10;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -276,7 +280,23 @@ public class TimersWrapper implements Serializable {
 
     public void getAllRingtones() {
 
-
     }
 
+    public static void loadTheme(Context app) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(app);
+        int appColor = sharedPreferences.getInt("currentTheme", 0);
+        Log.d("APP THEME", String.valueOf(appColor));
+        if (appColor == 0) {
+            app.setTheme(R.style.Theme_Timer_10);
+        } else if (appColor == 1) {
+            app.setTheme(R.style.Theme_ORANGE_THEME);
+        } else if (appColor == 2) {
+            app.setTheme(R.style.Theme_GREEN_THEME);
+        } else if (appColor == 3) {
+            app.setTheme(R.style.Theme_REDBLACK_THEME);
+        } else if (appColor == 4) {
+            app.setTheme(R.style.Theme_BLACK_THEME);
+        }
+    }
 }

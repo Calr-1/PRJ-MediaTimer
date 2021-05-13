@@ -71,7 +71,7 @@ public class TimerGroupFragment extends Fragment {
 
         layout.setOnClickListener(v -> {
             int index = wrapper.getIndexOfGroupOfTimers(group);
-            Intent intent = new Intent(getActivity(), GroupActivity.class);
+            Intent intent = new Intent(getActivity(), TimerGroupActivity.class);
             intent.putExtra("groupIndex", index);
             startActivityForResult(intent, 1);
 

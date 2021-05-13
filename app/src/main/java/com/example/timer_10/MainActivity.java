@@ -1,5 +1,6 @@
 package com.example.timer_10;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,27 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences, app_preferences;
-    SharedPreferences.Editor editor;
-
-    boolean appColor;
-
     private ImageButton addButton;
     private TimersWrapper wrapper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        appColor = app_preferences.getBoolean("color", false);
-        if (!appColor) {
-            setTheme(R.style.Theme_Timer_10);
-        } else if (appColor) {
-            setTheme(R.style.Theme_ORANGE_THEME);
-        }
-        setContentView(R.layout.activity_main);
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = sharedPreferences.edit();
         wrapper = TimersWrapper.getInstance();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        TimersWrapper.loadTheme(this);
+        setContentView(R.layout.activity_main);
         addButton = findViewById(R.id.addButton);
         registerForContextMenu(addButton);
         addButton.setOnClickListener(v -> addButton.showContextMenu());
@@ -76,12 +65,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         if (item.getItemId() == R.id.change_theme_option) {
-            editor.putBoolean("color", !appColor);
-            editor.commit();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+            Intent intent = new Intent(this, ChangeAppThemeActivity.class);
+            startActivityForResult(intent, 1);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -108,4 +94,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 }
