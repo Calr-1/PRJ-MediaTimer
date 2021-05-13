@@ -45,11 +45,18 @@ public class AddImagesActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
     private StorageTask mUploadTask;
+    private TimersWrapper wrapper;
+    private Timer timer;
+    private int indexOfTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_images);
+
+        indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
+        wrapper = TimersWrapper.getInstance();
+        timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
 
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
@@ -157,6 +164,7 @@ public class AddImagesActivity extends AppCompatActivity {
 
     private void openImagesActivity(){
         Intent intent = new Intent(this, ImagesActivity.class);
+        intent.putExtra("timerIndex", indexOfTimer);
         startActivity(intent);
     }
 }

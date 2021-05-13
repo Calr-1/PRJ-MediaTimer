@@ -36,10 +36,18 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     private List<Upload> mUploads;
 
+    private TimersWrapper wrapper;
+    private Timer timer;
+    private int indexOfTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images);
+
+        indexOfTimer = getIntent().getIntExtra("timerIndex", -1);
+        wrapper = TimersWrapper.getInstance();
+        timer = wrapper.getSpecificIndividualTimerByIndex(indexOfTimer);
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -90,12 +98,15 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "Normal click at position: "+position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "New timer media selected", Toast.LENGTH_SHORT).show();
+        timer.setUpload(mUploads.get(position));
+
     }
 
     @Override
     public void onWhatEverClick(int position) {
-        Toast.makeText(this, "Whatever click at position: "+position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "New timer media selected", Toast.LENGTH_SHORT).show();
+        timer.setUpload(mUploads.get(position));
     }
 
     @Override
@@ -108,6 +119,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
             public void onSuccess(Void aVoid) {
                 mDatabaseRef.child(selectedKey).removeValue();
                 Toast.makeText(ImagesActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
+                if(timer.getUpload().getImageUrl().equals(mUploads.get(position).getImageUrl())) timer.setUpload(null);
             }
         });
     }

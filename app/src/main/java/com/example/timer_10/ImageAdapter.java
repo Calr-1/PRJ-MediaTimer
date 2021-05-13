@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ImageAdapter  extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private Context mContext;
     private List<Upload> mUploads;
@@ -85,7 +85,7 @@ public class ImageAdapter  extends RecyclerView.Adapter<ImageAdapter.ImageViewHo
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             contextMenu.setHeaderTitle("Select Action");
-            MenuItem doWhatever = contextMenu.add(Menu.NONE, 1, 1, "Do Whatever");
+            MenuItem doWhatever = contextMenu.add(Menu.NONE, 1, 1, "Select as media");
             MenuItem delete = contextMenu.add(Menu.NONE, 2, 2, "Delete");
             doWhatever.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);

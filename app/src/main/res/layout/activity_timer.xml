@@ -160,6 +160,11 @@
                     android:layout_height="300dp"
                     android:layout_weight="1">
 
+                    <ImageView
+                        android:id="@+id/timerMedia"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/no_image" />
                 </FrameLayout>
 
                 <Button

@@ -8,10 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
@@ -22,7 +25,7 @@ public class TimerActivity extends AppCompatActivity {
     private long time;
     private String mode, name;
     //private CheckBox cb;
-    private EditText et;
+    //private EditText et;
     private Spinner sp;
     private Intent intent;
     public static EditText hoursView;
@@ -76,7 +79,7 @@ public class TimerActivity extends AppCompatActivity {
 
             }
         });
-        et = findViewById(R.id.inputNumberIntervals);
+        //et = findViewById(R.id.inputNumberIntervals);
         //cb = findViewById(R.id.notificationsCheckBox);
         hoursView = findViewById(R.id.hoursEditView);
         minutesView = findViewById(R.id.minutesEditView);
@@ -103,12 +106,13 @@ public class TimerActivity extends AppCompatActivity {
         }
         sp.setSelection(getIndex(sp, mode));
         //cb.setChecked(intervals);
-        et.setText("" + numberOfIntervals);
+        //et.setText("" + numberOfIntervals);
         nameView.setText(name);
         editable(time);
 
         addImages.setOnClickListener(v -> {
             intent = new Intent(this.getApplicationContext(), AddImagesActivity.class);
+            intent.putExtra("timerIndex", indexOfTimer);
             startActivityForResult(intent, images);
         });
 
@@ -119,10 +123,39 @@ public class TimerActivity extends AppCompatActivity {
             startActivityForResult(intent, notifications);
         });
 
+        Upload upload = timer.getUpload();
+        ImageView image = findViewById(R.id.timerMedia);
+        if(upload != null) {
+            Picasso.get()
+                    .load(upload.getImageUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .fit()
+                    .centerCrop()
+                    .into(image);
+        }
+        else {
+            image.setImageResource(R.drawable.no_image);
+        }
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Upload upload = timer.getUpload();
+        ImageView image = findViewById(R.id.timerMedia);
+        if(upload != null) {
+            Picasso.get()
+                    .load(upload.getImageUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .fit()
+                    .centerCrop()
+                    .into(image);
+        }
+        else {
+            image.setImageResource(R.drawable.no_image);
+        }
+    }
 
     private void editable(long time) {
         if (time != 0) {
@@ -148,13 +181,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private void save() {
         //intervals = cb.isChecked();
-        numberOfIntervals = Integer.parseInt(et.getText().toString());
+        //numberOfIntervals = Integer.parseInt(et.getText().toString());
         mode = sp.getSelectedItem().toString();
         time = wrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
         name = nameView.getText().toString();
 
         //timer.setIntervals(intervals);
-        timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
+        //timer.getNotifications().setNumberOfIntervals(numberOfIntervals);
         timer.setMode(mode);
         timer.setTimerName(name);
         timer.setCurrentTimerValue(time);

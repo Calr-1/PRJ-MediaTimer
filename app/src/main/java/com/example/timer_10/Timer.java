@@ -35,6 +35,8 @@ public class Timer {
 
     private int randomIntervals;
 
+    private Upload image;
+
     public Timer(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, TextView small, TextView medium, TextView big, timerFragment fragment) {
         currentTimerValue = timerInitialValue;
         this.timerInitialValue = timerInitialValue;
@@ -320,5 +322,13 @@ public class Timer {
 
     public void setRandomIntervals(int randomIntervals) {
         this.randomIntervals = randomIntervals;
+    }
+
+    public void setUpload(Upload upload){
+        this.image = upload;
+    }
+
+    public Upload getUpload(){
+        return this.image;
     }
 }
