@@ -4,6 +4,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,14 +23,19 @@ public class TimersWrapper implements Serializable {
     private static TimersWrapper instance = null;
 
     /**
+     * Reference for firebase storage
+     */
+    private StorageReference storageReference;
+
+    /**
      * Array containing the individual timers
      */
-    private ArrayList<Timer> individualTimerList;
+    private ArrayList<TimerClass> individualTimerClassList;
 
     /**
      * Array containing the groups of timers
      */
-    private ArrayList<TimerGroup> groupsOfTimers;
+    private ArrayList<TimerGroupClass> groupsOfTimers;
     /**
      * Array containing the groups of timers fragments
      */
@@ -43,10 +51,11 @@ public class TimersWrapper implements Serializable {
      * Initializes the arrays that will hold the necessary timers
      */
     private TimersWrapper() {
-        individualTimerList = new ArrayList<>();
+        individualTimerClassList = new ArrayList<>();
         groupsOfTimers = new ArrayList<>();
         timerFragments = new ArrayList<>();
         groupsOfTimersFragment = new ArrayList<>();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
     }
 
@@ -147,19 +156,19 @@ public class TimersWrapper implements Serializable {
      * SETTERS and GETTERS for the arrays of individual timers and groups of timers
      */
 
-    public ArrayList<Timer> getIndividualTimerList() {
-        return individualTimerList;
+    public ArrayList<TimerClass> getIndividualTimerList() {
+        return individualTimerClassList;
     }
 
-    public void setIndividualTimerList(ArrayList<Timer> individualTimerList) {
-        this.individualTimerList = individualTimerList;
+    public void setIndividualTimerList(ArrayList<TimerClass> individualTimerClassList) {
+        this.individualTimerClassList = individualTimerClassList;
     }
 
-    public ArrayList<TimerGroup> getGroupsOfTimers() {
+    public ArrayList<TimerGroupClass> getGroupsOfTimers() {
         return groupsOfTimers;
     }
 
-    public void setGroupsOfTimers(ArrayList<TimerGroup> groupsOfTimers) {
+    public void setGroupsOfTimers(ArrayList<TimerGroupClass> groupsOfTimers) {
         this.groupsOfTimers = groupsOfTimers;
     }
 
@@ -178,18 +187,18 @@ public class TimersWrapper implements Serializable {
     /**
      * Adds individual timers to its specific array
      *
-     * @param individualTimer Timer object to be added to the array
+     * @param individualTimerClass TimerClass object to be added to the array
      */
-    public void addIndividualTimerToList(Timer individualTimer) {
-        individualTimerList.add(individualTimer);
+    public void addIndividualTimerToList(TimerClass individualTimerClass) {
+        individualTimerClassList.add(individualTimerClass);
     }
 
     /**
-     * Adds group of timers to its specific array
+     * Adds GroupActivity of timers to its specific array
      *
-     * @param group TimerGroup object to be added to the array
+     * @param group TimerGroupClass object to be added to the array
      */
-    public void addGroupOfTimers(TimerGroup group) {
+    public void addGroupOfTimers(TimerGroupClass group) {
         groupsOfTimers.add(group);
     }
 
@@ -205,7 +214,7 @@ public class TimersWrapper implements Serializable {
     /**
      * Adds a fragment to its specific array
      *
-     * @param fragment group of timers fragment object to be added to the array
+     * @param fragment GroupActivity of timers fragment object to be added to the array
      */
     public void addTimerGroupFragment(Fragment fragment) {
         groupsOfTimersFragment.add(fragment);
@@ -216,34 +225,34 @@ public class TimersWrapper implements Serializable {
      *
      * @param index Index of the wanted timer
      */
-    public Timer getSpecificIndividualTimerByIndex(int index) {
-        return individualTimerList.get(index);
+    public TimerClass getSpecificIndividualTimerByIndex(int index) {
+        return individualTimerClassList.get(index);
     }
 
     /**
-     * Gets the index of the given individual timer from the array
+     * Gets the index of the given individual timerClass from the array
      *
-     * @param timer Index of wanted timer
+     * @param timerClass Index of wanted timerClass
      */
-    public int getIndexOfIndividualTimer(Timer timer) {
-        return individualTimerList.indexOf(timer);
+    public int getIndexOfIndividualTimer(TimerClass timerClass) {
+        return individualTimerClassList.indexOf(timerClass);
     }
 
     /**
-     * Gets a specific group of timers from the array given an index
+     * Gets a specific GroupActivity of timers from the array given an index
      *
      * @param index Index of the wanted timer
      */
-    public TimerGroup getSpecificGroupOfTimersByIndex(int index) {
+    public TimerGroupClass getSpecificGroupOfTimersByIndex(int index) {
         return groupsOfTimers.get(index);
     }
 
     /**
-     * Gets the index of the given group of timers from the array
+     * Gets the index of the given GroupActivity of timers from the array
      *
-     * @param group Index of wanted group
+     * @param group Index of wanted GroupActivity
      */
-    public int getIndexOfGroupOfTimers(TimerGroup group) {
+    public int getIndexOfGroupOfTimers(TimerGroupClass group) {
         return groupsOfTimers.indexOf(group);
     }
 
@@ -263,6 +272,11 @@ public class TimersWrapper implements Serializable {
      */
     public int getIndexOfTimerFragment(Fragment fragment) {
         return timerFragments.indexOf(fragment);
+    }
+
+    public void getAllRingtones() {
+
+
     }
 
 }

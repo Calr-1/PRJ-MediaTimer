@@ -1,67 +1,62 @@
 package com.example.timer_10;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-public class timerFragment extends Fragment {
+public class TimerFragment extends Fragment {
 
-    private ImageButton playPauseButton, stopTimerButton, optionsButton;
+    private ImageButton playPauseButton;
     private TextView hoursValue, minutesValue, secondsValue;
-    private Timer timer;
-    private ConstraintLayout layout;
+    private TimerClass timerClass;
     private boolean timerRunning, timerCreated;
     private long timerInitialValue;
     private int timerCountdownInterval;
     private TimersWrapper wrapper;
 
-    private Spinner sp;
-    private EditText et;
-    private CheckBox cb;
-
-    private int typeId;
-    private TimerGroup timerGroup;
+    private final int typeId;
+    private TimerGroupClass timerGroupClass;
 
     private static final int configure = 1;
 
-    public timerFragment(int typeId) {
+    public TimerFragment(int typeId) {
         this.typeId = typeId;
     }
 
-    public timerFragment(int typeId, TimerGroup timerGroup) {
+    public TimerFragment(int typeId, TimerGroupClass timerGroupClass) {
         this.typeId = typeId;
-        this.timerGroup = timerGroup;
+        this.timerGroupClass = timerGroupClass;
     }
 
-    public timerFragment(int typeId, TimerGroup timerGroup, Timer timer) {
+    public TimerFragment(int typeId, TimerGroupClass timerGroupClass, TimerClass timerClass) {
         this.typeId = typeId;
-        this.timerGroup = timerGroup;
-        this.timer = timer;
+        this.timerGroupClass = timerGroupClass;
+        this.timerClass = timerClass;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.timer_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_timer, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -73,46 +68,43 @@ public class timerFragment extends Fragment {
         secondsValue = getView().findViewById(R.id.secondsEditView);
 
         if (typeId == 1) {
-            timer = new Timer(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
-            wrapper.addIndividualTimerToList(timer);
+            timerClass = new TimerClass(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            wrapper.addIndividualTimerToList(timerClass);
         } else if (typeId == 2) {
-            timer = new Timer(0, 0, "Timer " + (timerGroup.getNumberOfTimers() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
-            timerGroup.addTimer(timer);
+            timerClass = new TimerClass(0, 0, "Timer " + (timerGroupClass.getNumberOfTimers() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timerGroupClass.addTimer(timerClass);
         }
 
 
         playPauseButton = getView().findViewById(R.id.play_and_pause_group_button);
-        stopTimerButton = getView().findViewById(R.id.stop_playing_group_button);
-        optionsButton = getView().findViewById(R.id.timer_options_group_button);
+        ImageButton stopTimerButton = getView().findViewById(R.id.stop_playing_group_button);
 
         TextView tv = getView().findViewById(R.id.timerFragName);
-        tv.setText(timer.getTimerName());
+        tv.setText(timerClass.getTimerName());
 
         timerRunning = false;
         timerCreated = false;
         timerInitialValue = 0;
         timerCountdownInterval = 100;
 
-        sp = getView().findViewById(R.id.modes_spinner);
-        et = getView().findViewById(R.id.inputIntervals);
-        cb = getView().findViewById(R.id.notificationsCheckBox);
+
         if (typeId == 3) {
-            timerRunning = timer.isTimerRunning();
-            timerInitialValue = timer.getTimerInitialValue();
-            timerCountdownInterval = timer.getTimerCountdownInterval();
-            timerCreated = timer.isTimerCreated();
+            timerRunning = timerClass.isTimerRunning();
+            timerInitialValue = timerClass.getTimerInitialValue();
+            timerCountdownInterval = timerClass.getTimerCountdownInterval();
+            timerCreated = timerClass.isTimerCreated();
         }
 
         playPauseButton.setOnClickListener(v -> {
             if (!timerCreated) {
-                timerInitialValue = wrapper.getTimerValue(timer.getMode(), secondsValue, minutesValue, hoursValue);
+                timerInitialValue = TimersWrapper.getTimerValue(timerClass.getMode(), secondsValue, minutesValue, hoursValue);
                 if (timerInitialValue != 0) {
                     startStopTimer();
-                    timer.setTimerInitialValue(timerInitialValue);
+                    timerClass.setTimerInitialValue(timerInitialValue);
                     Log.d("TIMER initial value: ", String.valueOf(timerInitialValue));
-                    timer.setTimerCountdownInterval(timerCountdownInterval);
-                    timer.createTimer(timerInitialValue, timerCountdownInterval);
-                    timer.startTimer();
+                    timerClass.setTimerCountdownInterval(timerCountdownInterval);
+                    timerClass.createTimer(timerInitialValue, timerCountdownInterval);
+                    timerClass.startTimer();
                     Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Timer can't start!", Toast.LENGTH_SHORT).show();
@@ -125,32 +117,33 @@ public class timerFragment extends Fragment {
         });
 
         stopTimerButton.setOnClickListener(v -> {
-            if (timer.canStopSound()) {
+            if (timerClass.canStopSound()) {
                 stopAlarm();
                 Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
                 playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
             }
         });
-        layout = getView().findViewById(R.id.frameLayout);
+        ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
         layout.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TimerActivity.class);
 
             if (typeId == 2 || typeId == 3) {
                 intent.putExtra("typeID", 2);
-                intent.putExtra("indexGroup", wrapper.getIndexOfGroupOfTimers(timerGroup));
-                intent.putExtra("indexTimer", timerGroup.getIndexOfTimer(timer));
+                intent.putExtra("indexGroup", wrapper.getIndexOfGroupOfTimers(timerGroupClass));
+                intent.putExtra("indexTimer", timerGroupClass.getIndexOfTimer(timerClass));
 
             } else if (typeId == 1) {
                 intent.putExtra("typeID", 1);
-                intent.putExtra("indexTimer", wrapper.getIndexOfIndividualTimer(timer));
+                intent.putExtra("indexTimer", wrapper.getIndexOfIndividualTimer(timerClass));
             }
             startActivityForResult(intent, configure);
         });
-        timer.setViews(secondsValue, minutesValue, hoursValue);
-        TimersWrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
+        timerClass.setViews(secondsValue, minutesValue, hoursValue);
+        TimersWrapper.updateViews(timerClass.getCurrentTimerValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void pauseUnpauseTimer() {
         if (timerRunning) {
             playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
@@ -158,9 +151,9 @@ public class timerFragment extends Fragment {
             playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
         }
 
-        timer.pauseUnpauseTimer(timerRunning);
+        timerClass.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;
-        timer.setTimerRunning(timerRunning);
+        timerClass.setTimerRunning(timerRunning);
 
 
     }
@@ -171,18 +164,18 @@ public class timerFragment extends Fragment {
         secondsValue.setEnabled(timerCreated);
         timerRunning = !timerCreated;
         timerCreated = !timerCreated;
-        timer.setTimerCreated(timerCreated);
-        timer.setTimerRunning(timerRunning);
+        timerClass.setTimerCreated(timerCreated);
+        timerClass.setTimerRunning(timerRunning);
 
     }
 
 
     private void stopAlarm() {
-        timer.stopSound();
+        timerClass.stopSound();
     }
 
-    public TimerGroup getTimerGroup() {
-        return timerGroup;
+    public TimerGroupClass getTimerGroup() {
+        return timerGroupClass;
     }
 
     public int getTypeId() {
@@ -198,10 +191,10 @@ public class timerFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == configure) {
             if (resultCode == RESULT_OK) {
-                timer.setViews(secondsValue, minutesValue, hoursValue);
-                TimersWrapper.updateViews(timer.getCurrentTimerValue(), timer.getMode(), secondsValue, minutesValue, hoursValue);
+                timerClass.setViews(secondsValue, minutesValue, hoursValue);
+                TimersWrapper.updateViews(timerClass.getCurrentTimerValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
                 TextView tv = getView().findViewById(R.id.timerFragName);
-                tv.setText(timer.getTimerName());
+                tv.setText(timerClass.getTimerName());
             }
         }
     }

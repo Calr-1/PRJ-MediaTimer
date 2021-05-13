@@ -4,47 +4,49 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
+
 public class TimerActivity extends AppCompatActivity {
 
-    private boolean intervals, timerRunning;
-    private int numberOfIntervals;
+    private boolean intervals;
     private long time;
     private String mode, name;
-    private CheckBox cb;
-    private EditText et;
+
     private Spinner sp;
     private Intent intent;
-    public static EditText hoursView;
-    public static EditText minutesView;
-    public static EditText secondsView;
+    public EditText hoursView;
+    public EditText minutesView;
+    public EditText secondsView;
     public EditText nameView;
     private TextView sp1, sp2, sp3;
 
-    private Timer timer;
-    private TimersWrapper wrapper;
-    private int typeID;
+    private TimerClass timerClass;
+    private int indexTimer;
 
 
-    SharedPreferences app_preferences;
-
-    boolean appColor;
+    private static final int images = 3;
+    private static final int notifications = 4;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        appColor = app_preferences.getBoolean("color", false);
+        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean appColor = app_preferences.getBoolean("color", false);
         if (!appColor) {
             setTheme(R.style.Theme_Timer_10);
         } else if (appColor) {
@@ -61,7 +63,7 @@ public class TimerActivity extends AppCompatActivity {
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
-                time = wrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
+                time = TimersWrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
                 mode = selectedItem;
                 if (selectedItem.equals("HH/MM/SS")) {
                     sp1.setText("H");
@@ -72,7 +74,7 @@ public class TimerActivity extends AppCompatActivity {
                     sp2.setText("H");
                     sp3.setText("M");
                 }
-                timer.setMode(mode);
+                timerClass.setMode(mode);
                 TimersWrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
 
 
@@ -82,8 +84,7 @@ public class TimerActivity extends AppCompatActivity {
 
             }
         });
-        et = findViewById(R.id.inputIntervals);
-        cb = findViewById(R.id.notificationsCheckBox);
+        Button addImages = findViewById(R.id.addImagesButton);
         hoursView = findViewById(R.id.hoursEditView);
         minutesView = findViewById(R.id.minutesEditView);
         secondsView = findViewById(R.id.secondsEditView);
@@ -91,38 +92,81 @@ public class TimerActivity extends AppCompatActivity {
         sp1 = findViewById(R.id.hoursIndicator);
         sp2 = findViewById(R.id.minutesIndicator);
         sp3 = findViewById(R.id.secondsIndicator);
-        wrapper = TimersWrapper.getInstance();
-        typeID = getIntent().getIntExtra("typeID", -1);
+        TimersWrapper wrapper = TimersWrapper.getInstance();
+        int typeID = getIntent().getIntExtra("typeID", -1);
 
         if (typeID == 2 || typeID == 3) {
             int indexGroup = getIntent().getIntExtra("indexGroup", -1);
-            int indexTimer = getIntent().getIntExtra("indexTimer", -1);
-            TimerGroup group = wrapper.getSpecificGroupOfTimersByIndex(indexGroup);
-            timer = group.getTimerByIndex(indexTimer);
+            indexTimer = getIntent().getIntExtra("indexTimer", -1);
+            TimerGroupClass group = wrapper.getSpecificGroupOfTimersByIndex(indexGroup);
+            timerClass = group.getTimerByIndex(indexTimer);
         } else if (typeID == 1) {
-            int index = getIntent().getIntExtra("indexTimer", -1);
-            timer = wrapper.getSpecificIndividualTimerByIndex(index);
+            indexTimer = getIntent().getIntExtra("indexTimer", -1);
+            timerClass = wrapper.getSpecificIndividualTimerByIndex(indexTimer);
 
         }
 
-        timer.setViews(secondsView, minutesView, hoursView);
-        intervals = timer.isIntervals();
-        numberOfIntervals = timer.getNumberOfIntervals();
-        mode = timer.getMode();
-        name = timer.getTimerName();
-        time = timer.getCurrentTimerValue();
-        timerRunning = timer.isTimerRunning();
+        timerClass.setViews(secondsView, minutesView, hoursView);
+
+        mode = timerClass.getMode();
+        name = timerClass.getTimerName();
+        time = timerClass.getCurrentTimerValue();
+        boolean timerRunning = timerClass.isTimerRunning();
         if (!timerRunning) {
-            wrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
+            TimersWrapper.updateViews(time, mode, secondsView, minutesView, hoursView);
         }
         sp.setSelection(getIndex(sp, mode));
-        cb.setChecked(intervals);
-        et.setText("" + numberOfIntervals);
+
         nameView.setText(name);
         editable(time);
 
-        intent = new Intent(this.getApplicationContext(), timerFragment.class);
+        intent = new Intent(this.getApplicationContext(), TimerFragment.class);
+
+        addImages.setOnClickListener(v -> {
+            intent = new Intent(this.getApplicationContext(), AddImagesActivity.class);
+            intent.putExtra("timerIndex", indexTimer);
+            startActivityForResult(intent, images);
+        });
+
+        TextView editNotifications = findViewById(R.id.enableIntervalText);
+        editNotifications.setOnClickListener(v -> {
+            intent = new Intent(this.getApplicationContext(), NotificationActivity.class);
+            intent.putExtra("timerIndex", indexTimer);
+            startActivityForResult(intent, notifications);
+        });
+
+        Upload upload = timerClass.getUpload();
+        ImageView image = findViewById(R.id.timerMedia);
+        if (upload != null) {
+            Picasso.get()
+                    .load(upload.getImageUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .fit()
+                    .centerCrop()
+                    .into(image);
+        } else {
+            image.setImageResource(R.drawable.no_image);
+        }
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Upload upload = timerClass.getUpload();
+        ImageView image = findViewById(R.id.timerMedia);
+        if (upload != null) {
+            Picasso.get()
+                    .load(upload.getImageUrl())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .fit()
+                    .centerCrop()
+                    .into(image);
+        } else {
+            image.setImageResource(R.drawable.no_image);
+        }
+    }
+
 
     private void editable(long time) {
         if (time != 0) {
@@ -145,17 +189,14 @@ public class TimerActivity extends AppCompatActivity {
 
 
     private void save() {
-        intervals = cb.isChecked();
-        numberOfIntervals = Integer.parseInt(et.getText().toString());
+
         mode = sp.getSelectedItem().toString();
-        time = wrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
+        time = TimersWrapper.getTimerValue(mode, secondsView, minutesView, hoursView);
         name = nameView.getText().toString();
 
-        timer.setIntervals(intervals);
-        timer.setNumberOfIntervals(numberOfIntervals);
-        timer.setMode(mode);
-        timer.setTimerName(name);
-        timer.setCurrentTimerValue(time);
+        timerClass.setMode(mode);
+        timerClass.setTimerName(name);
+        timerClass.setCurrentTimerValue(time);
 
     }
 
@@ -167,5 +208,17 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            save();
+            setResult(RESULT_OK);
+            finish();
+
+            return true;
+        }
+        return false;
     }
 }
