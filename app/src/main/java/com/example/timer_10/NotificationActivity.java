@@ -1,9 +1,7 @@
 package com.example.timer_10;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -28,13 +26,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean appColor = app_preferences.getBoolean("color", false);
-        if (!appColor) {
-            setTheme(R.style.Theme_Timer_10);
-        } else if (appColor) {
-            setTheme(R.style.Theme_ORANGE_THEME);
-        }
+        TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_notification);
 
         indexOfTimer = getIntent().getIntExtra("timerIndex", -1);

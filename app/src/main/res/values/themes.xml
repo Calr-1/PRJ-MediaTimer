@@ -66,5 +66,97 @@
         <item name="android:tint">@color/primaryColorLightestOrange</item>
     </style>
 
+    <style name="Theme.GREEN_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColorGreen</item>
+        <item name="colorPrimaryVariant">@color/primaryColorVariantGreen</item>
+        <item name="colorOnPrimary">@color/onPrimaryColorGreen</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/primaryColorLightestGreen</item>
+        <item name="android:textColorPrimary">@color/onPrimaryLightestColorGreen</item>
+        <item name="android:textColorSecondary">@color/onPrimaryLightestColorGreen</item>
+        <item name="android:textColorTertiary">@color/onPrimaryLightestColorGreen</item>
+        <item name="android:editTextColor">@color/onPrimaryLightestColorGreen</item>
+        <item name="colorControlActivated">@color/onPrimaryLightestColorGreen</item>
+        <item name="colorControlHighlight">@color/onPrimaryLightestColorGreen</item>
+        <item name="imageButtonStyle">@style/ImageButtonGreen</item>
+
+    </style>
+
+    <style name="ImageButtonGreen" parent="Theme.GREEN_THEME">
+        <item name="android:background">@drawable/button_style_green</item>
+        <item name="android:tint">@color/primaryColorLightestGreen</item>
+    </style>
+
+    <style name="Theme.REDBLACK_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColorRedBlack</item>
+        <item name="colorPrimaryVariant">@color/primaryColorVariantRedBlack</item>
+        <item name="colorOnPrimary">@color/onPrimaryColorRedBlack</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/primaryColorLightestRedBlack</item>
+        <item name="android:textColorPrimary">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="android:textColorSecondary">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="android:textColorTertiary">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="android:editTextColor">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="colorControlActivated">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="colorControlHighlight">@color/onPrimaryLightestColorRedBlack</item>
+        <item name="imageButtonStyle">@style/ImageButtonRedBlack</item>
+
+    </style>
+
+    <style name="ImageButtonRedBlack" parent="Theme.REDBLACK_THEME">
+        <item name="android:background">@drawable/button_style_red_black</item>
+        <item name="android:tint">@color/primaryColorLightestRedBlack</item>
+    </style>
+
+    <style name="Theme.BLACK_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColorBlack</item>
+        <item name="colorPrimaryVariant">@color/primaryColorVariantBlack</item>
+        <item name="colorOnPrimary">@color/onPrimaryColorBlack</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/primaryColorLightestBlack</item>
+        <item name="android:textColorPrimary">@color/onPrimaryLightestColorBlack</item>
+        <item name="android:textColorSecondary">@color/onPrimaryLightestColorBlack</item>
+        <item name="android:textColorTertiary">@color/onPrimaryLightestColorBlack</item>
+        <item name="android:editTextColor">@color/onPrimaryLightestColorBlack</item>
+        <item name="colorControlActivated">@color/onPrimaryLightestColorBlack</item>
+        <item name="colorControlHighlight">@color/onPrimaryLightestColorBlack</item>
+        <item name="imageButtonStyle">@style/ImageButtonBlack</item>
+
+    </style>
+
+    <style name="ImageButtonBlack" parent="Theme.BLACK_THEME">
+        <item name="android:background">@drawable/button_style_black</item>
+        <item name="android:tint">@color/primaryColorLightestBlack</item>
+    </style>
 
 </resources>

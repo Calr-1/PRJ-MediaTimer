@@ -1,8 +1,6 @@
 package com.example.timer_10;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -40,13 +38,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences app_preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean appColor = app_preferences.getBoolean("color", false);
-        if (!appColor) {
-            setTheme(R.style.Theme_Timer_10);
-        } else if (appColor) {
-            setTheme(R.style.Theme_ORANGE_THEME);
-        }
+        TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_images);
 
         int indexOfTimer = getIntent().getIntExtra("timerIndex", -1);

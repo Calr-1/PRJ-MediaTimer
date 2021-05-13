@@ -54,4 +54,10 @@
     <string name="time_between_intervals">Time between Intervals:</string>
     <string name="sounds">Sounds</string>
     <string name="enable_random_intervals">Enable random intervals</string>
+    <string name="choose_your_theme">Choose your theme</string>
+    <string name="blue_grey_text">Blue/Grey</string>
+    <string name="orange_text">Orange</string>
+    <string name="green_text">Green</string>
+    <string name="red_black_text">Red/Black</string>
+    <string name="black_text">Black</string>
 </resources>
