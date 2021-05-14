@@ -92,7 +92,7 @@ public class TimerActivity extends AppCompatActivity {
             indexTimer = getIntent().getIntExtra("indexTimer", -1);
             TimerGroupClass group = wrapper.getSpecificGroupOfTimersByIndex(indexGroup);
             timerClass = group.getTimerByIndex(indexTimer);
-        } else if (typeID == 1) {
+        } else if (typeID == 1 || typeID == 4) {
             indexTimer = getIntent().getIntExtra("indexTimer", -1);
             timerClass = wrapper.getSpecificIndividualTimerByIndex(indexTimer);
 

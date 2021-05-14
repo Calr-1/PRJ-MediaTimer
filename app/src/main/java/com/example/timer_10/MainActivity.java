@@ -31,6 +31,29 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(v -> addButton.showContextMenu());
         addButton.setOnLongClickListener(v -> true);
 
+        loadExistingTimers();
+
+    }
+
+    private void loadExistingTimers() {
+
+        for (int index = 0; index < wrapper.getTimerFragments().size(); index++) {
+            TimerFragment frag = new TimerFragment(4, wrapper.getSpecificIndividualTimerByIndex(index));
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.timerLayout, frag)
+                    .commit();
+            wrapper.setSpecificIndividualTimerFragment(index, frag);
+        }
+        for (int index = 0; index < wrapper.getGroupsOfTimersFragment().size(); index++) {
+            TimerGroupFragment group = wrapper.getGroupsOfTimersFragmentByIndex(index);
+            if (group.getAssociatedGroup() == null) {
+                TimerGroupFragment frag = new TimerGroupFragment(4, wrapper.getGroupsOfTimers().get(index));
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.timerLayout, frag)
+                        .commit();
+                wrapper.setGroupOfTimersFragment(index, frag);
+            }
+        }
     }
 
     @Override
@@ -107,8 +130,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 }

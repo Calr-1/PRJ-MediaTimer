@@ -49,6 +49,11 @@ public class TimerFragment extends Fragment {
         this.timerClass = timerClass;
     }
 
+    public TimerFragment(int typeId, TimerClass timerClass) {
+        this.typeId = typeId;
+        this.timerClass = timerClass;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,7 +93,7 @@ public class TimerFragment extends Fragment {
         timerCountdownInterval = 100;
 
 
-        if (typeId == 3) {
+        if (typeId == 3 || typeId == 4) {
             timerRunning = timerClass.isTimerRunning();
             timerInitialValue = timerClass.getTimerInitialValue();
             timerCountdownInterval = timerClass.getTimerCountdownInterval();
@@ -133,8 +138,8 @@ public class TimerFragment extends Fragment {
                 intent.putExtra("indexGroup", wrapper.getIndexOfGroupOfTimers(timerGroupClass));
                 intent.putExtra("indexTimer", timerGroupClass.getIndexOfTimer(timerClass));
 
-            } else if (typeId == 1) {
-                intent.putExtra("typeID", 1);
+            } else if (typeId == 1 || typeId == 4) {
+                intent.putExtra("typeID", typeId);
                 intent.putExtra("indexTimer", wrapper.getIndexOfIndividualTimer(timerClass));
             }
             startActivityForResult(intent, configure);
