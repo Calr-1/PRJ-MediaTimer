@@ -19,6 +19,8 @@ public class TimerGroupFragment extends Fragment {
 
     private TimersWrapper wrapper;
     private TimerGroupClass group;
+
+
     private TimerGroupClass associatedGroup;
     private final int type;
 
@@ -29,7 +31,13 @@ public class TimerGroupFragment extends Fragment {
 
     public TimerGroupFragment(int type, TimerGroupClass associatedGroup) {
         this.type = type;
-        this.associatedGroup = associatedGroup;
+        if (type == 4) {
+            this.group = associatedGroup;
+        } else {
+            this.associatedGroup = associatedGroup;
+        }
+
+
     }
 
     public TimerGroupFragment(int type, TimerGroupClass group, TimerGroupClass associatedGroup) {
@@ -92,5 +100,9 @@ public class TimerGroupFragment extends Fragment {
 
             }
         }
+    }
+
+    public TimerGroupClass getAssociatedGroup() {
+        return associatedGroup;
     }
 }

@@ -40,15 +40,16 @@ public class TimersWrapper implements Serializable {
      * Array containing the groups of timers
      */
     private ArrayList<TimerGroupClass> groupsOfTimers;
+
     /**
      * Array containing the groups of timers fragments
      */
-    private ArrayList<Fragment> groupsOfTimersFragment;
+    private ArrayList<TimerGroupFragment> groupsOfTimersFragment;
 
     /**
      * Array containing all the fragments that represent the individual timers
      */
-    private ArrayList<Fragment> timerFragments;
+    private ArrayList<TimerFragment> timerFragments;
 
     /**
      * Private constructor so it cant be instantiated outside
@@ -176,13 +177,26 @@ public class TimersWrapper implements Serializable {
         this.groupsOfTimers = groupsOfTimers;
     }
 
-    public ArrayList<Fragment> getTimerFragments() {
+    public ArrayList<TimerFragment> getTimerFragments() {
         return timerFragments;
     }
 
-    public void setTimerFragments(ArrayList<Fragment> timerFragments) {
+    public void setTimerFragments(ArrayList<TimerFragment> timerFragments) {
         this.timerFragments = timerFragments;
     }
+
+    public ArrayList<TimerGroupFragment> getGroupsOfTimersFragment() {
+        return groupsOfTimersFragment;
+    }
+
+    public void setSpecificIndividualTimerFragment(int index, TimerFragment timer) {
+        timerFragments.set(index, timer);
+    }
+
+    public void setGroupOfTimersFragment(int index, TimerGroupFragment timer) {
+        groupsOfTimersFragment.set(index, timer);
+    }
+
 
     /**
      * Methods to add objects to their respective arrays
@@ -211,7 +225,7 @@ public class TimersWrapper implements Serializable {
      *
      * @param fragment timer fragment object to be added to the array
      */
-    public void addTimerFragment(Fragment fragment) {
+    public void addTimerFragment(TimerFragment fragment) {
         timerFragments.add(fragment);
     }
 
@@ -220,7 +234,7 @@ public class TimersWrapper implements Serializable {
      *
      * @param fragment GroupActivity of timers fragment object to be added to the array
      */
-    public void addTimerGroupFragment(Fragment fragment) {
+    public void addTimerGroupFragment(TimerGroupFragment fragment) {
         groupsOfTimersFragment.add(fragment);
     }
 
@@ -265,8 +279,17 @@ public class TimersWrapper implements Serializable {
      *
      * @param index Index of the wanted timer
      */
-    public Fragment getTimerFragmentByIndex(int index) {
+    public TimerFragment getTimerFragmentByIndex(int index) {
         return timerFragments.get(index);
+    }
+
+    /**
+     * Gets a timer group fragment from the array given an index
+     *
+     * @param index Index of the wanted timer
+     */
+    public TimerGroupFragment getGroupsOfTimersFragmentByIndex(int index) {
+        return groupsOfTimersFragment.get(index);
     }
 
     /**
@@ -276,10 +299,6 @@ public class TimersWrapper implements Serializable {
      */
     public int getIndexOfTimerFragment(Fragment fragment) {
         return timerFragments.indexOf(fragment);
-    }
-
-    public void getAllRingtones() {
-
     }
 
     public static void loadTheme(Context app) {
