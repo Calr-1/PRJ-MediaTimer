@@ -105,4 +105,9 @@ public class TimerGroupFragment extends Fragment {
     public TimerGroupClass getAssociatedGroup() {
         return associatedGroup;
     }
+
+    public ConstraintLayout getLayout(){
+        ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
+        return layout;
+    }
 }

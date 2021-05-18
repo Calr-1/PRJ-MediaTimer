@@ -67,8 +67,6 @@ public class TimerClass {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createTimer(long timerInitialValue, int timerCountdownInterval) {
-
-        intervalArrayRandom = notifications.randomIntervals(randomIntervals, timerInitialValue);
         countDownTimerTimerObject = new CountDownTimer(timerInitialValue, timerCountdownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -174,8 +172,10 @@ public class TimerClass {
         return timerInitialValue;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setTimerInitialValue(long timerInitialValue) {
         this.timerInitialValue = timerInitialValue;
+        intervalArrayRandom = notifications.randomIntervals(randomIntervals, timerInitialValue);
     }
 
     public int getTimerCountdownInterval() {
