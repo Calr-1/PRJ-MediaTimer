@@ -60,4 +60,8 @@
     <string name="green_text">Green</string>
     <string name="red_black_text">Red/Black</string>
     <string name="black_text">Black</string>
+    <string name="max_number_of_intervals">Max number of intervals:</string>
+    <string name="min_number_of_intervals">Min number of intervals:</string>
+    <string name="vibration">Vibration</string>
+    <string name="enable_vibration">Enable vibration</string>
 </resources>

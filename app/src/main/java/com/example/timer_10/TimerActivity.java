@@ -31,6 +31,7 @@ public class TimerActivity extends AppCompatActivity {
     public EditText secondsView;
     public EditText nameView;
     private TextView sp1, sp2, sp3;
+    private ImageView editableName;
 
     private TimerClass timerClass;
     private int indexTimer;
@@ -84,6 +85,7 @@ public class TimerActivity extends AppCompatActivity {
         sp1 = findViewById(R.id.hoursIndicator);
         sp2 = findViewById(R.id.minutesIndicator);
         sp3 = findViewById(R.id.secondsIndicator);
+        editableName = findViewById(R.id.editableName);
         TimersWrapper wrapper = TimersWrapper.getInstance();
         int typeID = getIntent().getIntExtra("typeID", -1);
 
@@ -161,14 +163,19 @@ public class TimerActivity extends AppCompatActivity {
 
 
     private void editable(long time) {
-        if (time != 0) {
+        if (timerClass.isTimerRunning()) {
             hoursView.setEnabled(false);
             minutesView.setEnabled(false);
             secondsView.setEnabled(false);
+            nameView.setEnabled(false);
+            editableName.setVisibility(View.INVISIBLE);
         } else {
             hoursView.setEnabled(true);
             minutesView.setEnabled(true);
             secondsView.setEnabled(true);
+            nameView.setEnabled(true);
+            editableName.setVisibility(View.VISIBLE);
+
         }
     }
 

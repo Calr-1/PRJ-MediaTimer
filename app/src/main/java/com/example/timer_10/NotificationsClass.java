@@ -93,11 +93,17 @@ public class NotificationsClass {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public ArrayList<Long> randomIntervals(int maxIntervals, long timerInitialValue) {
+    public ArrayList<Long> randomIntervals(int maxIntervals, int minIntervals, long timerInitialValue) {
         ArrayList<Long> intervals = new ArrayList<Long>();
         long time = timerInitialValue;
         long interval = timerInitialValue / (maxIntervals + 1);
-        for (int i = 0; i < maxIntervals; i++) {
+        int numberOfIntervals = 0;
+        if(maxIntervals > minIntervals){
+            Random r = new Random();
+            numberOfIntervals = r.nextInt((maxIntervals+1)-minIntervals) + minIntervals;
+        }
+        else numberOfIntervals = maxIntervals;
+        for (int i = 0; i < numberOfIntervals; i++) {
             Random random = new Random();
             int low = -40;
             int high = 40;

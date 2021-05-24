@@ -29,7 +29,7 @@
             tools:ignore="LabelFor" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/editableName"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"

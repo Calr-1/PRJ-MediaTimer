@@ -115,6 +115,7 @@ public class TimerFragment extends Fragment {
                     timerClass.setTimerCountdownInterval(timerCountdownInterval);
                     timerClass.createTimer(timerInitialValue, timerCountdownInterval);
                     timerClass.startTimer();
+                    playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
                     Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Timer can't start!", Toast.LENGTH_SHORT).show();
@@ -129,8 +130,11 @@ public class TimerFragment extends Fragment {
         stopTimerButton.setOnClickListener(v -> {
             if (timerClass.canStopSound()) {
                 stopAlarm();
+                timerClass.stopVibration();
                 Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
                 playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                TimersWrapper.updateViews(timerClass.getTimerInitialValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
+
 
             }
         });
@@ -157,10 +161,9 @@ public class TimerFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void pauseUnpauseTimer() {
         if (timerRunning) {
-            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
-        } else {
             playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-        }
+        } else {
+            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);        }
 
         timerClass.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;

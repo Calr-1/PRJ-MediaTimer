@@ -238,22 +238,51 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/randomIntervalCheckBoxText"
+                    android:id="@+id/randomIntervalMinCheckBoxText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/NumberOfIntervalsRandomText"
+                        android:id="@+id/NumberOfIntervalsMinRandomText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_margin="10dp"
-                        android:text="@string/number_of_intervals"
+                        android:text="@string/min_number_of_intervals"
                         android:textSize="20sp" />
 
                     <EditText
-                        android:id="@+id/inputNumberIntervalsRandom"
+                        android:id="@+id/inputNumberIntervalsMinRandom"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="6dp"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:text="@string/number_of_intervals_default"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/randomIntervalMaxCheckBoxText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/NumberOfIntervalsMaxRandomText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/max_number_of_intervals"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/inputNumberIntervalsMaxRandom"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -299,6 +328,47 @@
                         android:gravity="center_vertical"
                         android:text="@string/choose_sound"
                         android:textSize="20sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/vibrationsSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/vibrationsSeparatorText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/vibration"
+                        android:textSize="24sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/vibrationsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/enableVibrationsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:text="@string/enable_vibration"
+                        android:textSize="20sp" />
+
+                    <CheckBox
+                        android:id="@+id/enableVibrationsCB"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="6dp"
+                        android:importantForAutofill="no"
+                        tools:ignore="LabelFor" />
+
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

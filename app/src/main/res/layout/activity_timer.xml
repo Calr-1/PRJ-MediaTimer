@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/linputNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,8 +37,12 @@
                     android:id="@+id/groupName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="0.7"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
                     android:hint="@string/timer_s_name"
                     android:importantForAutofill="no"
                     android:inputType="text"
@@ -46,13 +50,18 @@
                     tools:ignore="LabelFor" />
 
                 <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3"
+                    android:id="@+id/editableName"
+                    android:layout_width="37dp"
+                    android:layout_height="40dp"
+                    android:layout_alignEnd="@+id/groupName"
+                    android:layout_alignRight="@+id/groupName"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="7dp"
+                    android:layout_marginRight="7dp"
                     android:contentDescription="@string/edit_text_indicator"
                     android:src="@drawable/ic_baseline_edit_24" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/timeLayout"
