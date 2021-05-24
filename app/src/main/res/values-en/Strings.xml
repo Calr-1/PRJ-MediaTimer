@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Media Timer</string>
     <string name="startTimerButton_string">Start Timer</string>
@@ -21,7 +22,6 @@
     <string name="title_activity_common_page">common_page</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="group_timers">Group Timers</string>
     <string name="name_your_new_group">Name your new group</string>

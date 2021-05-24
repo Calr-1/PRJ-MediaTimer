@@ -39,7 +39,6 @@ public class TimerActivity extends AppCompatActivity {
     private static final int images = 3;
     private static final int notifications = 4;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

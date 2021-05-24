@@ -82,7 +82,7 @@ public class TimerFragment extends Fragment {
 
 
         playPauseButton = getView().findViewById(R.id.play_and_pause_group_button);
-        ImageButton stopTimerButton = getView().findViewById(R.id.stop_playing_group_button);
+        //ImageButton stopTimerButton = getView().findViewById(R.id.play_and_pause_group_button);
 
         TextView tv = getView().findViewById(R.id.timerFragName);
         tv.setText(timerClass.getTimerName());
@@ -117,18 +117,16 @@ public class TimerFragment extends Fragment {
                 }
 
             } else {
-                pauseUnpauseTimer();
+                if (timerClass.canStopSound()) {
+                    stopAlarm();
+                    Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
+                    playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+
+                } else pauseUnpauseTimer();
             }
         });
 
-        stopTimerButton.setOnClickListener(v -> {
-            if (timerClass.canStopSound()) {
-                stopAlarm();
-                Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
-                playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
-            }
-        });
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
         layout.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), TimerActivity.class);
