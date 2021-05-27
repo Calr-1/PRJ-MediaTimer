@@ -84,6 +84,7 @@ public class TimerFragment extends Fragment {
         playPauseButton = getView().findViewById(R.id.play_and_pause_group_button);
         //ImageButton stopTimerButton = getView().findViewById(R.id.play_and_pause_group_button);
 
+
         TextView tv = getView().findViewById(R.id.timerFragName);
         tv.setText(timerClass.getTimerName());
 

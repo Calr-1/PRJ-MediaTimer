@@ -10,6 +10,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.DragEvent;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +28,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(addButton);
         addButton.setOnClickListener(v -> addButton.showContextMenu());
         addButton.setOnLongClickListener(v -> true);
+
 
         originalLayout = findViewById(R.id.timerLayout);
         addTimerLine();
@@ -347,155 +355,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if (item.getItemId() == R.id.change_theme_option) {
-
-            Intent intent = new Intent(this, ChangeAppThemeActivity.class);
-            startActivityForResult(intent, 1);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void addTimerFragment() {
-
-        int lines = originalLayout.getChildCount();
-        LinearLayout og = (LinearLayout) ((LinearLayout) originalLayout.getChildAt(lines - 1)).getChildAt(0);
-
-        if (og.getChildAt(0).getVisibility() == View.INVISIBLE) {
-            LinearLayout layout = (LinearLayout) og.getChildAt(0);
-            layout.setVisibility(View.VISIBLE);
-            TimerFragment frag = new TimerFragment(1);
-            wrapper.addTimerFragment(frag);
-            layout.setId(id);
-            id++;
-            getSupportFragmentManager().beginTransaction()
-                    .add(layout.getId(), frag)
-                    .commitNow();
-            ConstraintLayout f = (ConstraintLayout) layout.getChildAt(0);
-            f.setTag("Fragment" + id);
-            f.setOnLongClickListener(new View.OnLongClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public boolean onLongClick(View view) {
-                    String clipText = "This is our clipData text";
-                    ClipData.Item item = new ClipData.Item(clipText);
-                    String[] mimeTypes;
-                    mimeTypes = new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN};
-                    ClipData data = new ClipData(clipText, mimeTypes, item);
-
-                    View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(layout);
-                    layout.startDragAndDrop(data, dragShadowBuilder, layout, 0);
-                    layout.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-            layout.setOnDragListener(onDragEventListener);
-        } else if (og.getChildAt(1).getVisibility() == View.INVISIBLE) {
-            LinearLayout layout = (LinearLayout) og.getChildAt(1);
-            layout.setVisibility(View.VISIBLE);
-            TimerFragment frag = new TimerFragment(1);
-            wrapper.addTimerFragment(frag);
-            layout.setId(id);
-            id++;
-            getSupportFragmentManager().beginTransaction()
-                    .add(layout.getId(), frag)
-                    .commitNow();
-            ConstraintLayout f = (ConstraintLayout) layout.getChildAt(0);
-            f.setTag("Fragment" + id);
-            f.setOnLongClickListener(new View.OnLongClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public boolean onLongClick(View view) {
-                    String clipText = "This is our clipData text";
-                    ClipData.Item item = new ClipData.Item(clipText);
-                    String[] mimeTypes;
-                    mimeTypes = new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN};
-                    ClipData data = new ClipData(clipText, mimeTypes, item);
-
-                    View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(layout);
-                    layout.startDragAndDrop(data, dragShadowBuilder, layout, 0);
-                    layout.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-            layout.setOnDragListener(onDragEventListener);
-        } else {
-            addTimerLine();
-            addTimerFragment();
-        }
-    }
-
-    private void addGroupFragment() {
-        int lines = originalLayout.getChildCount();
-        LinearLayout og = (LinearLayout) ((LinearLayout) originalLayout.getChildAt(lines - 1)).getChildAt(0);
-        if (og.getChildAt(0).getVisibility() == View.INVISIBLE) {
-            LinearLayout layout = (LinearLayout) og.getChildAt(0);
-            layout.setVisibility(View.VISIBLE);
-            TimerGroupFragment frag = new TimerGroupFragment(1);
-            wrapper.addTimerGroupFragment(frag);
-            layout.setId(id);
-            id++;
-            getSupportFragmentManager().beginTransaction()
-                    .add(layout.getId(), frag)
-                    .commitNow();
-            ConstraintLayout f = (ConstraintLayout) layout.getChildAt(0);
-            f.setTag("Fragment" + id);
-            f.setOnLongClickListener(new View.OnLongClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public boolean onLongClick(View view) {
-                    String clipText = "This is our clipData text";
-                    ClipData.Item item = new ClipData.Item(clipText);
-                    String[] mimeTypes;
-                    mimeTypes = new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN};
-                    ClipData data = new ClipData(clipText, mimeTypes, item);
-
-                    View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(layout);
-                    layout.startDragAndDrop(data, dragShadowBuilder, layout, 0);
-                    layout.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-            layout.setOnDragListener(onDragEventListener);
-        } else if (og.getChildAt(1).getVisibility() == View.INVISIBLE) {
-            LinearLayout layout = (LinearLayout) og.getChildAt(1);
-            layout.setVisibility(View.VISIBLE);
-            TimerGroupFragment frag = new TimerGroupFragment(1);
-            wrapper.addTimerGroupFragment(frag);
-            layout.setId(id);
-            id++;
-            getSupportFragmentManager().beginTransaction()
-                    .add(layout.getId(), frag)
-                    .commitNow();
-            ConstraintLayout f = (ConstraintLayout) layout.getChildAt(0);
-            f.setTag("Fragment" + id);
-            f.setOnLongClickListener(new View.OnLongClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public boolean onLongClick(View view) {
-                    String clipText = "This is our clipData text";
-                    ClipData.Item item = new ClipData.Item(clipText);
-                    String[] mimeTypes;
-                    mimeTypes = new String[]{ClipDescription.MIMETYPE_TEXT_PLAIN};
-                    ClipData data = new ClipData(clipText, mimeTypes, item);
-
-                    View.DragShadowBuilder dragShadowBuilder = new View.DragShadowBuilder(layout);
-                    layout.startDragAndDrop(data, dragShadowBuilder, layout, 0);
-                    layout.setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            });
-            layout.setOnDragListener(onDragEventListener);
-        } else {
-            addTimerLine();
-            addGroupFragment();
-        }
-
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -507,5 +366,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

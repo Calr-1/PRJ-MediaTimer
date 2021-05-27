@@ -35,6 +35,7 @@ public class AlarmPlayerClass {
         if (uri == null) soundObject = MediaPlayer.create(context, soundID);
         else soundObject = MediaPlayer.create(context, uri);
 
+
     }
 
     public void playNotification() {
