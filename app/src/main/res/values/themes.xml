@@ -22,13 +22,23 @@
         <item name="colorControlActivated">@color/onPrimaryLightestColorBlueGrey</item>
         <item name="colorControlHighlight">@color/onPrimaryLightestColorBlueGrey</item>
         <item name="imageButtonStyle">@style/ImageButtonBlueGrey</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationViewBlueGrey</item>
 
     </style>
-
     <style name="ImageButtonBlueGrey" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:background">@drawable/button_style_blue_grey</item>
         <item name="android:tint">@color/onPrimaryColorBlueGrey</item>
     </style>
+
+    <style name="Widget.App.BottomNavigationViewBlueGrey" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationViewBlueGrey
+        </item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationViewBlueGrey" parent="">
+        <item name="colorPrimary">@color/primaryColorBlueGrey</item>
+        <item name="colorOnPrimary">@color/primaryColorLightestBlueGrey</item>
+
 
     <style name="Theme.Timer_10.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -58,6 +68,8 @@
         <item name="colorControlActivated">@color/onPrimaryLightestColorOrange</item>
         <item name="colorControlHighlight">@color/onPrimaryLightestColorOrange</item>
         <item name="imageButtonStyle">@style/ImageButtonOrange</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationViewOrange</item>
+
 
     </style>
 
@@ -65,6 +77,16 @@
         <item name="android:background">@drawable/button_style_orange</item>
         <item name="android:tint">@color/primaryColorLightestOrange</item>
     </style>
+
+    <style name="Widget.App.BottomNavigationViewOrange" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationViewOrange</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationViewOrange" parent="">
+        <item name="colorPrimary">@color/primaryColorOrange</item>
+        <item name="colorOnPrimary">@color/primaryColorLightestOrange</item>
+    </style>
+
 
     <style name="Theme.GREEN_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
@@ -89,12 +111,23 @@
         <item name="colorControlActivated">@color/onPrimaryLightestColorGreen</item>
         <item name="colorControlHighlight">@color/onPrimaryLightestColorGreen</item>
         <item name="imageButtonStyle">@style/ImageButtonGreen</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationViewGreen</item>
+
 
     </style>
 
     <style name="ImageButtonGreen" parent="Theme.GREEN_THEME">
         <item name="android:background">@drawable/button_style_green</item>
         <item name="android:tint">@color/primaryColorLightestGreen</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationViewGreen" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationViewGreen</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationViewGreen" parent="">
+        <item name="colorPrimary">@color/primaryColorOrange</item>
+        <item name="colorOnPrimary">@color/primaryColorLightestOrange</item>
     </style>
 
     <style name="Theme.REDBLACK_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -120,12 +153,23 @@
         <item name="colorControlActivated">@color/onPrimaryLightestColorRedBlack</item>
         <item name="colorControlHighlight">@color/onPrimaryLightestColorRedBlack</item>
         <item name="imageButtonStyle">@style/ImageButtonRedBlack</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationViewREDBLACK</item>
 
     </style>
 
     <style name="ImageButtonRedBlack" parent="Theme.REDBLACK_THEME">
         <item name="android:background">@drawable/button_style_red_black</item>
         <item name="android:tint">@color/primaryColorLightestRedBlack</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationViewREDBLACK" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationViewREDBLACK
+        </item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationViewREDBLACK" parent="">
+        <item name="colorPrimary">@color/primaryColorRedBlack</item>
+        <item name="colorOnPrimary">@color/primaryColorLightestOrange</item>
     </style>
 
     <style name="Theme.BLACK_THEME" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -157,6 +201,15 @@
     <style name="ImageButtonBlack" parent="Theme.BLACK_THEME">
         <item name="android:background">@drawable/button_style_black</item>
         <item name="android:tint">@color/primaryColorLightestBlack</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationViewBLACK" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationViewBLACK</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationViewBLACK" parent="">
+        <item name="colorPrimary">@color/primaryColorVariantBlack</item>
+        <item name="colorOnPrimary">@color/primaryColorLightestOrange</item>
     </style>
 
 </resources>

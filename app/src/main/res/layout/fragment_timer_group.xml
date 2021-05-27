@@ -9,137 +9,154 @@
     android:background="@drawable/round_corners"
     tools:context=".TimerFragment">
 
-    <TextView
-        android:id="@+id/timerFragName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="@string/placeholder_desc"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/hoursEditView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/hints"
-        android:importantForAutofill="no"
-        android:text="@string/hours_string"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerFragName"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:id="@+id/timerNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/separator1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:text="@string/separator_string"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/hoursEditView"
-        app:layout_constraintEnd_toStartOf="@+id/minutesEditView"
-        app:layout_constraintStart_toEndOf="@+id/hoursEditView"
-        app:layout_constraintTop_toTopOf="@+id/hoursEditView"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/timerFragName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/placeholder_desc"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/secondsEditView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/hints"
-        android:importantForAutofill="no"
-        android:text="@string/seconds_string"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/minutesEditView"
-        app:layout_constraintStart_toEndOf="@+id/separator2"
-        app:layout_constraintTop_toTopOf="@+id/separator2" />
+        <LinearLayout
+            android:id="@+id/timerTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/minutesEditView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:gravity="center_horizontal"
-        android:hint="@string/hints"
-        android:importantForAutofill="no"
-        android:text="@string/minutes_string"
-        android:textSize="36sp"
-        app:layout_constraintStart_toEndOf="@+id/separator1"
-        app:layout_constraintTop_toTopOf="@+id/separator1" />
+            <TextView
+                android:id="@+id/hoursEditView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginLeft="3dp"
+                android:gravity="center_horizontal"
+                android:hint="@string/hints"
+                android:importantForAutofill="no"
+                android:text="@string/hours_string"
+                android:textSize="36sp" />
 
-    <TextView
-        android:id="@+id/separator2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:text="@string/separator_string"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="@+id/minutesEditView"
-        app:layout_constraintEnd_toStartOf="@+id/secondsEditView"
-        app:layout_constraintStart_toEndOf="@+id/minutesEditView"
-        app:layout_constraintTop_toTopOf="@+id/minutesEditView"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/separator1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="1dp"
+                android:text="@string/separator_string"
+                android:textSize="36sp" />
 
-    <ImageButton
-        android:id="@+id/play_and_pause_group_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_baseline_play_arrow_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/hoursEditView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/hoursEditView"
-        app:layout_constraintTop_toBottomOf="@+id/hoursEditView"
-        android:contentDescription="@string/placeholder_desc" />
+            <TextView
+                android:id="@+id/minutesEditView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="@string/hints"
+                android:importantForAutofill="no"
+                android:text="@string/minutes_string"
+                android:textSize="36sp" />
 
+            <TextView
+                android:id="@+id/separator2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="1dp"
+                android:text="@string/separator_string"
+                android:textSize="36sp" />
 
-    <ImageButton
-        android:id="@+id/stop_playing_group_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/ic_baseline_stop_24"
-        app:layout_constraintEnd_toEndOf="@+id/minutesEditView"
-        app:layout_constraintStart_toStartOf="@+id/minutesEditView"
-        app:layout_constraintTop_toTopOf="@+id/play_and_pause_group_button"
-        android:contentDescription="@string/placeholder_desc" />
+            <TextView
+                android:id="@+id/secondsEditView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:gravity="center_horizontal"
+                android:hint="@string/hints"
+                android:importantForAutofill="no"
+                android:text="@string/seconds_string"
+                android:textSize="36sp" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/timerProgressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/timer_options_group_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/ic_baseline_menu_24"
-        app:layout_constraintEnd_toEndOf="@+id/secondsEditView"
-        app:layout_constraintStart_toStartOf="@+id/secondsEditView"
-        app:layout_constraintTop_toTopOf="@+id/stop_playing_group_button"
-        android:contentDescription="@string/placeholder_desc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timerButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/restart_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/placeholder_desc"
+                android:src="@drawable/ic_baseline_play_arrow_24" />
+
+            <ImageButton
+                android:id="@+id/play_and_pause_group_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/placeholder_desc"
+                android:src="@drawable/ic_baseline_stop_24" />
+
+            <ImageButton
+                android:id="@+id/timer_options_group_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/placeholder_desc"
+                android:src="@drawable/ic_baseline_menu_24" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/imageView2"

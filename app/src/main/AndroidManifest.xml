@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timer_10">
+        <activity android:name=".TimerAudioActivity"></activity>
         <activity android:name=".NotificationActivity" />
         <activity android:name=".ImagesActivity" />
         <activity android:name=".AddImagesActivity" />
