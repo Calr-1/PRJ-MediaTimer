@@ -133,14 +133,6 @@ public class TimerFragment extends Fragment {
             }
         });
 
-        stopTimerButton.setOnClickListener(v -> {
-            if (timerClass.canStopSound()) {
-                stopAlarm();
-                timerClass.stopVibration();
-                Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
-                playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-                TimersWrapper.updateViews(timerClass.getTimerInitialValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
-
 
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
         layout.setOnClickListener(v -> {
@@ -172,7 +164,6 @@ public class TimerFragment extends Fragment {
         timerClass.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;
         timerClass.setTimerRunning(timerRunning);
-
 
     }
 

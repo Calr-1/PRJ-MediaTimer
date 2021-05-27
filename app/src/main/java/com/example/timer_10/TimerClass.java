@@ -227,7 +227,7 @@ public class TimerClass {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setCurrentTimerValue(long currentTimerValue) {
-        intervalArrayRandom = notifications.randomIntervals(randomIntervals, timerInitialValue);
+        intervalArrayRandom = notifications.randomIntervals(randomIntervalsMin,randomIntervalsMax, timerInitialValue);
         this.currentTimerValue = currentTimerValue;
     }
 

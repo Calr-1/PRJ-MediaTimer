@@ -1,9 +1,6 @@
 package com.example.timer_10;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.Intent;
@@ -11,41 +8,28 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.DragEvent;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.ContextMenu;
-import android.view.DragEvent;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.ArrayList;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.sql.Time;
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageButton addButton;
     private TimersWrapper wrapper;
     private LinearLayout originalLayout;
     private int id;
@@ -58,14 +42,54 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_main);
-        addButton = findViewById(R.id.addButton);
-        registerForContextMenu(addButton);
-        addButton.setOnClickListener(v -> addButton.showContextMenu());
-        addButton.setOnLongClickListener(v -> true);
+        registerForContextMenu(findViewById(R.id.addButton));
+
         layouts = new ArrayList<LinearLayout>();
         originalLayout = findViewById(R.id.timerLayout);
         addTimerLine();
         id = 1;
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Log.d("ENTROU 1",String.valueOf(item.getItemId()));
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(MainActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+        bottomNav.setOnNavigationItemReselectedListener(
+                new BottomNavigationView.OnNavigationItemReselectedListener() {
+                    @Override
+                    public void onNavigationItemReselected(@NonNull MenuItem item) {
+                        Log.d("ENTROU 2",String.valueOf(item.getItemId()));
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(MainActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                    }
+                });
+
 
 
         onDragEventListener = new View.OnDragListener() {
@@ -185,15 +209,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadExistingTimers(ArrayList<LinearLayout> layouts) {
         int j = 0;
-        for(int i = 0; i<layouts.size(); i++){
+        for (int i = 0; i < layouts.size(); i++) {
             LinearLayout og = (LinearLayout) ((LinearLayout) originalLayout.getChildAt(-1)).getChildAt(0);
             LinearLayout a = (LinearLayout) og.getChildAt(j);
             og.removeView(a);
             og.addView(layouts.get(i));
-            if(j<1) {
+            if (j < 1) {
                 j++;
-            }
-            else{
+            } else {
                 addTimerLine();
                 j = 0;
             }
@@ -205,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.timerLayout, frag)
                     .commit();
             wrapper.setSpecificIndividualTimerFragment(index, frag);*/
-        }
+
         for (int index = 0; index < wrapper.getGroupsOfTimersFragment().size(); index++) {
             int lines = originalLayout.getChildCount();
             LinearLayout og = (LinearLayout) ((LinearLayout) originalLayout.getChildAt(lines - 1)).getChildAt(0);
@@ -282,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }*/
 
+        }
     }
 
     @Override
@@ -305,24 +329,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_options_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        if (item.getItemId() == R.id.change_theme_option) {
-
-            Intent intent = new Intent(this, ChangeAppThemeActivity.class);
-            startActivityForResult(intent, 1);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void addTimerFragment() {
 
@@ -477,6 +483,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 
 }

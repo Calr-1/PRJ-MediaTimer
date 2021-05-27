@@ -38,6 +38,7 @@
     <style name="ThemeOverlay.App.BottomNavigationViewBlueGrey" parent="">
         <item name="colorPrimary">@color/primaryColorBlueGrey</item>
         <item name="colorOnPrimary">@color/primaryColorLightestBlueGrey</item>
+    </style>
 
 
     <style name="Theme.Timer_10.NoActionBar">
@@ -126,7 +127,7 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationViewGreen" parent="">
-        <item name="colorPrimary">@color/primaryColorOrange</item>
+        <item name="colorPrimary">@color/primaryColorGreen</item>
         <item name="colorOnPrimary">@color/primaryColorLightestOrange</item>
     </style>
 
