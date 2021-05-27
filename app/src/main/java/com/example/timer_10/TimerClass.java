@@ -1,10 +1,14 @@
 package com.example.timer_10;
 
+import android.net.Uri;
+
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+
+import java.io.IOException;
 
 import java.util.List;
 
@@ -220,7 +224,10 @@ public class TimerClass {
         return currentTimerValue;
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setCurrentTimerValue(long currentTimerValue) {
+        intervalArrayRandom = notifications.randomIntervals(randomIntervals, timerInitialValue);
         this.currentTimerValue = currentTimerValue;
     }
 
@@ -281,5 +288,11 @@ public class TimerClass {
     public void setVibration(boolean vibration) {
         this.vibration = vibration;
     }
+    public void setRingtone(Uri ringtone) throws IOException {
+        soundObject.setRingtone(ringtone);
+    }
+
+    ;
+
 
 }

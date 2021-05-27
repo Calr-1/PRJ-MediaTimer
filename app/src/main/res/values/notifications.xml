@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="notifications_array">
-        <item>No intervals</item>
-        <item>Number</item>
-        <item>Time</item>
-        <item>Random</item>
+        <item>@string/no_intervals_notification</item>
+        <item>@string/number_notification</item>
+        <item>@string/time_notification</item>
+        <item>@string/random_notification</item>
+
     </string-array>
 </resources>

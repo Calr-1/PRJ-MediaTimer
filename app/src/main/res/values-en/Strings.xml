@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Media Timer</string>
     <string name="startTimerButton_string">Start Timer</string>
@@ -13,7 +14,6 @@
     <string name="uploadTimerButton_string">Upload Timer</string>
     <string name="stopAlarm_string">Stop Alarm</string>
     <string name="enable_notifications">Notification Options</string>
-
     <string name="number_of_intervals">Number of intervals:</string>
     <string name="number_of_intervals_default">1</string>
     <string name="timer_format">Timer Format:</string>
@@ -22,7 +22,6 @@
     <string name="title_activity_common_page">common_page</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="group_timers">Group Timers</string>
     <string name="name_your_new_group">Name your new group</string>
@@ -35,7 +34,6 @@
     <string name="separator3">S</string>
     <string name="add_media">Add Media</string>
     <string name="create_timer_options">Create timer</string>
-
     <string name="create_group_options">Create group</string>
     <string name="give_a_name">Give a name</string>
     <string name="group_name_hint">Group Name</string>
@@ -62,10 +60,6 @@
     <string name="green_text">Green</string>
     <string name="red_black_text">Red</string>
     <string name="black_text">Black</string>
-    <string name="max_number_of_intervals">Max number of intervals:</string>
-    <string name="min_number_of_intervals">Min number of intervals:</string>
-    <string name="vibration">Vibration</string>
-    <string name="enable_vibration">Enable vibration</string>
     <string name="no_intervals_notification">No Intervals</string>
     <string name="time_notification">Timed Intervals</string>
     <string name="number_notification">Number of Intervals</string>

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.view.View;
+import android.net.Uri;
+
+import java.io.IOException;
 
 public class AlarmPlayerClass {
 
@@ -12,6 +15,7 @@ public class AlarmPlayerClass {
     private final Context context;
     private final int soundID;
     Vibrator vibrator;
+    private Uri uri;
 
 
     public AlarmPlayerClass(Context context, int soundID) {
@@ -32,7 +36,9 @@ public class AlarmPlayerClass {
         soundObject.stop();
         soundObject.release();
         released = true;
-        soundObject = MediaPlayer.create(context, soundID);
+        if (uri == null) soundObject = MediaPlayer.create(context, soundID);
+        else soundObject = MediaPlayer.create(context, uri);
+
 
     }
 
@@ -55,4 +61,11 @@ public class AlarmPlayerClass {
     public boolean isPlaying() {
         return !released;
     }
+
+    public void setRingtone(Uri ringtone) throws IOException {
+        uri = ringtone;
+        soundObject = MediaPlayer.create(context, uri);
+    }
+
+    ;
 }

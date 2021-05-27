@@ -37,8 +37,9 @@
     <color name="onPrimaryLightestColorGreen">#008b00</color>
 
     <!-- COLORS FOR RED/BLACK THEME-->
-    <color name="primaryColorRedBlack">#000000</color>
-    <color name="primaryColorVariantRedBlack">#ac0000</color>
+    <color name="primaryColorRedBlack">#ac0000</color>
+    <color name="primaryColorVariantRedBlack">#c71e17</color>
+
     <color name="primaryColorLighterRedBlack">#ff1507</color>
     <color name="primaryColorLightestRedBlack">#ffffff</color>
 

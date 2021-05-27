@@ -1,12 +1,25 @@
 package com.example.timer_10;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -72,6 +85,15 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
+        TextView tv = findViewById(R.id.chooseSoundText);
+        tv.setOnClickListener(v -> {
+            Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+            intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
+            this.startActivityForResult(intent, 5);
+        });
+
     }
 
     private int getIndex(Spinner spinner, String myString) {
@@ -100,5 +122,24 @@ public class NotificationActivity extends AppCompatActivity {
         timer.setRandomIntervalsMax(Integer.parseInt(randomMax.getText().toString()));
         timer.setRandomIntervalsMin(Integer.parseInt(randomMin.getText().toString()));
         timer.setVibration(vibration.isChecked());
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        Log.d(" RESULT CODE ", String.valueOf(resultCode));
+        if (resultCode != RESULT_CANCELED) {
+            if (resultCode == Activity.RESULT_OK && requestCode == 5) {
+
+                Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+
+                try {
+                    timer.setRingtone(uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
