@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,7 +35,8 @@ public class NotificationActivity extends AppCompatActivity {
     private int indexOfTimer;
     private NotificationsClass noti;
 
-    private EditText random;
+    private EditText randomMax, randomMin;
+    private CheckBox vibration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,13 @@ public class NotificationActivity extends AppCompatActivity {
         minutesView = findViewById(R.id.minutesEditInterval);
         secondsView = findViewById(R.id.secondsEditInterval);
         numberOfIntervals = findViewById(R.id.inputNumberIntervals);
-        random = findViewById(R.id.inputNumberIntervalsRandom);
-        random.setText(timer.getRandomIntervals() + "");
+        randomMax = findViewById(R.id.inputNumberIntervalsMaxRandom);
+        randomMin = findViewById(R.id.inputNumberIntervalsMinRandom);
+        vibration = findViewById(R.id.enableVibrationsCB);
+
+        randomMax.setText(timer.getRandomIntervalsMax() + "");
+        randomMin.setText(timer.getRandomIntervalsMin() + "");
+        vibration.setChecked(timer.isVibration());
 
         time = timer.getNotifications().getIntervalTime();
         typeOfInterval = timer.getNotifications().getTypeOfInterval();
@@ -112,7 +119,9 @@ public class NotificationActivity extends AppCompatActivity {
         noti.setIntervalTime(time);
         noti.setNumberOfIntervals(Integer.parseInt(numberOfIntervals.getText().toString()));
         timer.setNotifications(noti);
-        timer.setRandomIntervals(Integer.parseInt(random.getText().toString()));
+        timer.setRandomIntervalsMax(Integer.parseInt(randomMax.getText().toString()));
+        timer.setRandomIntervalsMin(Integer.parseInt(randomMin.getText().toString()));
+        timer.setVibration(vibration.isChecked());
     }
 
     @Override

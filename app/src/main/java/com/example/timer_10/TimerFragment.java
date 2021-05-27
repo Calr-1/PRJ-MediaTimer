@@ -1,13 +1,17 @@
 package com.example.timer_10;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +61,7 @@ public class TimerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         return inflater.inflate(R.layout.fragment_timer, container, false);
     }
@@ -111,6 +116,7 @@ public class TimerFragment extends Fragment {
                     timerClass.setTimerCountdownInterval(timerCountdownInterval);
                     timerClass.createTimer(timerInitialValue, timerCountdownInterval);
                     timerClass.startTimer();
+                    playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
                     Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "Timer can't start!", Toast.LENGTH_SHORT).show();
@@ -126,6 +132,14 @@ public class TimerFragment extends Fragment {
                 } else pauseUnpauseTimer();
             }
         });
+
+        stopTimerButton.setOnClickListener(v -> {
+            if (timerClass.canStopSound()) {
+                stopAlarm();
+                timerClass.stopVibration();
+                Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
+                playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+                TimersWrapper.updateViews(timerClass.getTimerInitialValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
 
 
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
@@ -145,15 +159,15 @@ public class TimerFragment extends Fragment {
         });
         timerClass.setViews(secondsValue, minutesValue, hoursValue);
         TimersWrapper.updateViews(timerClass.getCurrentTimerValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void pauseUnpauseTimer() {
         if (timerRunning) {
-            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
-        } else {
             playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
-        }
+        } else {
+            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);        }
 
         timerClass.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;
@@ -188,6 +202,11 @@ public class TimerFragment extends Fragment {
 
     public void start() {
         playPauseButton.performClick();
+    }
+
+    public ConstraintLayout getLayout(){
+        ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
+        return layout;
     }
 
     @Override

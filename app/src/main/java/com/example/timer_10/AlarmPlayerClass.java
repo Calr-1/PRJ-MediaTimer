@@ -2,6 +2,8 @@ package com.example.timer_10;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
+import android.view.View;
 import android.net.Uri;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ public class AlarmPlayerClass {
     private boolean released;
     private final Context context;
     private final int soundID;
+    Vibrator vibrator;
     private Uri uri;
 
 
@@ -19,6 +22,7 @@ public class AlarmPlayerClass {
         soundObject = MediaPlayer.create(context, soundID);
         this.context = context;
         this.soundID = soundID;
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
     }
 
@@ -36,6 +40,18 @@ public class AlarmPlayerClass {
         else soundObject = MediaPlayer.create(context, uri);
 
 
+    }
+
+    public void startVibrateEnd(long pattern[]) {
+        vibrator.vibrate(pattern, 0);
+    }
+
+    public void startVibrateInterval(long time) {
+        vibrator.vibrate(time);
+    }
+
+    public void stopVibrate() {
+        vibrator.cancel();
     }
 
     public void playNotification() {

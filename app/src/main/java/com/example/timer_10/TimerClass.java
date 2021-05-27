@@ -30,6 +30,7 @@ public class TimerClass {
 
     private boolean timerCreated;
 
+    private boolean vibration;
 
     private TextView small;
     private TextView medium;
@@ -39,7 +40,7 @@ public class TimerClass {
 
     private NotificationsClass notifications;
 
-    private int randomIntervals;
+    private int randomIntervalsMax, randomIntervalsMin;
 
     private Upload image;
 
@@ -56,6 +57,7 @@ public class TimerClass {
 
         timerRunning = false;
         timerCreated = false;
+        vibration = false;
 
         this.small = small;
         this.medium = medium;
@@ -65,13 +67,13 @@ public class TimerClass {
         soundObject = new AlarmPlayerClass(context, soundID);
         notifications = new NotificationsClass();
 
-        randomIntervals = 0;
+        randomIntervalsMax = 1;
+        randomIntervalsMin = 1;
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void createTimer(long timerInitialValue, int timerCountdownInterval) {
-
         countDownTimerTimerObject = new CountDownTimer(timerInitialValue, timerCountdownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -84,20 +86,13 @@ public class TimerClass {
                             if (Math.abs(l - currentTimerValue) < 120) {
                                 notificationSound.stopSoundObject();
                                 notificationSound.playNotification();
+                                if (vibration) {
+                                    soundObject.startVibrateInterval(500);
+                                }
                                 intervalArrayNumber.remove(l);
                                 break;
                             }
                         }
-                    /*if(enableRandom) {
-                        for (Long l : intervalArrayRandomNumber) {
-                            if (Math.abs(l - currentTimerValue) < 120) {
-                                random.stopSoundObject();
-                                random.playNotification();
-                                intervalArrayRandomNumber.remove(l);
-                                break;
-                            }
-                        }
-                    }*/
                         break;
                     case "Time":
                         notifications.setTimeIntervals(timerInitialValue);
@@ -106,26 +101,22 @@ public class TimerClass {
                             if (Math.abs(l - currentTimerValue) < 120) {
                                 notificationSound.stopSoundObject();
                                 notificationSound.playNotification();
+                                if (vibration) {
+                                    soundObject.startVibrateInterval(500);
+                                }
                                 intervalArrayTime.remove(l);
                                 break;
                             }
                         }
-                    /*if(enableRandom) {
-                        for (Long l : intervalArrayRandomTime) {
-                            if (Math.abs(l - currentTimerValue) < 120) {
-                                random.stopSoundObject();
-                                random.playNotification();
-                                intervalArrayRandomTime.remove(l);
-                                break;
-                            }
-                        }
-                    }*/
                         break;
                     case "Random":
                         for (Long l : intervalArrayRandom) {
                             if (Math.abs(l - currentTimerValue) < 120) {
                                 random.stopSoundObject();
                                 random.playNotification();
+                                if (vibration) {
+                                    soundObject.startVibrateInterval(500);
+                                }
                                 intervalArrayRandom.remove(l);
                                 break;
                             }
@@ -141,25 +132,37 @@ public class TimerClass {
                 fragment.startStopTimer();
                 soundObject.startSoundObject();
                 notificationSound.stopSoundObject();
+                soundObject.stopVibrate();
                 random.stopSoundObject();
-
+                timerRunning = false;
+                if (vibration) {
+                    long pattern[] = {0, 100, 200, 300, 400};
+                    soundObject.startVibrateEnd(pattern);
+                }
             }
         };
 
     }
 
+    public void stopVibration() {
+        soundObject.stopVibrate();
+    }
+
     public void startTimer() {
         countDownTimerTimerObject.start();
+        timerRunning = true;
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void pauseUnpauseTimer(boolean isPlaying) {
-        if (isPlaying)
+        if (isPlaying) {
             countDownTimerTimerObject.cancel();
-        else {
+            timerRunning = false;
+        } else {
             createTimer(currentTimerValue, timerCountdownInterval);
-            countDownTimerTimerObject.start();
+            //countDownTimerTimerObject.start();
+            startTimer();
         }
 
     }
@@ -177,8 +180,10 @@ public class TimerClass {
         return timerInitialValue;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setTimerInitialValue(long timerInitialValue) {
         this.timerInitialValue = timerInitialValue;
+        intervalArrayRandom = notifications.randomIntervals(randomIntervalsMax, randomIntervalsMin, timerInitialValue);
     }
 
     public int getTimerCountdownInterval() {
@@ -252,12 +257,20 @@ public class TimerClass {
         this.notifications = noti;
     }
 
-    public int getRandomIntervals() {
-        return randomIntervals;
+    public int getRandomIntervalsMax() {
+        return randomIntervalsMax;
     }
 
-    public void setRandomIntervals(int randomIntervals) {
-        this.randomIntervals = randomIntervals;
+    public void setRandomIntervalsMax(int randomIntervalsMax) {
+        this.randomIntervalsMax = randomIntervalsMax;
+    }
+
+    public int getRandomIntervalsMin() {
+        return randomIntervalsMin;
+    }
+
+    public void setRandomIntervalsMin(int randomIntervalsMin) {
+        this.randomIntervalsMin = randomIntervalsMin;
     }
 
     public void setUpload(Upload upload) {
@@ -268,10 +281,18 @@ public class TimerClass {
         return this.image;
     }
 
+    public boolean isVibration() {
+        return vibration;
+    }
+
+    public void setVibration(boolean vibration) {
+        this.vibration = vibration;
+    }
     public void setRingtone(Uri ringtone) throws IOException {
         soundObject.setRingtone(ringtone);
     }
 
     ;
+
 
 }

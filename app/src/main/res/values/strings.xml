@@ -62,6 +62,10 @@
     <string name="green_text">Green</string>
     <string name="red_black_text">Red</string>
     <string name="black_text">Black</string>
+    <string name="max_number_of_intervals">Max number of intervals:</string>
+    <string name="min_number_of_intervals">Min number of intervals:</string>
+    <string name="vibration">Vibration</string>
+    <string name="enable_vibration">Enable vibration</string>
     <string name="no_intervals_notification">No Intervals</string>
     <string name="time_notification">Timed Intervals</string>
     <string name="number_notification">Number of Intervals</string>
@@ -70,6 +74,5 @@
     <string name="create">Create</string>
     <string name="options">Options</string>
     <string name="choose_your_language">Choose your language</string>
-
 
 </resources>
