@@ -92,7 +92,7 @@ public class TimerActivity extends AppCompatActivity {
             indexTimer = getIntent().getIntExtra("indexTimer", -1);
             TimerGroupClass group = wrapper.getSpecificGroupOfTimersByIndex(indexGroup);
             timerClass = group.getTimerByIndex(indexTimer);
-        } else if (typeID == 1 || typeID == 4) {
+        } else if (typeID == 1 || typeID == 4 || typeID == 5) {
             indexTimer = getIntent().getIntExtra("indexTimer", -1);
             timerClass = wrapper.getSpecificIndividualTimerByIndex(indexTimer);
 
@@ -189,6 +189,7 @@ public class TimerActivity extends AppCompatActivity {
         timerClass.setMode(mode);
         timerClass.setTimerName(name);
         timerClass.setCurrentTimerValue(time);
+        TimersWrapper.saveObjectToSharedPreference(this.getApplicationContext(),"wrapperPref", "wrapper", TimersWrapper.getInstance().timer);
 
     }
 

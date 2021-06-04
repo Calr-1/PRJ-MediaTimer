@@ -21,11 +21,11 @@ public class ChangeAppThemeActivity extends AppCompatActivity implements View.On
         editor = settings.edit();
         TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_change_app_theme);
-        findViewById(R.id.BlueGreyLayout).setOnClickListener(this);
-        findViewById(R.id.OrangeLayout).setOnClickListener(this);
-        findViewById(R.id.GreenLayout).setOnClickListener(this);
-        findViewById(R.id.RedBlackLayout).setOnClickListener(this);
-        findViewById(R.id.BlackLayout).setOnClickListener(this);
+        findViewById(R.id.ChooseBlueGreyColor).setOnClickListener(this);
+        findViewById(R.id.chooseOrangeColor).setOnClickListener(this);
+        findViewById(R.id.chooseGreenColor).setOnClickListener(this);
+        findViewById(R.id.chooseRedBlackColor).setOnClickListener(this);
+        findViewById(R.id.chooseBlackColor).setOnClickListener(this);
 
 
     }
@@ -39,21 +39,21 @@ public class ChangeAppThemeActivity extends AppCompatActivity implements View.On
                 editor.commit();
                 break;
 
-            case R.id.OrangeLayout:
+            case R.id.chooseOrangeColor:
                 editor.putInt("currentTheme", 1);
                 editor.commit();
                 break;
-            case R.id.GreenLayout:
+            case R.id.chooseGreenColor:
                 editor.putInt("currentTheme", 2);
                 editor.commit();
                 break;
 
-            case R.id.RedBlackLayout:
+            case R.id.chooseRedBlackColor:
                 editor.putInt("currentTheme", 3);
                 editor.commit();
                 break;
 
-            case R.id.BlackLayout:
+            case R.id.chooseBlackColor:
                 editor.putInt("currentTheme", 4);
                 editor.commit();
                 break;

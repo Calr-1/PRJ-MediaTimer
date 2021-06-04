@@ -6,9 +6,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.content.Intent;
-import android.os.Bundle;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,9 +15,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
-
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class NotificationActivity extends AppCompatActivity {
 
@@ -121,14 +115,13 @@ public class NotificationActivity extends AppCompatActivity {
         Log.d(" RESULT CODE ", String.valueOf(resultCode));
         if (resultCode != RESULT_CANCELED) {
             if (resultCode == Activity.RESULT_OK && requestCode == 5) {
-
                 Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-
-
-                try {
-                    timer.setRingtone(uri);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(uri!=null) {
+                    try {
+                        timer.setRingtone(uri,this.getApplicationContext());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

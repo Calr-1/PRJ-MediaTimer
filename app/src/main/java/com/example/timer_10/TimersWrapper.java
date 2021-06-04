@@ -10,16 +10,19 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 /**
  * Singleton class that contains all the timers created,
  * Serializable to facilitate saving user data
  */
-public class TimersWrapper implements Serializable {
+public class TimersWrapper{
 
     /**
      * Single instance of TimersWrapper
@@ -51,6 +54,10 @@ public class TimersWrapper implements Serializable {
      */
     private ArrayList<TimerFragment> timerFragments;
 
+    public ArrayList<TimerClass> timer;
+
+    private SharedPreferences settings;
+    private SharedPreferences.Editor editor;
     /**
      * Private constructor so it cant be instantiated outside
      * Initializes the arrays that will hold the necessary timers
@@ -61,6 +68,7 @@ public class TimersWrapper implements Serializable {
         timerFragments = new ArrayList<>();
         groupsOfTimersFragment = new ArrayList<>();
         storageReference = FirebaseStorage.getInstance().getReference();
+        timer = new ArrayList<>();
 
     }
 
@@ -318,4 +326,24 @@ public class TimersWrapper implements Serializable {
             app.setTheme(R.style.Theme_BLACK_THEME);
         }
     }
+
+    public static void saveObjectToSharedPreference(Context context, String preferenceFileName, String serializedObjectKey, Object object) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName, 0);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        final Gson gson = new Gson();
+        String serializedObject = gson.toJson(object);
+        sharedPreferencesEditor.putString(serializedObjectKey, serializedObject);
+        sharedPreferencesEditor.apply();
+    }
+
+    public static ArrayList<TimerClass> getSavedObjectFromPreference(Context context, String preferenceFileName, String preferenceKey) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preferenceFileName, 0);
+        if (sharedPreferences.contains(preferenceKey)) {
+            final Gson gson = new Gson();
+            Type collectionType = new TypeToken<Collection<TimerClass>>(){}.getType();
+            return gson.fromJson(sharedPreferences.getString(preferenceKey, ""), collectionType);
+        }
+        return null;
+    }
 }
+

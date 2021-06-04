@@ -1,56 +1,53 @@
 package com.example.timer_10;
 
+import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
-
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
-
 import java.util.List;
 
 public class TimerClass {
 
     private long currentTimerValue, timerInitialValue;
-    private int timerCountdownInterval;
-    private String timerName;
-    private CountDownTimer countDownTimerTimerObject;
-    private final AlarmPlayerClass soundObject, notificationSound, random;
 
-    private String mode;
+    private int timerCountdownInterval,randomIntervalsMax, randomIntervalsMin;;
 
-    private List<Long> intervalArrayNumber;
-    private List<Long> intervalArrayTime;
-    private List<Long> intervalArrayRandom;
+    private String mode,timerName;
 
-    private boolean timerRunning;
+    private List<Long> intervalArrayNumber,intervalArrayTime,intervalArrayRandom;
 
-    private boolean timerCreated;
+    private boolean timerRunning,timerCreated,vibration;
 
 
-    private TextView small;
-    private TextView medium;
-    private TextView big;
+    private transient TextView small,medium,big;
 
-    private final TimerFragment fragment;
+    private AlarmPlayerClass soundObject, notificationSound, random;
 
     private NotificationsClass notifications;
 
     private int randomIntervals;
 
+    private CountDownTimer countDownTimerTimerObject;
+
     private Upload image;
 
-    public TimerClass(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, TextView small, TextView medium, TextView big, TimerFragment fragment) {
+    public TimerClass(long timerInitialValue, int timerCountdownInterval, String timerName, Context context, int soundID, TextView small, TextView medium, TextView big) {
         currentTimerValue = timerInitialValue;
+
         this.timerInitialValue = timerInitialValue;
         this.timerCountdownInterval = timerCountdownInterval;
         this.timerName = timerName;
+
         notificationSound = new AlarmPlayerClass(context, R.raw.notification);
         random = new AlarmPlayerClass(context, R.raw.random);
-
+        soundObject = new AlarmPlayerClass(context, soundID);
 
         mode = "HH/MM/SS";
 
@@ -61,17 +58,24 @@ public class TimerClass {
         this.medium = medium;
         this.big = big;
 
-        this.fragment = fragment;
-        soundObject = new AlarmPlayerClass(context, soundID);
         notifications = new NotificationsClass();
 
         randomIntervals = 0;
 
     }
+    public void TimerClassRecreate(Context context,TextView small, TextView medium, TextView big){
+        this.small = small;
+        this.medium = medium;
+        this.big = big;
+        notificationSound.AlarmPlayerClassRecreate(context);
+        random.AlarmPlayerClassRecreate(context);
+        soundObject.AlarmPlayerClassRecreate(context);
+
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void createTimer(long timerInitialValue, int timerCountdownInterval) {
-
+    public void createTimer(long timerInitialValue, int timerCountdownInterval, Context context) {
         countDownTimerTimerObject = new CountDownTimer(timerInitialValue, timerCountdownInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -82,7 +86,7 @@ public class TimerClass {
                         intervalArrayNumber = notifications.getNumberIntervals();
                         for (Long l : intervalArrayNumber) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                notificationSound.stopSoundObject();
+                                notificationSound.stopSoundObject(context);
                                 notificationSound.playNotification();
                                 intervalArrayNumber.remove(l);
                                 break;
@@ -104,7 +108,7 @@ public class TimerClass {
                         intervalArrayTime = notifications.getTimeIntervals();
                         for (Long l : intervalArrayTime) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                notificationSound.stopSoundObject();
+                                notificationSound.stopSoundObject(context);
                                 notificationSound.playNotification();
                                 intervalArrayTime.remove(l);
                                 break;
@@ -124,7 +128,7 @@ public class TimerClass {
                     case "Random":
                         for (Long l : intervalArrayRandom) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                random.stopSoundObject();
+                                random.stopSoundObject(context);
                                 random.playNotification();
                                 intervalArrayRandom.remove(l);
                                 break;
@@ -138,11 +142,17 @@ public class TimerClass {
             @Override
             public void onFinish() {
                 currentTimerValue = 0;
-                fragment.startStopTimer();
                 soundObject.startSoundObject();
-                notificationSound.stopSoundObject();
-                random.stopSoundObject();
-
+                notificationSound.stopSoundObject(context);
+                soundObject.stopVibrate();
+                random.stopSoundObject(context);
+                timerRunning = false;
+                if (vibration) {
+                    long pattern[] = {0, 100, 200, 300, 400};
+                    soundObject.startVibrateEnd(pattern);
+                }
+                ImageButton button = ((Activity) context).findViewById(R.id.play_and_pause_group_button);
+                button.setImageResource(R.drawable.ic_baseline_stop_24);
             }
         };
 
@@ -154,18 +164,20 @@ public class TimerClass {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void pauseUnpauseTimer(boolean isPlaying) {
-        if (isPlaying)
+    public void pauseUnpauseTimer(boolean isPlaying, Context context) {
+        if (isPlaying) {
             countDownTimerTimerObject.cancel();
-        else {
-            createTimer(currentTimerValue, timerCountdownInterval);
-            countDownTimerTimerObject.start();
+            timerRunning = false;
+        } else {
+            createTimer(currentTimerValue, timerCountdownInterval,context);
+            //countDownTimerTimerObject.start();
+            startTimer();
         }
 
     }
 
-    public void stopSound() {
-        soundObject.stopSoundObject();
+    public void stopSound(Context context) {
+        soundObject.stopSoundObject(context);
     }
 
     public boolean canStopSound() {
@@ -232,10 +244,6 @@ public class TimerClass {
         this.big = big;
     }
 
-    public TimerFragment getFragment() {
-        return fragment;
-    }
-
     public boolean isTimerCreated() {
         return timerCreated;
     }
@@ -268,9 +276,16 @@ public class TimerClass {
         return this.image;
     }
 
-    public void setRingtone(Uri ringtone) throws IOException {
-        soundObject.setRingtone(ringtone);
+
+    public boolean isVibration() {
+        return vibration;
     }
+
+    public void setVibration(boolean vibration) {
+        this.vibration = vibration;
+    }
+    public void setRingtone(Uri ringtone, Context context) throws IOException {
+        soundObject.setRingtone(ringtone, context); }
 
     ;
 
