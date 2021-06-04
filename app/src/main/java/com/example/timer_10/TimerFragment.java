@@ -23,10 +23,11 @@ import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-public class TimerFragment extends Fragment {
+public class TimerFragment extends Fragment implements Timer{
 
     private ImageButton playPauseButton;
     private TextView hoursValue, minutesValue, secondsValue;
+
     private TimerClass timerClass;
     private boolean timerRunning, timerCreated;
     private long timerInitialValue;
@@ -37,6 +38,8 @@ public class TimerFragment extends Fragment {
     private TimerGroupClass timerGroupClass;
 
     private static final int configure = 1;
+
+    private LinearLayout parent;
 
     public TimerFragment(int typeId) {
         this.typeId = typeId;
@@ -124,7 +127,9 @@ public class TimerFragment extends Fragment {
                 }
 
             } else {
+                Log.d("TESTE", timerClass.canStopSound()+"");
                 if (timerClass.canStopSound()) {
+                    startStopTimer();
                     stopAlarm();
                     Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
                     playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
@@ -200,6 +205,7 @@ public class TimerFragment extends Fragment {
         return layout;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -211,5 +217,14 @@ public class TimerFragment extends Fragment {
                 tv.setText(timerClass.getTimerName());
             }
         }
+    }
+
+    @Override
+    public int getType() {
+        return 1;
+    }
+
+    public TimerClass getTimerClass() {
+        return timerClass;
     }
 }

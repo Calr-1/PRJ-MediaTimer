@@ -4,6 +4,8 @@ import android.net.Uri;
 
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -44,6 +46,8 @@ public class TimerClass {
 
     private Upload image;
 
+    private ProgressBar mProgressBar;
+
     public TimerClass(long timerInitialValue, int timerCountdownInterval, String timerName, android.content.Context context, int soundID, TextView small, TextView medium, TextView big, TimerFragment fragment) {
         currentTimerValue = timerInitialValue;
         this.timerInitialValue = timerInitialValue;
@@ -51,7 +55,7 @@ public class TimerClass {
         this.timerName = timerName;
         notificationSound = new AlarmPlayerClass(context, R.raw.notification);
         random = new AlarmPlayerClass(context, R.raw.random);
-
+        mProgressBar = fragment.getView().findViewById(R.id.progress_bar);
 
         mode = "HH/MM/SS";
 
@@ -69,6 +73,8 @@ public class TimerClass {
 
         randomIntervalsMax = 1;
         randomIntervalsMin = 1;
+
+        mProgressBar.setProgress(0);
 
     }
 
@@ -123,13 +129,14 @@ public class TimerClass {
                         }
                         break;
                 }
+                double progress = (100.0 * currentTimerValue / getTimerInitialValue());
+                mProgressBar.setProgress((int) progress);
                 TimersWrapper.updateViews(currentTimerValue, mode, small, medium, big);
             }
 
             @Override
             public void onFinish() {
                 currentTimerValue = 0;
-                fragment.startStopTimer();
                 soundObject.startSoundObject();
                 notificationSound.stopSoundObject();
                 soundObject.stopVibrate();
@@ -139,6 +146,9 @@ public class TimerClass {
                     long pattern[] = {0, 100, 200, 300, 400};
                     soundObject.startVibrateEnd(pattern);
                 }
+                mProgressBar.setProgress(100);
+                ImageButton button = fragment.getView().findViewById(R.id.play_and_pause_group_button);
+                button.setImageResource(R.drawable.ic_baseline_stop_24);
             }
         };
 

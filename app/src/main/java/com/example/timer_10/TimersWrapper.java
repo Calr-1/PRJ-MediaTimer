@@ -21,6 +21,8 @@ import java.util.HashMap;
  */
 public class TimersWrapper implements Serializable {
 
+    public boolean load;
+
     /**
      * Single instance of TimersWrapper
      */
@@ -51,6 +53,12 @@ public class TimersWrapper implements Serializable {
      */
     private ArrayList<TimerFragment> timerFragments;
 
+
+    /**
+     * Array containing all the fragments despite being a group or not
+     */
+    public ArrayList<Timer> timers;
+
     /**
      * Private constructor so it cant be instantiated outside
      * Initializes the arrays that will hold the necessary timers
@@ -61,6 +69,9 @@ public class TimersWrapper implements Serializable {
         timerFragments = new ArrayList<>();
         groupsOfTimersFragment = new ArrayList<>();
         storageReference = FirebaseStorage.getInstance().getReference();
+        timers = new ArrayList<Timer>();
+        //timers.add(new TimerFragment(1));
+        load = false;
 
     }
 
@@ -226,7 +237,9 @@ public class TimersWrapper implements Serializable {
      * @param fragment timer fragment object to be added to the array
      */
     public void addTimerFragment(TimerFragment fragment) {
+
         timerFragments.add(fragment);
+        timers.add(fragment);
     }
 
     /**
@@ -236,6 +249,11 @@ public class TimersWrapper implements Serializable {
      */
     public void addTimerGroupFragment(TimerGroupFragment fragment) {
         groupsOfTimersFragment.add(fragment);
+        timers.add(fragment);
+    }
+
+    public void addFragment(Timer fragment){
+        timers.add(fragment);
     }
 
     /**
@@ -279,8 +297,8 @@ public class TimersWrapper implements Serializable {
      *
      * @param index Index of the wanted timer
      */
-    public TimerFragment getTimerFragmentByIndex(int index) {
-        return timerFragments.get(index);
+    public Timer getTimerFragmentByIndex(int index) {
+        return timers.get(index);
     }
 
     /**
@@ -299,6 +317,14 @@ public class TimersWrapper implements Serializable {
      */
     public int getIndexOfTimerFragment(Fragment fragment) {
         return timerFragments.indexOf(fragment);
+    }
+
+    public ArrayList<Timer> getTimers() {
+        return timers;
+    }
+
+    public void setTimers(ArrayList<Timer> timers) {
+        this.timers = timers;
     }
 
     public static void loadTheme(Context app) {

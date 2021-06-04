@@ -68,5 +68,6 @@
     <string name="create">Criar</string>
     <string name="options">Opções</string>
     <string name="choose_your_language">Escolha a sua Linguagem</string>
+    <string name="mode1">HH/MM/SS</string>
 
 </resources>

@@ -189,12 +189,12 @@
 
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/primaryColorLightestBlack</item>
-        <item name="android:textColorPrimary">@color/onPrimaryLightestColorBlack</item>
-        <item name="android:textColorSecondary">@color/onPrimaryLightestColorBlack</item>
-        <item name="android:textColorTertiary">@color/onPrimaryLightestColorBlack</item>
-        <item name="android:editTextColor">@color/onPrimaryLightestColorBlack</item>
-        <item name="colorControlActivated">@color/onPrimaryLightestColorBlack</item>
-        <item name="colorControlHighlight">@color/onPrimaryLightestColorBlack</item>
+        <item name="android:textColorPrimary">@color/primaryColorBlack</item>
+        <item name="android:textColorSecondary">@color/primaryColorBlack</item>
+        <item name="android:textColorTertiary">@color/primaryColorBlack</item>
+        <item name="android:editTextColor">@color/primaryColorBlack</item>
+        <item name="colorControlActivated">@color/primaryColorBlack</item>
+        <item name="colorControlHighlight">@color/primaryColorBlack</item>
         <item name="imageButtonStyle">@style/ImageButtonBlack</item>
 
     </style>

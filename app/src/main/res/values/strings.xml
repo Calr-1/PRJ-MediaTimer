@@ -74,5 +74,6 @@
     <string name="create">Create</string>
     <string name="options">Options</string>
     <string name="choose_your_language">Choose your language</string>
+    <string name="mode1">HH/MM/SS</string>
 
 </resources>

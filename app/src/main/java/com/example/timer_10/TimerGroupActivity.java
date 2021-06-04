@@ -3,6 +3,7 @@ package com.example.timer_10;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,7 +11,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TimerGroupActivity extends AppCompatActivity {
 
@@ -25,16 +29,54 @@ public class TimerGroupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_group);
+        registerForContextMenu(findViewById(R.id.addButton));
 
         TimersWrapper wrapper = TimersWrapper.getInstance();
         timerGroupClass = wrapper.getSpecificGroupOfTimersByIndex(getIntent().getIntExtra("groupIndex", -1));
 
         et = findViewById(R.id.groupName);
         et.setText(timerGroupClass.getName());
-        addButton = findViewById(R.id.addTimerButton);
-        registerForContextMenu(addButton);
-        addButton.setOnClickListener(v -> addButton.showContextMenu());
-        addButton.setOnLongClickListener(v -> true);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Log.d("ENTROU 1",String.valueOf(item.getItemId()));
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(TimerGroupActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+        bottomNav.setOnNavigationItemReselectedListener(
+                new BottomNavigationView.OnNavigationItemReselectedListener() {
+                    @Override
+                    public void onNavigationItemReselected(@NonNull MenuItem item) {
+                        Log.d("ENTROU 2",String.valueOf(item.getItemId()));
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(TimerGroupActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                    }
+                });
         loadExistingTimers();
 
     }

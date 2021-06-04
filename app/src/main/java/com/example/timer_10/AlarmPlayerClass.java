@@ -29,13 +29,13 @@ public class AlarmPlayerClass {
     public void startSoundObject() {
         soundObject.start();
         soundObject.setLooping(true);
-        released = false;
+        released = true;
     }
 
     public void stopSoundObject() {
         soundObject.stop();
         soundObject.release();
-        released = true;
+        released = false;
         if (uri == null) soundObject = MediaPlayer.create(context, soundID);
         else soundObject = MediaPlayer.create(context, uri);
 
@@ -59,7 +59,7 @@ public class AlarmPlayerClass {
     }
 
     public boolean isPlaying() {
-        return !released;
+        return released;
     }
 
     public void setRingtone(Uri ringtone) throws IOException {

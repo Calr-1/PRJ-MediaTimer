@@ -2,7 +2,7 @@ package com.example.timer_10;
 
 import java.util.ArrayList;
 
-public class TimerGroupClass {
+public class TimerGroupClass{
 
 
     private ArrayList<TimerClass> timerClassArray;

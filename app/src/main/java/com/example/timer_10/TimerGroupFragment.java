@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,14 +16,17 @@ import androidx.fragment.app.Fragment;
 import static android.app.Activity.RESULT_OK;
 
 
-public class TimerGroupFragment extends Fragment {
+public class TimerGroupFragment extends Fragment implements Timer{
 
     private TimersWrapper wrapper;
-    private TimerGroupClass group;
+
+    private TimerGroupClass timerGroupClass;
 
 
     private TimerGroupClass associatedGroup;
     private final int type;
+
+    private LinearLayout parent;
 
 
     public TimerGroupFragment(int type) {
@@ -32,7 +36,7 @@ public class TimerGroupFragment extends Fragment {
     public TimerGroupFragment(int type, TimerGroupClass associatedGroup) {
         this.type = type;
         if (type == 4) {
-            this.group = associatedGroup;
+            this.timerGroupClass = associatedGroup;
         } else {
             this.associatedGroup = associatedGroup;
         }
@@ -42,7 +46,7 @@ public class TimerGroupFragment extends Fragment {
 
     public TimerGroupFragment(int type, TimerGroupClass group, TimerGroupClass associatedGroup) {
         this.type = type;
-        this.group = group;
+        this.timerGroupClass = group;
         this.associatedGroup = associatedGroup;
     }
 
@@ -65,12 +69,12 @@ public class TimerGroupFragment extends Fragment {
         wrapper = TimersWrapper.getInstance();
 
         if (type == 1) {
-            group = new TimerGroupClass("Timer Group " + (wrapper.getGroupsOfTimers().size() + 1));
-            wrapper.addGroupOfTimers(group);
+            timerGroupClass = new TimerGroupClass("Timer Group " + (wrapper.getGroupsOfTimers().size() + 1));
+            wrapper.addGroupOfTimers(timerGroupClass);
         }
         if (type == 2) {
-            group = new TimerGroupClass("Timer Group " + (associatedGroup.getNumberOfGroups() + 1));
-            associatedGroup.addTimerGroup(group);
+            timerGroupClass = new TimerGroupClass("Timer Group " + (associatedGroup.getNumberOfGroups() + 1));
+            associatedGroup.addTimerGroup(timerGroupClass);
         }
 
         updateName();
@@ -78,7 +82,7 @@ public class TimerGroupFragment extends Fragment {
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
 
         layout.setOnClickListener(v -> {
-            int index = wrapper.getIndexOfGroupOfTimers(group);
+            int index = wrapper.getIndexOfGroupOfTimers(timerGroupClass);
             Intent intent = new Intent(getActivity(), TimerGroupActivity.class);
             intent.putExtra("groupIndex", index);
             startActivityForResult(intent, 1);
@@ -88,7 +92,7 @@ public class TimerGroupFragment extends Fragment {
 
     private void updateName() {
         TextView tv = getView().findViewById(R.id.timerFragName);
-        tv.setText(group.getName());
+        tv.setText(timerGroupClass.getName());
     }
 
     @Override
@@ -109,5 +113,15 @@ public class TimerGroupFragment extends Fragment {
     public ConstraintLayout getLayout(){
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
         return layout;
+    }
+
+
+    @Override
+    public int getType() {
+        return 2;
+    }
+
+    public TimerGroupClass getTimerGroupClass() {
+        return timerGroupClass;
     }
 }
