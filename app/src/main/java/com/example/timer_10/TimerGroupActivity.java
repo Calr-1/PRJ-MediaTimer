@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TimerGroupActivity extends AppCompatActivity {
 
@@ -18,6 +21,7 @@ public class TimerGroupActivity extends AppCompatActivity {
     private TimerGroupClass timerGroupClass;
 
     private EditText et;
+    private int index;
 
 
     @Override
@@ -27,14 +31,52 @@ public class TimerGroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
 
         TimersWrapper wrapper = TimersWrapper.getInstance();
-        timerGroupClass = wrapper.getSpecificGroupOfTimersByIndex(getIntent().getIntExtra("groupIndex", -1));
-
+        index = getIntent().getIntExtra("groupIndex", -1);
+        timerGroupClass = wrapper.getSpecificGroupOfTimersByIndex(index);
+        
+        registerForContextMenu(findViewById(R.id.addButton));
         et = findViewById(R.id.groupName);
         et.setText(timerGroupClass.getName());
-        addButton = findViewById(R.id.addTimerButton);
-        registerForContextMenu(addButton);
-        addButton.setOnClickListener(v -> addButton.showContextMenu());
-        addButton.setOnLongClickListener(v -> true);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(TimerGroupActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+        bottomNav.setOnNavigationItemReselectedListener(
+                new BottomNavigationView.OnNavigationItemReselectedListener() {
+                    @Override
+                    public void onNavigationItemReselected(@NonNull MenuItem item) {
+
+                        switch (item.getItemId()) {
+                            case R.id.favouriteButton:
+                                break;
+                            case R.id.addButton:
+                                findViewById(R.id.addButton).showContextMenu();
+                                break;
+                            case R.id.optionsButton:
+                                Intent intent = new Intent(TimerGroupActivity.this, ChangeAppThemeActivity.class);
+                                startActivityForResult(intent, 1);
+                                break;
+                        }
+                    }
+                });
+
         loadExistingTimers();
 
     }
@@ -107,6 +149,20 @@ public class TimerGroupActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Intent intent = new Intent(this, TimerGroupActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("groupIndex",index);
+                startActivity(intent);
+            }
         }
     }
 }

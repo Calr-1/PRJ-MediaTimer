@@ -101,7 +101,7 @@ public class TimerGroupClass {
             if (currentlyRunning < timerClassArray.size()) {
 
                 if (getTimerByIndex(currentlyRunning).getCurrentTimerValue() != 0) {
-                    getTimerByIndex(currentlyRunning).getFragment().start();
+                    timerFragment.get(currentlyRunning).start();
                 } else currentlyRunning--;
             }
         }

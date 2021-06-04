@@ -18,6 +18,8 @@ import static android.app.Activity.RESULT_OK;
 public class TimerGroupFragment extends Fragment {
 
     private TimersWrapper wrapper;
+
+
     private TimerGroupClass group;
 
 
@@ -109,5 +111,13 @@ public class TimerGroupFragment extends Fragment {
     public ConstraintLayout getLayout(){
         ConstraintLayout layout = getView().findViewById(R.id.frameLayout);
         return layout;
+    }
+
+    public TimerGroupClass getGroup() {
+        return group;
+    }
+
+    public void setGroup(TimerGroupClass group) {
+        this.group = group;
     }
 }

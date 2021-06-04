@@ -1,17 +1,13 @@
 package com.example.timer_10;
 
-import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,16 +23,22 @@ public class TimerFragment extends Fragment {
 
     private ImageButton playPauseButton;
     private TextView hoursValue, minutesValue, secondsValue;
+
+
+
     private TimerClass timerClass;
     private boolean timerRunning, timerCreated;
     private long timerInitialValue;
     private int timerCountdownInterval;
     private TimersWrapper wrapper;
 
-    private final int typeId;
+    private int typeId = 0;
     private TimerGroupClass timerGroupClass;
 
     private static final int configure = 1;
+
+    public TimerFragment() {
+    }
 
     public TimerFragment(int typeId) {
         this.typeId = typeId;
@@ -58,6 +60,10 @@ public class TimerFragment extends Fragment {
         this.timerClass = timerClass;
     }
 
+    public TimerFragment(int typeId, TimerClass timerClass,String test) {
+        this.typeId = typeId;
+        this.timerClass = timerClass;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,11 +84,14 @@ public class TimerFragment extends Fragment {
         secondsValue = getView().findViewById(R.id.secondsEditView);
 
         if (typeId == 1) {
-            timerClass = new TimerClass(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timerClass = new TimerClass(0, 0, "Timer " + (wrapper.getIndividualTimerList().size() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue);
             wrapper.addIndividualTimerToList(timerClass);
         } else if (typeId == 2) {
-            timerClass = new TimerClass(0, 0, "Timer " + (timerGroupClass.getNumberOfTimers() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue, this);
+            timerClass = new TimerClass(0, 0, "Timer " + (timerGroupClass.getNumberOfTimers() + 1), getActivity(), R.raw.sound, secondsValue, minutesValue, hoursValue);
             timerGroupClass.addTimer(timerClass);
+        }
+        if(typeId == 5){
+            timerClass.TimerClassRecreate(this.getContext(), secondsValue, minutesValue, hoursValue);
         }
 
 
@@ -114,7 +123,7 @@ public class TimerFragment extends Fragment {
                     timerClass.setTimerInitialValue(timerInitialValue);
                     Log.d("TIMER initial value: ", String.valueOf(timerInitialValue));
                     timerClass.setTimerCountdownInterval(timerCountdownInterval);
-                    timerClass.createTimer(timerInitialValue, timerCountdownInterval);
+                    timerClass.createTimer(timerInitialValue, timerCountdownInterval, this.getContext());
                     timerClass.startTimer();
                     playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
                     Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
@@ -124,8 +133,10 @@ public class TimerFragment extends Fragment {
                 }
 
             } else {
+
                 if (timerClass.canStopSound()) {
                     stopAlarm();
+                    startStopTimer();
                     Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
                     playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
@@ -161,7 +172,7 @@ public class TimerFragment extends Fragment {
         } else {
             playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);        }
 
-        timerClass.pauseUnpauseTimer(timerRunning);
+        timerClass.pauseUnpauseTimer(timerRunning,this.getContext());
         timerRunning = !timerRunning;
         timerClass.setTimerRunning(timerRunning);
 
@@ -180,7 +191,7 @@ public class TimerFragment extends Fragment {
 
 
     private void stopAlarm() {
-        timerClass.stopSound();
+        timerClass.stopSound(this.getContext());
     }
 
     public TimerGroupClass getTimerGroup() {
@@ -211,5 +222,12 @@ public class TimerFragment extends Fragment {
                 tv.setText(timerClass.getTimerName());
             }
         }
+    }
+    public TimerClass getTimerClass() {
+        return timerClass;
+    }
+
+    public void setTimerClass(TimerClass timerClass) {
+        this.timerClass = timerClass;
     }
 }
