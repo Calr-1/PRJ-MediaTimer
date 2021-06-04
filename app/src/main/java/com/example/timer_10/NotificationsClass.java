@@ -11,9 +11,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class NotificationsClass {
 
-    private List<Long> numberIntervals;
-    private List<Long> timeIntervals;
-    private List<Long> randomIntervals;
+    private ArrayList<Long> numberIntervals;
+    private ArrayList<Long> timeIntervals;
+    private ArrayList<Long> randomIntervals;
 
 
     private String typeOfInterval;
@@ -22,9 +22,9 @@ public class NotificationsClass {
     private int intervalNumber;
 
     public NotificationsClass() {
-        numberIntervals = new ArrayList<Long>();
-        timeIntervals = new ArrayList<Long>();
-        randomIntervals = new ArrayList<Long>();
+        numberIntervals = new ArrayList<>();
+        timeIntervals = new ArrayList<>();
+        randomIntervals = new ArrayList<>();
 
         intervalTime = 0L;
         intervalNumber = 1;

@@ -18,14 +18,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timer_10">
-        <activity android:name=".TimerAudioActivity"></activity>
-        <activity android:name=".NotificationActivity" />
-        <activity android:name=".ImagesActivity" />
-        <activity android:name=".AddImagesActivity" />
-        <activity android:name=".ChangeAppThemeActivity" />
-        <activity android:name=".TimerGroupActivity" />
-        <activity android:name=".TimerActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".TimerAudioActivity" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".NotificationActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ImagesActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".AddImagesActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".ChangeAppThemeActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".TimerGroupActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".TimerActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".MainActivity" android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
