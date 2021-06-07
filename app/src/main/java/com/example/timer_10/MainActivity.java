@@ -222,17 +222,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadExistingTimers() {
+        int timerIdx = 0;
+        int groupIdx = 0;
         for (int index = 0; index < wrapper.getTimers().size(); index++) {
             Log.e("123", String.valueOf(wrapper.load));
             Timer frag = wrapper.getTimers().get(index);
             int type = frag.getType();
             if(type == 1){
                 TimerFragment fragmento = new TimerFragment(4, ((TimerFragment)frag).getTimerClass());
+                wrapper.setSpecificIndividualTimerFragment(timerIdx,fragmento);
                 addTimerFragment(fragmento);
+                timerIdx++;
             }
             if(type == 2){
                 TimerGroupFragment fragmento = new TimerGroupFragment(4, ((TimerGroupFragment)frag).getTimerGroupClass());
+                wrapper.setGroupOfTimersFragment(groupIdx, fragmento);
                 addGroupFragment(fragmento);
+                groupIdx++;
             }
 
         }

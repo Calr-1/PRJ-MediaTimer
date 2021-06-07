@@ -127,7 +127,7 @@ public class NotificationActivity extends AppCompatActivity {
                 Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
                 if(uri!=null) {
                     try {
-                        timer.setRingtone(uri,this.getApplicationContext());
+                        timer.setRingtone(uri);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

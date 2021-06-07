@@ -10,19 +10,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class TimerGroupActivity extends AppCompatActivity {
 
     private ImageButton addButton;
     private TimerGroupClass timerGroupClass;
-
+    private LinearLayout originalLayout;
+    private int id;
     private EditText et;
 
+    private ArrayList<LinearLayout> layouts;
+    private int timerSize;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(timerSize!=(timerGroupClass.getNumberOfTimers()+timerGroupClass.getNumberOfGroups())) {
+            loadExistingTimers();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +44,11 @@ public class TimerGroupActivity extends AppCompatActivity {
         TimersWrapper.loadTheme(this);
         setContentView(R.layout.activity_group);
         registerForContextMenu(findViewById(R.id.addButton));
-
+        timerSize=0;
+        layouts = new ArrayList<LinearLayout>();
+        originalLayout = findViewById(R.id.timerLayout);
+        addTimerLine();
+        id = 1;
         TimersWrapper wrapper = TimersWrapper.getInstance();
         timerGroupClass = wrapper.getSpecificGroupOfTimersByIndex(getIntent().getIntExtra("groupIndex", -1));
 
@@ -77,18 +95,21 @@ public class TimerGroupActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         loadExistingTimers();
 
     }
 
     private void loadExistingTimers() {
+
         for (int index = 0; index < timerGroupClass.getNumberOfTimers(); index++) {
 
             TimerFragment frag = new TimerFragment(3, timerGroupClass, timerGroupClass.getTimerByIndex(index));
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.timerLayout, frag)
                     .commit();
-            timerGroupClass.addTimerFragment(frag);
+            timerGroupClass.setTimerFragment(index, frag);
+            timerSize++;
         }
         for (int index = 0; index < timerGroupClass.getNumberOfGroups(); index++) {
 
@@ -96,7 +117,8 @@ public class TimerGroupActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.timerLayout, frag)
                     .commit();
-            timerGroupClass.addTimerGroupFragment(frag);
+            timerGroupClass.setTimerGroupFragment(index, frag);
+            timerSize++;
         }
 
     }
@@ -131,6 +153,12 @@ public class TimerGroupActivity extends AppCompatActivity {
 
     }
 
+    private void addTimerLine() {
+        View child = getLayoutInflater().inflate(R.layout.table_line_timers, null);
+        originalLayout.addView(child);
+    }
+
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -149,6 +177,20 @@ public class TimerGroupActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onContextItemSelected(item);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                Intent intent = new Intent(this, TimerGroupActivity.class);
+                intent.putExtra("groupIndex",getIntent().getIntExtra("groupIndex",-1));
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
         }
     }
 }

@@ -13,7 +13,7 @@
     <color name="primaryColorBlueGrey">#132c33</color>
     <color name="primaryColorVariantBlueGrey">#30545e</color>
     <color name="primaryColorLighterBlueGrey">#687980</color>
-    <color name="primaryColorLightestBlueGrey">#ffffff</color>
+    <color name="primaryColorLightestBlueGrey">#e2f0f5</color>
 
     <color name="onPrimaryColorBlueGrey">#ffffff</color>
     <color name="onPrimaryLightestColorBlueGrey">#132c33</color>
@@ -22,7 +22,7 @@
     <color name="primaryColorOrange">#f4501e</color>
     <color name="primaryColorVariantOrange">#ff5622</color>
     <color name="primaryColorLighterOrange">#ff6f43</color>
-    <color name="primaryColorLightestOrange">#ffffff</color>
+    <color name="primaryColorLightestOrange">#fbe9e7</color>
 
     <color name="onPrimaryColorOrange">#ffffff</color>
     <color name="onPrimaryLightestColorOrange">#f4501e</color>
@@ -31,7 +31,7 @@
     <color name="primaryColorGreen">#008b00</color>
     <color name="primaryColorVariantGreen">#41c300</color>
     <color name="primaryColorLighterGreen">#90ee02</color>
-    <color name="primaryColorLightestGreen">#ffffff</color>
+    <color name="primaryColorLightestGreen">#e6f5e5</color>
 
     <color name="onPrimaryColorGreen">#ffffff</color>
     <color name="onPrimaryLightestColorGreen">#008b00</color>
@@ -39,17 +39,16 @@
     <!-- COLORS FOR RED/BLACK THEME-->
     <color name="primaryColorRedBlack">#ac0000</color>
     <color name="primaryColorVariantRedBlack">#c71e17</color>
-
     <color name="primaryColorLighterRedBlack">#ff1507</color>
-    <color name="primaryColorLightestRedBlack">#ffffff</color>
+    <color name="primaryColorLightestRedBlack">#ffe9eb</color>
 
     <color name="onPrimaryColorRedBlack">#ffffff</color>
-    <color name="onPrimaryLightestColorRedBlack">#000000</color>
+    <color name="onPrimaryLightestColorRedBlack">#121212</color>
 
     <!-- COLORS FOR BLACK THEME-->
-    <color name="primaryColorBlack">#000000</color>
-    <color name="primaryColorVariantBlack">#000000</color>
-    <color name="primaryColorLighterBlack">#000000</color>
+    <color name="primaryColorBlack">#121212</color>
+    <color name="primaryColorVariantBlack">#121212</color>
+    <color name="primaryColorLighterBlack">#121212</color>
     <color name="primaryColorLightestBlack">#ffffff</color>
 
     <color name="onPrimaryColorBlack">#ffffff</color>

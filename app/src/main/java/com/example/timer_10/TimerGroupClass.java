@@ -85,10 +85,17 @@ public class TimerGroupClass{
         this.timerFragment.add(fragment);
     }
 
+    public void setTimerFragment(int index, TimerFragment fragment) {
+        this.timerFragment.set(index, fragment);
+    }
+
     public void addTimerGroupFragment(TimerGroupFragment fragment) {
         this.timerGroupFragment.add(fragment);
     }
 
+    public void setTimerGroupFragment(int index, TimerGroupFragment fragment) {
+        this.timerGroupFragment.set(index, fragment);
+    }
 
     public int getIndexOfTimer(TimerClass timerClass) {
         return timerClassArray.indexOf(timerClass);

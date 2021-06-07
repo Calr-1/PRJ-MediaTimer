@@ -38,7 +38,7 @@ public class TimerClass {
     private TextView medium;
     private TextView big;
 
-    private final TimerFragment fragment;
+    private TimerFragment fragment;
 
     private NotificationsClass notifications;
 
@@ -90,7 +90,7 @@ public class TimerClass {
                         intervalArrayNumber = notifications.getNumberIntervals();
                         for (Long l : intervalArrayNumber) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                notificationSound.stopSoundObject();
+                                notificationSound.stopSoundObject(fragment.getContext());
                                 notificationSound.playNotification();
                                 if (vibration) {
                                     soundObject.startVibrateInterval(500);
@@ -105,7 +105,7 @@ public class TimerClass {
                         intervalArrayTime = notifications.getTimeIntervals();
                         for (Long l : intervalArrayTime) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                notificationSound.stopSoundObject();
+                                notificationSound.stopSoundObject(fragment.getContext());
                                 notificationSound.playNotification();
                                 if (vibration) {
                                     soundObject.startVibrateInterval(500);
@@ -118,7 +118,7 @@ public class TimerClass {
                     case "Random":
                         for (Long l : intervalArrayRandom) {
                             if (Math.abs(l - currentTimerValue) < 120) {
-                                random.stopSoundObject();
+                                random.stopSoundObject(fragment.getContext());
                                 random.playNotification();
                                 if (vibration) {
                                     soundObject.startVibrateInterval(500);
@@ -138,9 +138,9 @@ public class TimerClass {
             public void onFinish() {
                 currentTimerValue = 0;
                 soundObject.startSoundObject();
-                notificationSound.stopSoundObject();
+                notificationSound.stopSoundObject(fragment.getContext());
                 soundObject.stopVibrate();
-                random.stopSoundObject();
+                random.stopSoundObject(fragment.getContext());
                 timerRunning = false;
                 if (vibration) {
                     long pattern[] = {0, 100, 200, 300, 400};
@@ -178,7 +178,8 @@ public class TimerClass {
     }
 
     public void stopSound() {
-        soundObject.stopSoundObject();
+        mProgressBar.setProgress(0);
+        soundObject.stopSoundObject(fragment.getContext());
     }
 
     public boolean canStopSound() {
@@ -298,11 +299,24 @@ public class TimerClass {
     public void setVibration(boolean vibration) {
         this.vibration = vibration;
     }
+
     public void setRingtone(Uri ringtone) throws IOException {
-        soundObject.setRingtone(ringtone);
+        soundObject.setRingtone(ringtone, fragment.getContext());
     }
 
-    ;
+    public void setFragment(TimerFragment frag){
+        fragment =frag;
+        setViews();
+    }
+
+    public void setViews(){
+
+        this.big = fragment.getView().findViewById(R.id.hoursEditView);
+        this.medium = fragment.getView().findViewById(R.id.minutesEditView);
+        this.small = fragment.getView().findViewById(R.id.secondsEditView);
+        this.mProgressBar = fragment.getView().findViewById(R.id.progress_bar);
+
+    }
 
 
 }

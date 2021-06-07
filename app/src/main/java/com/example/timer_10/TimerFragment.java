@@ -88,6 +88,7 @@ public class TimerFragment extends Fragment implements Timer{
             timerGroupClass.addTimer(timerClass);
         }
 
+        timerClass.setFragment(this);
 
         playPauseButton = getView().findViewById(R.id.play_and_pause_group_button);
         //ImageButton stopTimerButton = getView().findViewById(R.id.play_and_pause_group_button);
@@ -121,21 +122,26 @@ public class TimerFragment extends Fragment implements Timer{
                     timerClass.startTimer();
                     playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
                     Toast.makeText(getActivity(), "Timer started!", Toast.LENGTH_SHORT).show();
+                    Log.e("CREATE TIMER"," YES");
+
                 } else {
                     Toast.makeText(getActivity(), "Timer can't start!", Toast.LENGTH_SHORT).show();
 
                 }
 
             } else {
-                Log.d("TESTE", timerClass.canStopSound()+"");
                 if (timerClass.canStopSound()) {
+                    Log.e("STOP TIMER"," YES");
                     startStopTimer();
                     stopAlarm();
                     Toast.makeText(getActivity(), "Alarm Stopped!", Toast.LENGTH_SHORT).show();
                     playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
-                } else pauseUnpauseTimer();
+                } else {
+                    Log.e("PAUSE TIMER"," YES");
+                    pauseUnpauseTimer();}
             }
+            Log.e("BUTTON PRESSED",timerClass.getTimerName());
         });
 
 
@@ -154,7 +160,6 @@ public class TimerFragment extends Fragment implements Timer{
             }
             startActivityForResult(intent, configure);
         });
-        timerClass.setViews(secondsValue, minutesValue, hoursValue);
         TimersWrapper.updateViews(timerClass.getCurrentTimerValue(), timerClass.getMode(), secondsValue, minutesValue, hoursValue);
 
     }
@@ -164,7 +169,8 @@ public class TimerFragment extends Fragment implements Timer{
         if (timerRunning) {
             playPauseButton.setImageResource(R.drawable.ic_baseline_play_arrow_24);
         } else {
-            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);        }
+            playPauseButton.setImageResource(R.drawable.ic_baseline_pause_24);
+        }
 
         timerClass.pauseUnpauseTimer(timerRunning);
         timerRunning = !timerRunning;

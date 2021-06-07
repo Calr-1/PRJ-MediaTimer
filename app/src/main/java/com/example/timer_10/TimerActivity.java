@@ -196,7 +196,7 @@ public class TimerActivity extends AppCompatActivity {
         timerClass.setMode(mode);
         timerClass.setTimerName(name);
         timerClass.setCurrentTimerValue(time);
-        TimersWrapper.saveObjectToSharedPreference(this.getApplicationContext(),"wrapperPref", "wrapper", TimersWrapper.getInstance().timer);
+        //TimersWrapper.saveObjectToSharedPreference(this.getApplicationContext(),"wrapperPref", "wrapper", TimersWrapper.getInstance().timer);
 
     }
 
